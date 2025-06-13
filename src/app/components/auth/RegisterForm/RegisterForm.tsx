@@ -1,15 +1,18 @@
 "use client";
-
+  import { AxiosError } from 'axios';
+  import axios from '../../../libraries/axios';
   import React, { FormEvent, useEffect, useState, useRef } from 'react';
-  import styles from './RegisterForm.module.css';
+  import styles from '../styles/form.module.css';
 
 export default function RegisterForm() {
-
   const nameRef = useRef<HTMLInputElement>(null);
+  // "Hacky" solution to get rid of the styled autocomplete text.
+  // These values in combination with setForm will force the fields to become empty.
   const [form, setForm] = useState({
     name: ' ',
     email: ' ',
-    password: '__________________________________________________________________________________________________________________________________________'});
+    password: '************************************************************************************************'
+  });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -20,37 +23,24 @@ export default function RegisterForm() {
   useEffect(() => {
       nameRef.current?.focus();
       setForm({name: '', email: '', password: ''});
-  }, [])
+  }, []);
 
   const register = async () => {
-      console.log(form);
-
-      const url = 'http://localhost:8000/api/register';
-      const requestBody = {
-        data: form,
-      }
-
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: 'include',
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+      await axios.get('/sanctum/csrf-cookie');
+      const response = await axios.post('/api/register', form);
+      console.log('Success:', response.data);
+    } catch (error) {
+      if (error instanceof AxiosError) { // Handle Axios errors.
+        console.error('Error response:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        console.error('Error message:', error.message);
+      } else {
+        // Handle non-Axios errors.
+        console.error('Unexpected error:', error);
       }
-
-      const json = await response.text();
-      console.log(json);
-
-    } catch(error: any) {
-      console.error(error.message);
     }
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -60,9 +50,9 @@ export default function RegisterForm() {
    * Register new user form.
    */
   return (
-      <form className={styles.registerForm} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <fieldset className={styles.formFieldset}>
-          <legend className={styles.formLegend}>Register</legend>
+          <legend className={styles.formLegend}>Register new user</legend>
           {/* Name. */}
           <label className={styles.formLabel} htmlFor="name">Name</label>
           <input
@@ -72,7 +62,7 @@ export default function RegisterForm() {
             name="name"
             value={form.name}
             onChange={handleChange}
-            placeholder='Name'
+            // placeholder='Name'
           />
           {/* Email. */}
           <label
@@ -85,7 +75,7 @@ export default function RegisterForm() {
             name="email"
             value={form.email}
             onChange={handleChange}
-            placeholder='Email'
+            // placeholder='Email'
           />
           {/* Password. */}
           <label
@@ -97,7 +87,7 @@ export default function RegisterForm() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            placeholder='Password'
+            // placeholder='Password'
           />
           {/* Submit. */}
           <input

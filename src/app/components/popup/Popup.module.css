@@ -1,0 +1,29 @@
+.success {
+  background-color: limegreen;
+}
+
+.error {
+  background-color: red;
+}
+
+.warning {
+  background-color: yellow;
+}
+
+.info {
+  background-color: blue;
+}
+
+.popup {
+  transition-duration: 0.3s;
+}
+
+.popupHidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.popupVisible {
+  visibility: visible;
+  opacity: 1;
+}

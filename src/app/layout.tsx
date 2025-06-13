@@ -1,8 +1,16 @@
+import PopupProvider from "./context/popup/provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Petrona } from 'next/font/google';
 import "./globals.css";
 import Header from './components/shared/Header';
 import Footer from './components/shared/Footer';
+
+const petrona = Petrona({
+  variable: "--font-petrona",
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '700'],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +34,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${petrona.variable}`}>
         <Header />
-        {children}
+        <PopupProvider>
+          {children}
+        </PopupProvider>
         <Footer />
       </body>
     </html>
