@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import PopupContext from '@/app/context/popup/context';
 import styles from './Popup.module.css';
 

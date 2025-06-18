@@ -8,8 +8,7 @@ import LoginForm from "./components/auth/LoginForm";
 
 export default function Home() {
 
-  const [isLoginForm, setIsLoginForm] = useState(false);
-  const [isLoginText, setIsLoginText] = useState("Login");
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
   const toggleFormType = () => {
     setIsLoginForm(prev => !prev);

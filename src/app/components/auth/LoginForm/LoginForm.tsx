@@ -32,22 +32,33 @@ export default function LoginForm() {
     try {
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('/api/login', form);
-      console.log('Success:', response.data);
-
-      setPopup({
-        message: 'Logged in successfully!',
-        type: 'success',
-        isVisible: true,
-      });
+      console.log('Success:', response.data.message);
+      setPopup({message: response.data.message, type: 'success', isVisible: true});
 
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
         console.error('Error response:', error.response?.data);
         console.error('Error status:', error.response?.status);
         console.error('Error message:', error.message);
+        let errorMessage: any = 'Something went wrong.';
+
+        // Deal with the response from the server.
+        if (typeof(error.response?.data?.error) === "string") {
+          errorMessage = error.response?.data?.error;
+        } else if (typeof(error.response?.data?.error)  === "object") {
+          errorMessage = Object.values(error.response?.data?.error)[0];
+        }
+
+        setPopup({message: errorMessage, type: 'error', isVisible: true});
+  
       } else {
         // Handle non-Axios errors.
         console.error('Unexpected error:', error);
+        setPopup({
+          message: 'Something went wrong.',
+          type: 'error',
+          isVisible: true,
+        });
       }
     }
   };

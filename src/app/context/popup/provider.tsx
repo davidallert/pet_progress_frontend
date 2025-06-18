@@ -11,7 +11,6 @@ export default function PopupProvider({ children }: { children: React.ReactNode 
       const timer = setTimeout(() => {
         setPopup(prev => ({ ...prev, isVisible: false }));
       }, 3000);
-
       return () => clearTimeout(timer);
   }, [popup.isVisible]);
 

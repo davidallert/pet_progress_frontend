@@ -6,6 +6,8 @@
   --main: #A6DEB5;
   --accent: #7E9E87;
   --white: #fff;
+  --error: #DEA6A8;
+  --warning: #DED2A6;
 }
 
 /* @media (prefers-color-scheme: dark) {
