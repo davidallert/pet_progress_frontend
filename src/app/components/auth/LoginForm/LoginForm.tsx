@@ -4,6 +4,7 @@ import axios from '../../../libraries/axios';
 import React, { FormEvent, useEffect, useState, useRef, useContext } from 'react';
 import styles from '../styles/form.module.css';
 import PopupContext from '@/app/context/popup/context';
+import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -28,13 +29,15 @@ export default function LoginForm() {
       setForm({email: '', password: ''});
   }, []);
 
+  const router = useRouter() // Needed for redirects.
+
   const login = async () => {
     try {
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('/api/login', form);
       console.log('Success:', response.data.message);
-      setPopup({message: response.data.message, type: 'success', isVisible: true});
-
+      setPopup({messages: [response.data.message], type: 'success', isVisible: true});
+      router.push('/profile');
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
         console.error('Error response:', error.response?.data);
@@ -44,18 +47,16 @@ export default function LoginForm() {
 
         // Deal with the response from the server.
         if (typeof(error.response?.data?.error) === "string") {
-          errorMessage = error.response?.data?.error;
+          errorMessage = [error.response?.data?.error];
         } else if (typeof(error.response?.data?.error)  === "object") {
-          errorMessage = Object.values(error.response?.data?.error)[0];
+          errorMessage = Object.values(error.response?.data?.error);
         }
-
-        setPopup({message: errorMessage, type: 'error', isVisible: true});
-  
+        setPopup({messages: errorMessage, type: 'error', isVisible: true});
       } else {
         // Handle non-Axios errors.
         console.error('Unexpected error:', error);
         setPopup({
-          message: 'Something went wrong.',
+          messages: ['Something went wrong.'],
           type: 'error',
           isVisible: true,
         });

@@ -14,7 +14,9 @@ export default function Popup() {
         ${styles.popup}
         ${popup.isVisible ? styles.popupVisible : styles.popupHidden}
       `}>
-        {popup.message}
+        {popup.messages.map((msg, index) => (
+          <p key={index}>{msg}<br /></p>
+        ))}
       </div>
   </>
   )

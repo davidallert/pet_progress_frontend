@@ -1,11 +1,14 @@
 "use client";
-  import { AxiosError } from 'axios';
-  import axios from '../../../libraries/axios';
-  import React, { FormEvent, useEffect, useState, useRef } from 'react';
-  import styles from '../styles/form.module.css';
+import { AxiosError } from 'axios';
+import axios from '../../../libraries/axios';
+import React, { FormEvent, useEffect, useState, useRef, useContext } from 'react';
+import styles from '../styles/form.module.css';
+import PopupContext from '@/app/context/popup/context';
 
 export default function RegisterForm() {
   const nameRef = useRef<HTMLInputElement>(null);
+  const { setPopup } = useContext(PopupContext);
+
   // "Hacky" solution to get rid of the styled autocomplete text.
   // These values in combination with setForm will force the fields to become empty.
   const [form, setForm] = useState({
@@ -30,13 +33,16 @@ export default function RegisterForm() {
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('/api/register', form);
       console.log('Success:', response.data);
+      setPopup({messages: [response.data], type: 'success', isVisible: true});
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
         console.error('Error response:', error.response?.data);
         console.error('Error status:', error.response?.status);
         console.error('Error message:', error.message);
+        setPopup({messages: Object.values(error.response?.data.error), type: 'error', isVisible: true});
       } else {
         // Handle non-Axios errors.
+        setPopup({messages: ['An unexpected error occurred.'], type: 'error', isVisible: true});
         console.error('Unexpected error:', error);
       }
     }

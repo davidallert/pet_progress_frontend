@@ -3,7 +3,7 @@
 import { createContext } from "react";
 
 interface PopupState {
-  message: string;
+  messages: Array<String>;
   type: string;
   isVisible: boolean;
 }
@@ -14,7 +14,7 @@ interface PopupContextType {
 }
 
 export const defaultPopupState = {
-  message: '',
+  messages: [],
   type: '',
   isVisible: false,
 };
