@@ -53,9 +53,14 @@ export default function Profile() {
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target);
-    setPets({ ...pets });
-    console.log('pets', pets);
+    const index = Number(e.target.getAttribute('data-index'));
+    const { name, value } = e.target;
+
+    setPets(prev => {
+      const updatedPets = [...prev];
+      updatedPets[index] = { ...updatedPets[index], [name] : value } // Need to use brackets around name when inserting a variable dynamically.
+      return updatedPets;
+    })
   };
 
   const handleClick = () => {
@@ -80,6 +85,7 @@ export default function Profile() {
                 name="name"
                 value={pet.name}
                 onChange={handleChange}
+                data-index={index}
               />
             <label className={formStyles.formLabel} htmlFor="species">Species</label>
               <Input
@@ -88,6 +94,7 @@ export default function Profile() {
                 name="species"
                 value={pet.species}
                 onChange={handleChange}
+                data-index={index}
               />
             <label className={formStyles.formLabel} htmlFor="breed">Breed</label>
               <Input
@@ -96,6 +103,7 @@ export default function Profile() {
                 name="breed"
                 value={pet.breed}
                 onChange={handleChange}
+                data-index={index}
               />
             <label className={formStyles.formLabel} htmlFor="birthday">Birthday</label>
               <Input
@@ -104,6 +112,7 @@ export default function Profile() {
                 name="birthday"
                 value={pet.birthday}
                 onChange={handleChange}
+                data-index={index}
               />
             </form>
           </div>
