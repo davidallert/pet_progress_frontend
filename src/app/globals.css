@@ -3,11 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --main: #A6DEB5;
-  --accent: #7E9E87;
+  --light: #f4f4f4;
+  --main: #435b8f; /* Original blue: #203561 */
+  --accent: #e1deda;
+  --complement: #3B2061; /* Original purple: #3B2061 */
   --white: #fff;
   --error: #DEA6A8;
   --warning: #DED2A6;
+
+  --radius: 5px;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -19,8 +23,9 @@
 
 html,
 body {
-  max-width: 100vw;
+  /* max-width: 100vw; */
   overflow-x: hidden;
+  min-height: 100dvh;
 }
 
 body {
@@ -28,6 +33,9 @@ body {
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 * {

@@ -2,12 +2,14 @@
 import { AxiosError } from 'axios';
 import axios from '../../../libraries/axios';
 import React, { FormEvent, useEffect, useState, useRef, useContext } from 'react';
-import styles from '../styles/form.module.css';
+import styles from '../../../styles/form/form.module.css'
 import PopupContext from '@/app/context/popup/context';
 import { useRouter } from 'next/navigation'
+import Input from '../../Input';
 
 export default function LoginForm() {
   const nameRef = useRef<HTMLInputElement>(null);
+  const router = useRouter()
 
   const { setPopup } = useContext(PopupContext);
 
@@ -28,8 +30,6 @@ export default function LoginForm() {
       nameRef.current?.focus();
       setForm({email: '', password: ''});
   }, []);
-
-  const router = useRouter() // Needed for redirects.
 
   const login = async () => {
     try {
@@ -81,25 +81,21 @@ export default function LoginForm() {
             className={styles.formLabel}
             htmlFor="email">Email
           </label>
-          <input
-            className={styles.formInput}
+          <Input
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
-            // placeholder='Email'
           />
           {/* Password. */}
           <label
             className={styles.formLabel}
             htmlFor="password">Password</label>
-          <input
-            className={styles.formInput}
+          <Input
             type="password"
             name="password"
             value={form.password}
             onChange={handleChange}
-            // placeholder='Password'
           />
           {/* Submit. */}
           <input

@@ -2,7 +2,7 @@
 import { AxiosError } from 'axios';
 import axios from '../../../libraries/axios';
 import React, { FormEvent, useEffect, useState, useRef, useContext } from 'react';
-import styles from '../styles/form.module.css';
+import styles from '../../../styles/form/form.module.css'
 import PopupContext from '@/app/context/popup/context';
 
 export default function RegisterForm() {

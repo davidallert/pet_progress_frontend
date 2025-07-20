@@ -1,5 +1,10 @@
 .header {
   width: 100dvw;
   height: 10dvh;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--foreground);
+  color: var(--background);
+  gap: 1dvw;
 }

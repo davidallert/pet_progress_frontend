@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1dvw;
+  width: 100%;
+  height: 100%;
+  padding: 5dvw;
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1dvw;
+}
+
+.card {
+  width: 30%;
+  background-color: var(--accent);
+  padding: 2dvw;
+  border-radius: var(--radius);
+}
+
+.main .btn {
+  width: 20dvw;
+  height: 2dvw;
+  padding: 2%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
