@@ -1,0 +1,41 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1dvw;
+  width: 100%;
+  height: 100%;
+  padding: 5dvw;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.vertical {
+  margin: 125px auto;
+  height: 1px;
+  width: 250px;
+  background-color: var(--foreground);
+  transform: rotate(90deg)
+}
+
+.left,
+.right {
+  position: relative;
+  height: 1px;
+  width: 10dvw;
+  background-color: var(--foreground);
+}
+
+.left {
+  right: 100;
+}
+
+.right {
+  left: 100;
+}
+

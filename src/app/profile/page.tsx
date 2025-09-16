@@ -32,7 +32,7 @@ export default function Profile() {
   const { setPopup } = useContext(PopupContext);
   const [pets, setPets] = useState<Array<Pets>>([]);
   const router = useRouter()
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
@@ -40,7 +40,7 @@ export default function Profile() {
         const response = await axios.get('/api/user/data', { withCredentials: true });
         setUser(response.data.user);
         setPets(response.data.pets);
-        // setLoading(false);
+        setLoading(false);
       }
       catch (e) {
         if (e instanceof(AxiosError)) {
@@ -68,7 +68,7 @@ export default function Profile() {
   }
 
   // Return an empty page, just displaying the header and footer.
-  // if (loading) return <main className={styles.main}>IMAGINE A SPINNER ICON</main>;
+  if (loading) return <main className={styles.main}>IMAGINE A SPINNER ICON</main>;
 
   return (
     <main className={styles.main}>
