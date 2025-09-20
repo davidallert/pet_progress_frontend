@@ -1,7 +1,3 @@
-.main {
-  padding: 5dvw;
-}
-
 .timelineWrapper {
   display: flex;
   flex-direction: column;
@@ -11,36 +7,34 @@
 
 .timelineBar {
   position: absolute;
-  bottom: 0;
-  height: 50dvh;
   width: 1px;
   background-color: var(--foreground);
+  z-index: -1;
+  height: 100%;
 }
 
 .timelineStart {
   margin-bottom: 5dvh;
+  background-color: var(--light);
 }
 
 .event {
   position: relative;
   background-color: var(--light);
-  padding: 1dvw;
+  padding: 10px;
   margin-bottom: 5dvh;
-}
-
-.left, 
-.right {
-  position: relative;
+  width: 20dvw;
+  min-height: 10dvh;
 }
 
 .left {
-  right: 125px;
   text-align: left;
+  margin-right: 30dvw;
 }
 
 .right {
-  left: 125px;
   text-align: right;
+  margin-left: 30dvw;
 }
 
 .left::after {
@@ -69,3 +63,17 @@
   transform: translateY(-50%);
 }
 
+.icon {
+  position: fixed;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: var(--foreground);
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--light);
+  font-size: 1.5dvw;
+}
