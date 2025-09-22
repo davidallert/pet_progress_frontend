@@ -80,21 +80,42 @@ useEffect(() => {
         <section className={`${styles.left} ${styles.event}`} aria-label="Timeline event">
           <div className={styles.icon}><i className="fa-solid fa-paw"></i></div>
           <h3>Learned sit</h3>
-          <h4>2024-03-10</h4>
+          <h4 className={styles.date}>2024-03-22</h4>
           <p>Lorem ipsum dolor sit amet.</p>
         </section>
 
         <section className={`${styles.right} ${styles.event}`} aria-label="Timeline event">
           <div className={styles.icon}><i className="fa-solid fa-dog"></i></div>
           <h3>Learned stay</h3>
-          <h4>2024-03-22</h4>
+          <h4 className={styles.date}>2024-03-22</h4>
           <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
         </section>
 
         <section className={`${styles.left} ${styles.event}`} aria-label="Timeline event">
           <div className={styles.icon}><i className="fa-solid fa-bone"></i></div>
           <h3>Learned stay</h3>
-          <h4>2024-03-22</h4>
+          <h4 className={styles.date}>2024-03-22</h4>
+          <p></p>
+        </section>
+
+        <section className={`${styles.right} ${styles.event}`} aria-label="Timeline event">
+          <div className={styles.icon}><i className="fa-solid fa-bone"></i></div>
+          <h3>Learned stay</h3>
+          <h4 className={styles.date}>2024-03-22</h4>
+          <p></p>
+        </section>
+
+        <section className={`${styles.left} ${styles.event}`} aria-label="Timeline event">
+          <div className={styles.icon}><i className="fa-solid fa-bone"></i></div>
+          <h3>Learned stay</h3>
+          <h4 className={styles.date}>2024-03-22</h4>
+          <p></p>
+        </section>
+
+        <section className={`${styles.right} ${styles.event}`} aria-label="Timeline event">
+          <div className={styles.icon}><i className="fa-solid fa-bone"></i></div>
+          <h3>Learned stay</h3>
+          <h4 className={styles.date}>2024-03-22</h4>
           <p></p>
         </section>
       </section>
