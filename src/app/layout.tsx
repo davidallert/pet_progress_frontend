@@ -1,16 +1,26 @@
 import PopupProvider from "./context/popup/provider";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import { Petrona } from 'next/font/google';
 import "./globals.css";
 import Header from './components/shared/Header';
 import Footer from './components/shared/Footer';
+
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 const petrona = Petrona({
   variable: "--font-petrona",
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '700'],
 });
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ['latin'],
+});
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,13 +43,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* <script
-          src="https://kit.fontawesome.com/b46579c4fc.js"
-          crossOrigin="anonymous"
-        ></script> */}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${petrona.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${petrona.variable} ${spaceGrotesk.variable}`}>
         <Header />
         <PopupProvider>
           {children}
