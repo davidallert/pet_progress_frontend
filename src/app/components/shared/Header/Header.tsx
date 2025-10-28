@@ -6,7 +6,8 @@ export default function Header() {
     <header id="header" className={styles.header}>
       <Link href="/">Sign in / up</Link>|
       <Link href="/profile">My Pets</Link>|
-      <Link href="/timeline">Timeline</Link>
+      <Link href="/timeline">Timeline</Link>|
+      <Link href="/logout">Log out</Link>
     </header>
   )
 }

@@ -8,6 +8,8 @@ import { useEffect, useState, useContext } from "react";
 import { useRouter } from 'next/navigation'
 import PopupContext from '@/app/context/popup/context';
 import Input from "../components/Input";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faOtter } from '@fortawesome/free-solid-svg-icons'
 
 export default function Profile() {
   interface User {
@@ -68,7 +70,7 @@ export default function Profile() {
   }
 
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={styles.main}>IMAGINE A SPINNER ICON</main>;
+  if (loading) return <main className={styles.main}><FontAwesomeIcon icon={faOtter} beatFade size="3x"/></main>;
 
   return (
     <main className={styles.main}>

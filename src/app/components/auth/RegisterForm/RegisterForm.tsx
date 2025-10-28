@@ -4,10 +4,15 @@ import axios from '../../../libraries/axios';
 import React, { FormEvent, useEffect, useState, useRef, useContext } from 'react';
 import styles from '../../../styles/form/form.module.css'
 import PopupContext from '@/app/context/popup/context';
+import { useRouter } from 'next/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFrog } from '@fortawesome/free-solid-svg-icons'
 
 export default function RegisterForm() {
   const nameRef = useRef<HTMLInputElement>(null);
   const { setPopup } = useContext(PopupContext);
+  const router = useRouter()
+  const [loading, setLoading] = useState(false);
 
   // "Hacky" solution to get rid of the styled autocomplete text.
   // These values in combination with setForm will force the fields to become empty.
@@ -30,10 +35,12 @@ export default function RegisterForm() {
 
   const register = async () => {
     try {
+      setLoading(true);
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('/api/register', form);
       console.log('Success:', response.data);
-      setPopup({messages: [response.data], type: 'success', isVisible: true});
+      setPopup({messages: [response.data.message], type: 'success', isVisible: true});
+      router.push('/profile');
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
         console.error('Error response:', error.response?.data);
@@ -45,6 +52,8 @@ export default function RegisterForm() {
         setPopup({messages: ['An unexpected error occurred.'], type: 'error', isVisible: true});
         console.error('Unexpected error:', error);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,11 +105,14 @@ export default function RegisterForm() {
             // placeholder='Password'
           />
           {/* Submit. */}
-          <input
+          <button
             className={`${styles.formInput} ${styles.formSubmit}`}
             type="submit"
-            value="Register"
-          />
+            disabled={loading}
+            inert={loading}
+          >
+            {loading ? <FontAwesomeIcon icon={faFrog} bounce/> : "Register"}
+          </button>
         </fieldset>
       </form>
   )

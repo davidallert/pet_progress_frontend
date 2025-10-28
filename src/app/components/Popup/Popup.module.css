@@ -1,0 +1,37 @@
+.success {
+  background-color: var(--main);
+}
+
+.error {
+  background-color: var(--error);
+}
+
+.warning {
+  background-color: var(--warning);
+}
+
+.info {
+  background-color: var(--accent);
+}
+
+.popup {
+  transition-duration: 0.3s;
+  width: 15dvw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1dvw;
+  color: #fff;
+  border-radius: 25px;
+  margin: 1dvw;
+}
+
+.popupHidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.popupVisible {
+  visibility: visible;
+  opacity: 1;
+}

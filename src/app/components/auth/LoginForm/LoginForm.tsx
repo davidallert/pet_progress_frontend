@@ -6,10 +6,13 @@ import styles from '../../../styles/form/form.module.css'
 import PopupContext from '@/app/context/popup/context';
 import { useRouter } from 'next/navigation'
 import Input from '../../Input';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFrog } from '@fortawesome/free-solid-svg-icons'
 
 export default function LoginForm() {
   const nameRef = useRef<HTMLInputElement>(null);
   const router = useRouter()
+  const [loading, setLoading] = useState(false);
 
   const { setPopup } = useContext(PopupContext);
 
@@ -33,6 +36,7 @@ export default function LoginForm() {
 
   const login = async () => {
     try {
+      setLoading(true);
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('/api/login', form);
       console.log('Success:', response.data.message);
@@ -51,17 +55,17 @@ export default function LoginForm() {
         } else if (typeof(error.response?.data?.error)  === "object") {
           errorMessage = Object.values(error.response?.data?.error);
         }
+
         setPopup({messages: errorMessage, type: 'error', isVisible: true});
       } else {
         // Handle non-Axios errors.
         console.error('Unexpected error:', error);
-        setPopup({
-          messages: ['Something went wrong.'],
-          type: 'error',
-          isVisible: true,
-        });
+        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
       }
+    } finally {
+      setLoading(false);
     }
+   
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,11 +102,14 @@ export default function LoginForm() {
             onChange={handleChange}
           />
           {/* Submit. */}
-          <input
+          <button
             className={`${styles.formInput} ${styles.formSubmit}`}
             type="submit"
-            value="Login"
-          />
+            disabled={loading}
+            inert={loading}
+          >
+            {loading ? <FontAwesomeIcon icon={faFrog} bounce/> : "Login"}
+          </button>
         </fieldset>
       </form>
       </>
