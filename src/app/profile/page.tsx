@@ -1,15 +1,17 @@
 "use client";
 
 import styles from "./page.module.css";
-import formStyles from '../styles/form/form.module.css'
+import formStyles from '../components/forms/form.module.css'
 import axios from '../libraries/axios';
 import { AxiosError } from 'axios';
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from 'next/navigation'
 import PopupContext from '@/app/context/popup/context';
-import Input from "../components/Input";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faOtter } from '@fortawesome/free-solid-svg-icons'
+import Input from "../components/ui/Input";
+import Button from "../components/ui/Button";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faOtter } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 
 export default function Profile() {
   interface User {
@@ -65,12 +67,16 @@ export default function Profile() {
     })
   };
 
-  const handleClick = () => {
+  const handleSave = () => {
     console.log(pets);
   }
 
+  const handleAdd = () => {
+    router.push('/profile/add/pet');
+  }
+
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={styles.main}><FontAwesomeIcon icon={faOtter} beatFade size="3x"/></main>;
+  if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   return (
     <main className={styles.main}>
@@ -80,6 +86,9 @@ export default function Profile() {
         {pets.map((pet, index) => (
           <div className={styles.card} key={pet.id}>
             <form key={index}>
+            <Button icon={true}>
+              <FontAwesomeIcon icon={faCircleXmark}/>
+            </Button>
             <label className={formStyles.formLabel} htmlFor="name">Name</label>
               <Input
                 id="name"
@@ -120,11 +129,16 @@ export default function Profile() {
           </div>
         ))}
       </section>
-      <button
-        className={`${formStyles.formSubmit} ${formStyles.formInput} ${styles.btn}`}
-        onClick={handleClick}>
-        Save
-      </button>
+      <section className={styles.buttonGroup}>
+        {pets.length > 0 &&
+          <Button type="submit" onClick={handleSave}>
+            Save Pets
+          </Button>
+        }
+        <Button type="submit" onClick={handleAdd}>
+          Add Pet
+        </Button>
+      </section>
     </main>
   );
 }

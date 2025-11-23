@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import { Petrona } from 'next/font/google';
 import "./globals.css";
-import Header from './components/shared/Header';
-import Footer from './components/shared/Footer';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'

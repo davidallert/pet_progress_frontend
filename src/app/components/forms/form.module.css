@@ -1,0 +1,35 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  /* height: 100%; */
+}
+
+.formFieldset {
+  width: 100%;
+  /* padding: 1dvw; */
+  border: 1px solid transparent;
+  transition: border 0.5s;
+  border-radius: var(--radius);
+}
+
+/* .formFieldset:hover {
+  border: 1px solid #cbcbcb;
+  transition: border 0.5s;
+} */
+
+.formLegend {
+  font-size: xx-large;
+  margin-bottom: 5dvh;
+}
+
+.formLabel {
+  display: block;
+  width: 100%;
+}
+
+.formLabel {
+  margin: 0 0 1% 0;
+  font-size: larger;
+}

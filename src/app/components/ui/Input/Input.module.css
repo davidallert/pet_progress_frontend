@@ -1,0 +1,35 @@
+.input {
+  width: 100%;
+  padding: 4%;
+  margin: 0 0 5% 0;
+  font-size: larger;
+  border-radius: var(--radius);
+  transition-duration: 0.3s;
+  animation-name: autofillFix;
+  animation-fill-mode: both;
+  background-color: var(--light);
+}
+
+.submit {
+  cursor: pointer;
+  background-color: var(--main);
+  color: var(--white);
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+}
+
+.input,
+.submit {
+  border: none;
+}
+
+.submit:hover {
+  background-color: var(--accent);
+}
+
+.input:hover,
+.submit:hover {
+  filter: drop-shadow(1px 1px 5px #c3c3c36b);
+  transition-duration: 0.3s;
+}

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import PopupContext, { defaultPopupState } from "./context";
-import Popup from "@/app/components/Popup";
+import Popup from "@/app/components/layout/Popup";
 
 export default function PopupProvider({ children }: { children: React.ReactNode }) {
   const [popup, setPopup] = useState(defaultPopupState);

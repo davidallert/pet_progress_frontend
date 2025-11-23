@@ -1,0 +1,134 @@
+"use client";
+
+import styles from "../../page.module.css";
+import formStyles from '../../../components/forms/form.module.css'
+import axios from '../../../libraries/axios';
+import { AxiosError } from 'axios';
+import React, { FormEvent, useEffect, useState, useContext } from 'react';
+import { useRouter } from 'next/navigation'
+import PopupContext from '@/app/context/popup/context';
+import Input from "../../../components/ui/Input";
+import Button from "../../../components/ui/Button";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faOtter } from '@fortawesome/free-solid-svg-icons'
+
+export default function Profile() {
+  const { setPopup } = useContext(PopupContext);
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [loadingAdd, setLoadingAdd] = useState(false);
+  const [form, setForm] = useState({
+    user_id: '',
+    name: '',
+    species: '',
+    breed: '',
+    birthday: ''
+  });
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get('/api/user/data', { withCredentials: true });
+        setForm({...form, user_id: response.data.user.id});
+        setLoading(false);
+      }
+      catch (e) {
+        if (e instanceof(AxiosError)) {
+          setPopup({messages: [e.response?.data?.message + "."], type: 'error', isVisible: true})
+        }
+        router.push('/');
+      }
+    }
+    getUser();
+  }, []);
+
+  const addPet = async () => {
+    try {
+      setLoadingAdd(true);
+      // await axios.get('/sanctum/csrf-cookie');
+      console.log(form);
+      const response = await axios.post('/api/add/pet', form);
+      console.log(response);
+      router.push('/profile')
+    } catch (error) {
+      if (error instanceof AxiosError) { // Handle Axios errors.
+        console.error('Error response:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        console.error('Error message:', error.message);
+        let errorMessage: any = 'Something went wrong.';
+
+        // Deal with the response from the server.
+        if (typeof(error.response?.data?.error) === "string") {
+          errorMessage = [error.response?.data?.error];
+        } else if (typeof(error.response?.data?.error)  === "object") {
+          errorMessage = Object.values(error.response?.data?.error);
+        }
+
+        setPopup({messages: errorMessage, type: 'error', isVisible: true});
+      } else {
+        // Handle non-Axios errors.
+        console.error('Unexpected error:', error);
+        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
+      }
+    } finally {
+      setLoadingAdd(false);
+    }
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      await addPet();
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({...form, [e.target.name]: e.target.value})
+  };
+
+  // Return an empty page, just displaying the header and footer.
+  if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+
+  return (
+    <main className={styles.main}>
+        <form className={formStyles.form} onSubmit={handleSubmit}>
+        <fieldset className={formStyles.formFieldset}>
+          <legend className={formStyles.formLegend}>Add New Pet</legend>
+          <label className={formStyles.formLabel} htmlFor="name">Name</label>
+            <Input
+              id="name"
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+            />
+          <label className={formStyles.formLabel} htmlFor="species">Species</label>
+            <Input
+              id="species"
+              type="text"
+              name="species"
+              value={form.species}
+              onChange={handleChange}
+            />
+          <label className={formStyles.formLabel} htmlFor="breed">Breed</label>
+            <Input
+              id="breed"
+              type="text"
+              name="breed"
+              value={form.breed}
+              onChange={handleChange}
+            />
+          <label className={formStyles.formLabel} htmlFor="birthday">Birthday</label>
+            <Input
+              id="birthday"
+              type="date"
+              name="birthday"
+              value={form.birthday}
+              onChange={handleChange}
+            />
+          <Button type="submit" loading={loadingAdd}>
+            Add Pet
+          </Button>
+      </fieldset>
+      </form>
+    </main>
+  );
+}

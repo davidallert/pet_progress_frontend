@@ -7,6 +7,11 @@
   padding: 5dvw;
 }
 
+.loading {
+  justify-content: center;
+  align-items: center;
+}
+
 .cards {
   width: 100%;
   display: flex;
@@ -18,18 +23,16 @@
 }
 
 .card {
+  position: relative;
   width: 30%;
   background-color: var(--accent);
   padding: 2dvw;
   border-radius: var(--radius);
 }
 
-.main .btn {
-  width: 20dvw;
-  height: 2dvw;
-  padding: 2%;
-  margin: 0;
+.buttonGroup {
+  width: 30%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  gap: 1dvw;
 }

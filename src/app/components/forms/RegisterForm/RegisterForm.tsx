@@ -1,12 +1,12 @@
 "use client";
 import { AxiosError } from 'axios';
 import axios from '../../../libraries/axios';
-import React, { FormEvent, useEffect, useState, useRef, useContext } from 'react';
-import styles from '../../../styles/form/form.module.css'
+import React, { FormEvent, useState, useRef, useContext } from 'react';
+import styles from '../form.module.css'
 import PopupContext from '@/app/context/popup/context';
 import { useRouter } from 'next/navigation'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFrog } from '@fortawesome/free-solid-svg-icons'
+import Input from '../../ui/Input';
+import Button from '../../ui/Button';
 
 export default function RegisterForm() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -14,24 +14,16 @@ export default function RegisterForm() {
   const router = useRouter()
   const [loading, setLoading] = useState(false);
 
-  // "Hacky" solution to get rid of the styled autocomplete text.
-  // These values in combination with setForm will force the fields to become empty.
   const [form, setForm] = useState({
-    name: ' ',
-    email: ' ',
-    password: '************************************************************************************************'
+    name: '',
+    email: '',
+    password: ''
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       await register();
   }
-
-  // Focus the first input field automatically.
-  useEffect(() => {
-      nameRef.current?.focus();
-      setForm({name: '', email: '', password: ''});
-  }, []);
 
   const register = async () => {
     try {
@@ -70,22 +62,19 @@ export default function RegisterForm() {
           <legend className={styles.formLegend}>Register new user</legend>
           {/* Name. */}
           <label className={styles.formLabel} htmlFor="name">Name</label>
-          <input
-            ref={nameRef}
-            className={styles.formInput}
+          <Input
+            autoFocus
             type="text"
             name="name"
             value={form.name}
             onChange={handleChange}
-            // placeholder='Name'
           />
           {/* Email. */}
           <label
             className={styles.formLabel}
             htmlFor="email">Email
           </label>
-          <input
-            className={styles.formInput}
+          <Input
             type="email"
             name="email"
             value={form.email}
@@ -96,8 +85,7 @@ export default function RegisterForm() {
           <label
             className={styles.formLabel}
             htmlFor="password">Password</label>
-          <input
-            className={styles.formInput}
+          <Input
             type="password"
             name="password"
             value={form.password}
@@ -105,14 +93,9 @@ export default function RegisterForm() {
             // placeholder='Password'
           />
           {/* Submit. */}
-          <button
-            className={`${styles.formInput} ${styles.formSubmit}`}
-            type="submit"
-            disabled={loading}
-            inert={loading}
-          >
-            {loading ? <FontAwesomeIcon icon={faFrog} bounce/> : "Register"}
-          </button>
+          <Button type="submit" loading={loading}>
+            Register
+          </Button>
         </fieldset>
       </form>
   )

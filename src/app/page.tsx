@@ -3,8 +3,8 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import React, { FormEvent, useEffect, useState } from 'react';
-import RegisterForm from "./components/auth/RegisterForm";
-import LoginForm from "./components/auth/LoginForm";
+import RegisterForm from "./components/forms/RegisterForm";
+import LoginForm from "./components/forms/LoginForm";
 
 export default function Home() {
 
