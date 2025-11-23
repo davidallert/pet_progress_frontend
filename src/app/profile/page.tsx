@@ -10,8 +10,7 @@ import PopupContext from '@/app/context/popup/context';
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter } from '@fortawesome/free-solid-svg-icons';
-import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import { faOtter, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function Profile() {
   interface User {
@@ -37,6 +36,7 @@ export default function Profile() {
   const [pets, setPets] = useState<Array<Pets>>([]);
   const router = useRouter()
   const [loading, setLoading] = useState(true);
+  const [loadingSave, setLoadingSave] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
@@ -56,6 +56,65 @@ export default function Profile() {
     getUser()
   }, [])
 
+  const savePets = async () => {
+    try {
+      setLoadingSave(true);
+      const data = {pets: pets};
+      console.log(data);
+      const response = await axios.post('/api/upsert/pet', data);
+      setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
+    } catch (error) {
+      if (error instanceof AxiosError) { // Handle Axios errors.
+        console.error('Error response:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        console.error('Error message:', error.message);
+        let errorMessage: any = 'Something went wrong.';
+
+        // Deal with the response from the server.
+        if (typeof(error.response?.data?.error) === "string") {
+          errorMessage = [error.response?.data?.error];
+        } else if (typeof(error.response?.data?.error)  === "object") {
+          errorMessage = Object.values(error.response?.data?.error);
+        }
+
+        setPopup({messages: [errorMessage], type: 'error', isVisible: true});
+      } else {
+        // Handle non-Axios errors.
+        console.error('Unexpected error:', error);
+        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
+      }
+    } finally {
+      setLoadingSave(false);
+    }
+  }
+
+  const removePet = async (id:Number) => {
+    try {
+      const response = await axios.post('/api/remove/pet', {id: id});
+      setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
+    } catch (error) {
+      if (error instanceof AxiosError) { // Handle Axios errors.
+        console.error('Error response:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        console.error('Error message:', error.message);
+        let errorMessage: any = 'Something went wrong.';
+
+        // Deal with the response from the server.
+        if (typeof(error.response?.data?.error) === "string") {
+          errorMessage = [error.response?.data?.error];
+        } else if (typeof(error.response?.data?.error)  === "object") {
+          errorMessage = Object.values(error.response?.data?.error);
+        }
+        setPopup({messages: [errorMessage], type: 'error', isVisible: true});
+      } else {
+        // Handle non-Axios errors.
+        console.error('Unexpected error:', error);
+        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
+      }
+    } finally {
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const index = Number(e.target.getAttribute('data-index'));
     const { name, value } = e.target;
@@ -68,11 +127,18 @@ export default function Profile() {
   };
 
   const handleSave = () => {
-    console.log(pets);
+    savePets();
   }
 
   const handleAdd = () => {
     router.push('/profile/add/pet');
+  }
+
+  const handleRemove = (e:React.MouseEvent<HTMLButtonElement>, id:Number) => {
+    e.preventDefault();
+    const div = document.getElementById(String(id))
+    div?.remove()
+    removePet(id);
   }
 
   // Return an empty page, just displaying the header and footer.
@@ -84,10 +150,10 @@ export default function Profile() {
       <h2>My Pets</h2>
       <section className={styles.cards}>
         {pets.map((pet, index) => (
-          <div className={styles.card} key={pet.id}>
+          <div id={String(pet.id)} className={styles.card} key={pet.id}>
             <form key={index}>
-            <Button icon={true}>
-              <FontAwesomeIcon icon={faCircleXmark}/>
+            <Button icon={true} onClick={(e) => handleRemove(e, pet.id)}>
+              <FontAwesomeIcon icon={faXmark}/>
             </Button>
             <label className={formStyles.formLabel} htmlFor="name">Name</label>
               <Input
@@ -131,12 +197,12 @@ export default function Profile() {
       </section>
       <section className={styles.buttonGroup}>
         {pets.length > 0 &&
-          <Button type="submit" onClick={handleSave}>
-            Save Pets
+          <Button type="submit" onClick={handleSave} loading={loadingSave}>
+            Save
           </Button>
         }
         <Button type="submit" onClick={handleAdd}>
-          Add Pet
+          Add
         </Button>
       </section>
     </main>
