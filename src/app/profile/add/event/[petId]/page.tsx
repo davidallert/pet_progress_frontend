@@ -1,35 +1,38 @@
 "use client";
 
-import styles from "../../page.module.css";
-import formStyles from '../../../components/forms/form.module.css'
-import axios from '../../../libraries/axios';
+import styles from "@/app/profile/page.module.css";
+import formStyles from '@/app/components/forms/form.module.css'
+import axios from '@/app/libraries/axios';
 import { AxiosError } from 'axios';
 import React, { FormEvent, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation'
 import PopupContext from '@/app/context/popup/context';
-import Input from "../../../components/ui/Input";
-import Button from "../../../components/ui/Button";
+import Input from "@/app/components/ui/Input";
+import Button from "@/app/components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOtter } from '@fortawesome/free-solid-svg-icons'
 
-export default function Pet() {
+export default function Event({params}: PageProps<'/profile/add/event/[petId]'>) {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [loadingAdd, setLoadingAdd] = useState(false);
+  const { petId } = React.use(params);
   const [form, setForm] = useState({
     user_id: '',
-    name: '',
-    species: '',
-    breed: '',
-    birthday: ''
+    pet_id: '',
+    title: '',
+    description: '',
+    image: '',
+    type: '',
+    date: ''
   });
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const response = await axios.get('/api/user/data', { withCredentials: true });
-        setForm({...form, user_id: response.data.user.id});
+        setForm({...form, user_id: response.data.user.id, pet_id: petId});
         setLoading(false);
       }
       catch (e) {
@@ -42,10 +45,10 @@ export default function Pet() {
     getUser();
   }, []);
 
-  const addPet = async () => {
+  const addEvent = async () => {
     try {
       setLoadingAdd(true);
-      const response = await axios.post('/api/add/pet', form);
+      const response = await axios.post('/api/add/event', form);
       console.log(response);
       router.push('/profile')
     } catch (error) {
@@ -75,7 +78,8 @@ export default function Pet() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await addPet();
+      console.log(form)
+      // await addEvent();
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,41 +93,49 @@ export default function Pet() {
     <main className={styles.main}>
         <form className={formStyles.form} onSubmit={handleSubmit}>
         <fieldset className={formStyles.formFieldset}>
-          <legend className={formStyles.formLegend}>Add New Pet</legend>
-          <label className={formStyles.formLabel} htmlFor="name">Name</label>
+          <legend className={formStyles.formLegend}>Add New Event</legend>
+          <label className={formStyles.formLabel} htmlFor="title">Title</label>
             <Input
-              id="name"
+              id="title"
               type="text"
-              name="name"
-              value={form.name}
+              name="title"
+              value={form.title}
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="species">Species</label>
+          <label className={formStyles.formLabel} htmlFor="description">Description</label>
             <Input
-              id="species"
+              id="description"
               type="text"
-              name="species"
-              value={form.species}
+              name="description"
+              value={form.description}
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="breed">Breed</label>
+          <label className={formStyles.formLabel} htmlFor="image">Image</label>
             <Input
-              id="breed"
-              type="text"
-              name="breed"
-              value={form.breed}
+              id="image"
+              type="file"
+              name="image"
+              value={form.image}
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="birthday">Birthday</label>
+          <label className={formStyles.formLabel} htmlFor="type">Type</label>
             <Input
-              id="birthday"
+              id="type"
+              type="text"
+              name="type"
+              value={form.type}
+              onChange={handleChange}
+            />
+          <label className={formStyles.formLabel} htmlFor="date">Date</label>
+            <Input
+              id="date"
               type="date"
-              name="birthday"
-              value={form.birthday}
+              name="date"
+              value={form.date}
               onChange={handleChange}
             />
           <Button type="submit" loading={loadingAdd}>
-            Add Pet
+            Add Event
           </Button>
       </fieldset>
       </form>

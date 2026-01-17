@@ -30,17 +30,22 @@
 
 .icon {
   all: unset;
-  position: absolute;
-  top: 1dvh;
-  right: 1dvh;
+  /* position: absolute; */
+  /* top: 1dvh; */
+  /* right: 1dvh; */
   cursor: pointer;
-  font-size: x-large;
+  font-size: xx-large;
   color: #fff;
   transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .icon:hover {
-  transform: scale(1.2)
+  /* transform: scale(1.2) */
+  transform: rotate(180deg);
 }
 
 .button,

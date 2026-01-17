@@ -10,7 +10,7 @@ import PopupContext from '@/app/context/popup/context';
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faOtter, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Profile() {
   interface User {
@@ -141,6 +141,11 @@ export default function Profile() {
     removePet(id);
   }
 
+  const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, id:Number) => {
+    e.preventDefault();
+    router.push(`/profile/add/event/${id}`);
+  }
+
   // Return an empty page, just displaying the header and footer.
   if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
@@ -152,9 +157,14 @@ export default function Profile() {
         {pets.map((pet, index) => (
           <div id={String(pet.id)} className={styles.card} key={pet.id}>
             <form key={index}>
-            <Button icon={true} onClick={(e) => handleRemove(e, pet.id)}>
-              <FontAwesomeIcon icon={faXmark}/>
-            </Button>
+            <div className={styles.iconGroup}>
+              <Button icon={true} onClick={(e) => handleRemove(e, pet.id)}>
+                <FontAwesomeIcon icon={faXmark}/>
+              </Button>
+              <Button icon={true} onClick={(e) => handleAddEvent(e, pet.id)}>
+                <FontAwesomeIcon icon={faPlus}/>
+              </Button>
+            </div>
             <label className={formStyles.formLabel} htmlFor="name">Name</label>
               <Input
                 id="name"

@@ -36,3 +36,12 @@
   flex-direction: row;
   gap: 1dvw;
 }
+
+.iconGroup {
+  position: absolute;
+  top: 1dvh;
+  right: 1dvh;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex;
+}
