@@ -23,7 +23,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
     pet_id: '',
     title: '',
     description: '',
-    image: '',
+    image: null as File | null,
     type: '',
     date: ''
   });
@@ -45,10 +45,12 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
     getUser();
   }, []);
 
-  const addEvent = async () => {
+  const addEvent = async (formData: FormData) => {
     try {
       setLoadingAdd(true);
-      const response = await axios.post('/api/add/event', form);
+      const response = await axios.post('/api/add/event', formData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
       console.log(response);
       router.push('/profile')
     } catch (error) {
@@ -78,12 +80,28 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log(form)
-      // await addEvent();
+      console.log(form);
+
+      const formData = new FormData();
+      formData.append('pet_id', form.pet_id);
+      formData.append('title', form.title);
+      formData.append('description', form.description);
+      if (form.image) formData.append('image', form.image);
+      formData.append('type', form.type);
+      formData.append('date', form.date);
+
+      console.log('FormData image:', formData.get('image'));
+      console.log('FormData entries:', Array.from(formData.entries()));
+
+     await addEvent(formData);
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({...form, [e.target.name]: e.target.value})
+    if (e.target.type === 'file') {
+      setForm({...form, [e.target.name]: e.target.files?.[0] || null});
+    } else {
+    setForm({...form, [e.target.name]: e.target.value});
+    }
   };
 
   // Return an empty page, just displaying the header and footer.
@@ -91,7 +109,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
 
   return (
     <main className={styles.main}>
-        <form className={formStyles.form} onSubmit={handleSubmit}>
+        <form className={formStyles.form} onSubmit={handleSubmit} encType="multipart/form-data">
         <fieldset className={formStyles.formFieldset}>
           <legend className={formStyles.formLegend}>Add New Event</legend>
           <label className={formStyles.formLabel} htmlFor="title">Title</label>
@@ -115,7 +133,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
               id="image"
               type="file"
               name="image"
-              value={form.image}
+              // value={form.image}
               onChange={handleChange}
             />
           <label className={formStyles.formLabel} htmlFor="type">Type</label>
