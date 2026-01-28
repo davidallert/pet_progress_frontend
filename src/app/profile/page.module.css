@@ -45,3 +45,9 @@
   flex-direction: row;
   justify-content: flex;
 }
+
+.arrow {
+  position: absolute;
+  bottom: 1dvh;
+  right: 1dvh;
+}

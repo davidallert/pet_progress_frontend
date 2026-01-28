@@ -10,7 +10,7 @@ import PopupContext from '@/app/context/popup/context';
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faOtter, faXmark, faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export default function Profile() {
   interface User {
@@ -134,7 +134,7 @@ export default function Profile() {
     router.push('/profile/add/pet');
   }
 
-  const handleRemove = (e:React.MouseEvent<HTMLButtonElement>, id:Number) => {
+  const handleRemovePet = (e:React.MouseEvent<HTMLButtonElement>, id:Number) => {
     e.preventDefault();
     const div = document.getElementById(String(id))
     div?.remove()
@@ -144,6 +144,13 @@ export default function Profile() {
   const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, id:Number) => {
     e.preventDefault();
     router.push(`/profile/add/event/${id}`);
+  }
+
+  const routeToTimeline = (e:React.MouseEvent<HTMLButtonElement>, name:String, id:Number) => {
+    e.preventDefault();
+
+    name = name.toLowerCase();
+    router.push(`/timeline/${name}/${id}`);
   }
 
   // Return an empty page, just displaying the header and footer.
@@ -158,7 +165,7 @@ export default function Profile() {
           <div id={String(pet.id)} className={styles.card} key={pet.id}>
             <form key={index}>
             <div className={styles.iconGroup}>
-              <Button icon={true} onClick={(e) => handleRemove(e, pet.id)}>
+              <Button icon={true} onClick={(e) => handleRemovePet(e, pet.id)}>
                 <FontAwesomeIcon icon={faXmark}/>
               </Button>
               <Button icon={true} onClick={(e) => handleAddEvent(e, pet.id)}>
@@ -201,6 +208,11 @@ export default function Profile() {
                 onChange={handleChange}
                 data-index={index}
               />
+              <div className={styles.arrow}>
+              <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)}>
+                <FontAwesomeIcon icon={faArrowRight}/>
+              </Button>
+              </div>
             </form>
           </div>
         ))}

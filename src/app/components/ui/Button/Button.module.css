@@ -44,8 +44,8 @@
 }
 
 .icon:hover {
-  /* transform: scale(1.2) */
-  transform: rotate(180deg);
+  transform: scale(1.2)
+  /* transform: rotate(180deg); */
 }
 
 .button,

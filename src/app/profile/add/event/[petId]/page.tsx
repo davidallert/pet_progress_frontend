@@ -48,7 +48,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
   const addEvent = async (formData: FormData) => {
     try {
       setLoadingAdd(true);
-      const response = await axios.post('/api/add/event', formData, {
+      const response = await axios.post('/api/event/add', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
       console.log(response);
