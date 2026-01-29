@@ -60,7 +60,6 @@ export default function Profile() {
     try {
       setLoadingSave(true);
       const data = {pets: pets};
-      console.log(data);
       const response = await axios.post('/api/upsert/pet', data);
       setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
     } catch (error) {
@@ -91,6 +90,7 @@ export default function Profile() {
   const removePet = async (id:Number) => {
     try {
       const response = await axios.post('/api/remove/pet', {id: id});
+      console.log(pets);
       setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
@@ -121,7 +121,7 @@ export default function Profile() {
 
     setPets(prev => {
       const updatedPets = [...prev];
-      updatedPets[index] = { ...updatedPets[index], [name] : value } // Need to use brackets around name when inserting a variable dynamically.
+      updatedPets[index] = { ...updatedPets[index], [name] : value } // Use brackets around e.g. "name" when inserting a variable dynamically.
       return updatedPets;
     })
   };
