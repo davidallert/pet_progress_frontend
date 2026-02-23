@@ -1,3 +1,8 @@
+/* https://ibelick.com/blog/create-grainy-backgrounds-with-css */
+/* https://frontendmasters.com/blog/grainy-gradients/ */
+/* https://www.freepik.com/free-photos-vectors/grainy-gradient-abstract-background#uuid=d7574a06-aeb0-46cb-a509-4d7c4fd17a39 */
+/* https://www.svgbackgrounds.com/elements/svg-shapes-geometric/ */
+
 .main {
   display: flex;
   flex-direction: column;
@@ -9,10 +14,10 @@
   /* background: #ffffff; */
 }
 
-.bg {
+/* .bg {
   background: #EEAECA;
   background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-}
+} */
 
 .loading {
   justify-content: center;
@@ -36,23 +41,65 @@
   opacity: 1;
 }
 
-.timelineStart {
-  margin: 0 auto 10dvh;
+/* .timelineStart {
+  margin: 0 auto 30dvh;
   background-color: var(--light);
   padding: 1dvw;
-  border-radius: 5;
+  border-radius: var(--radius);
   text-align: center;
+} */
+
+.timelineStart {
+  margin: auto auto 20dvh auto;
+  display: flex;
+  justify-content: space-between;
+  width: 70dvw;
+}
+
+.timelineStartText {
+  font-size: 4dvw;
+  word-wrap: break-word;
+  overflow: hidden;
+  width: 30dvw;
+}
+
+.timelineStartTextLeft {
+  text-align: left;
+}
+
+.timelineStartTextRight {
+  text-align: right;
+}
+
+.timelineStartIconLeft {
+  position: absolute;
+  top: -6dvw;
+  left: -6dvw;
+  width: 30dvw;
+  transform: rotate(211deg);
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.timelineStartIconRight {
+  position: absolute;
+  top: -26dvw;
+  right: -23dvw;
+  width: 48dvw;
+  transform: rotate(211deg);
+  opacity: 0.3;
+  z-index: -1;
 }
 
 .event {
   position: relative;
-  /* background-color: var(--light); */
-  background-color: var(--white);
+  margin-top: -2dvh;
+  background-color: var(--light);
+  /* background-color: var(--white); */
   padding: 2dvw;
-  margin-bottom: 5dvh;
   width: 30dvw;
   min-height: 10dvh;
-  border-radius: 5;
+  border-radius: var(--radius);
 }
 
 .left {
@@ -67,18 +114,18 @@
 
 .date {
   position: absolute;
-  font-size: x-large;
+  font-size: xx-large;
 }
 
 .left .date {
   top: 50%;
-  right: -12dvw;
+  right: -15dvw;
   transform: translateY(-50%);
 }
 
 .right .date {
   top: 50%;
-  left: -12dvw;
+  left: -15dvw;
   transform: translateY(-50%);
 }
 
@@ -91,7 +138,8 @@
   height: 0;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
-  border-left: 15px solid var(--white);
+  border-left: 15px solid var(--light);
+  /* border-left: 15px solid var(--white); */
   content: "";
   transform: translateY(-50%);
 }
@@ -105,7 +153,8 @@
   height: 0;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
-  border-right: 15px solid var(--white);
+  border-right: 15px solid var(--light);
+  /* border-right: 15px solid var(--white); */
   content: "";
   transform: translateY(-50%);
 }
@@ -113,8 +162,8 @@
 .icon {
   position: fixed;
   top: 50%;
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   border-radius: 100%;
   background-color: var(--foreground);
   transform: translateY(-50%);
@@ -122,7 +171,7 @@
   justify-content: center;
   align-items: center;
   color: var(--white);
-  font-size: 1.5dvw;
+  font-size: 2dvw;
   transition-duration: 0.5s;
   opacity: 1;
 }

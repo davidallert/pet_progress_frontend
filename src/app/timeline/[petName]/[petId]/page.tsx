@@ -132,13 +132,22 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
     <main id="main" className={`${styles.main} ${styles.bg}`}>
       <section className={styles.timelineWrapper} aria-label="Timeline section">
         <div id="timelineBar" className={`${stable ? styles.timelineBar : styles.hidden}`}></div>
-
-        <div className={styles.timelineStart}>
+        {/* <div className={styles.timelineStart}>
           <h1>Timeline</h1>
           <div aria-label="First timeline event">
             <h2>{petName.charAt(0).toUpperCase() + petName.slice(1)}'s birthday</h2>
             <h3>2023-12-24</h3>
           </div>
+        </div> */}
+        <div className={`${styles.timelineStart}`}>
+            <h1 className={`${styles.timelineStartText} ${styles.timelineStartTextLeft}`}>{petName.charAt(0).toUpperCase() + petName.slice(1)} 🐶</h1>
+            <svg className={styles.timelineStartIconLeft} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
+              <path d="M320 0v240a160 160 0 1 0-320 0v240h160V240a160 160 0 1 0 320 0V0H320Z" fill="#808"></path>
+            </svg>
+          <h1 className={`${styles.timelineStartText} ${styles.timelineStartTextRight}`}>2023-12-24 🥳</h1>
+          <svg className={styles.timelineStartIconRight} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
+            <path d="M240 0a240 240 0 1 0 0 480 240 240 0 0 0 0-480Zm0 360a120 120 0 1 1 0-240 120 120 0 0 1 0 240Z" fill="#808"></path>
+          </svg>
         </div>
         {events.map((event, index) =>
         <div className={`${index % 2 === 0 ? styles.left : styles.right} ${styles.event}`} aria-label="Timeline event" key={event.id}>
