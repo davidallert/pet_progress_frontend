@@ -102,6 +102,12 @@
   border-radius: var(--radius);
 }
 
+.eventImage {
+  border-radius: var(--radius);
+  max-width: 100%;
+  height: auto;
+}
+
 .left {
   text-align: left;
   margin-right: 40dvw;

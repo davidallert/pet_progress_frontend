@@ -39,8 +39,8 @@
 
 .iconGroup {
   position: absolute;
-  top: 1dvh;
-  right: 1dvh;
+  top: 2dvh;
+  right: 2dvh;
   display: flex;
   flex-direction: row;
   justify-content: flex;
@@ -48,6 +48,6 @@
 
 .arrow {
   position: absolute;
-  bottom: 1dvh;
-  right: 1dvh;
+  bottom: 2dvh;
+  right: 2dvh;
 }

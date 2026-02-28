@@ -3,15 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --light: #f4f4f4;
-  --main: #435b8f; /* Original blue: #203561 */
-  --accent: #e1deda;
+  --light: #f4f4f4; /* Default light gray: #f4f4f4 */
+  --main: #bca3ff; /* Original blue: #203561, #435b8f */
+  --accent: #e1deda; /* Prev greige: #e1deda */
   --complement: #3B2061; /* Original purple: #3B2061 */
   --white: #fff;
   --error: #DEA6A8;
   --warning: #DED2A6;
 
-  --radius: 5px;
+  --radius: 50px;
 }
 
 /* @media (prefers-color-scheme: dark) {

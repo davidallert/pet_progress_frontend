@@ -5,56 +5,21 @@ import formStyles from '../components/forms/form.module.css'
 import axios from '../libraries/axios';
 import { AxiosError } from 'axios';
 import { useEffect, useState, useContext } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import PopupContext from '@/app/context/popup/context';
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter, faXmark, faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
+import { getUserData } from '../hooks/getUserData';
+
 export default function Profile() {
-  interface User {
-    id: number,
-    name: string,
-    email: string,
-    email_verified_at: null,
-    created_at: null,
-    updated_at: null
-  }
-
-  interface Pets {
-    id: number,
-    user_id: number,
-    name: string,
-    birthday: string,
-    species: string,
-    breed: string,
-  }
-
-  const [user, setUser] = useState<User | null>(null);
   const { setPopup } = useContext(PopupContext);
-  const [pets, setPets] = useState<Array<Pets>>([]);
-  const router = useRouter()
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get('/api/user/data', { withCredentials: true });
-        setUser(response.data.user);
-        setPets(response.data.pets);
-        setLoading(false);
-      }
-      catch (e) {
-        if (e instanceof(AxiosError)) {
-          setPopup({messages: [e.response?.data?.message + "."], type: 'error', isVisible: true})
-        }
-        router.push('/');
-      }
-    }
-    getUser()
-  }, [])
+  const { user, pets, setPets } = getUserData(router, setLoading, setPopup);
 
   const savePets = async () => {
     try {
@@ -165,11 +130,11 @@ export default function Profile() {
           <div id={String(pet.id)} className={styles.card} key={pet.id}>
             <form key={index}>
             <div className={styles.iconGroup}>
-              <Button icon={true} onClick={(e) => handleRemovePet(e, pet.id)}>
-                <FontAwesomeIcon icon={faXmark}/>
-              </Button>
               <Button icon={true} onClick={(e) => handleAddEvent(e, pet.id)}>
                 <FontAwesomeIcon icon={faPlus}/>
+              </Button>
+              <Button icon={true} onClick={(e) => handleRemovePet(e, pet.id)}>
+                <FontAwesomeIcon icon={faXmark}/>
               </Button>
             </div>
             <label className={formStyles.formLabel} htmlFor="name">Name</label>
@@ -202,7 +167,7 @@ export default function Profile() {
             <label className={formStyles.formLabel} htmlFor="birthday">Birthday</label>
               <Input
                 id="birthday"
-                type="text"
+                type="date"
                 name="birthday"
                 value={pet.birthday}
                 onChange={handleChange}

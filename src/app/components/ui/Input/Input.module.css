@@ -3,11 +3,15 @@
   padding: 4%;
   margin: 0 0 5% 0;
   font-size: larger;
-  border-radius: var(--radius);
   transition-duration: 0.3s;
   animation-name: autofillFix;
   animation-fill-mode: both;
   background-color: var(--light);
+  /* border-radius: var(--radius); */
+  border-top-left-radius: calc(var(--radius) / 2);
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: calc(var(--radius) / 2);
+  border-bottom-left-radius: var(--radius);
 }
 
 .submit {

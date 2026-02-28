@@ -27,9 +27,8 @@
 .formLabel {
   display: block;
   width: 100%;
-}
-
-.formLabel {
+  padding: 0 2% 0.5%;
+  font-style: italic;
   margin: 0 0 1% 0;
   font-size: larger;
 }
