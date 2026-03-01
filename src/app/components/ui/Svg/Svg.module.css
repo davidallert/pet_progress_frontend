@@ -1,0 +1,67 @@
+.primary {
+  position: absolute;
+  z-index: -1;
+}
+
+.svg1 {
+  --rotation: 160deg;
+  transform: rotate(var(--rotation));
+
+  --height: 220%;
+  height: var(--height);
+
+  --width: 220%;
+  width: var(--width);
+
+  --top: -55%;
+  top: var(--top);
+
+  --left: -55%;
+  left: var(--left);
+}
+
+.svg2 {
+  --rotation: 9deg;
+  transform: rotate(var(--rotation));
+  left: -43%;
+
+  --height: 220%;
+  height: var(--height);
+
+  --width: 220%;
+  width: var(--width);
+
+  --top: -60%;
+  top: var(--top);
+
+  --left: -55%;
+  left: var(--left);
+}
+
+.svg3 {
+  --rotation: 166deg;
+  transform: rotate(var(--rotation));
+
+  --height: 200%;
+  height: var(--height);
+
+  --width: 200%;
+  width: var(--width);
+
+  --top: -50%;
+  top: var(--top);
+
+  --left: -43%;
+  left: var(--left);
+}
+
+.secondary {
+  position: absolute;
+  z-index: -2;
+  opacity: 0.5;
+  height: calc(var(--height) + 7.5%);
+  width: calc(var(--width) + 7.5%);
+  top: var(--top);
+  left: var(--left);
+  transform: rotate(calc(var(--rotation) + 10deg))
+}

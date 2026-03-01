@@ -6,12 +6,13 @@
   transition-duration: 0.3s;
   animation-name: autofillFix;
   animation-fill-mode: both;
-  background-color: var(--light);
+  background-color: var(--white);
   /* border-radius: var(--radius); */
   border-top-left-radius: calc(var(--radius) / 2);
   border-top-right-radius: var(--radius);
   border-bottom-right-radius: calc(var(--radius) / 2);
   border-bottom-left-radius: var(--radius);
+  filter: drop-shadow(1px 1px 10px #ffffff6b);
 }
 
 .submit {

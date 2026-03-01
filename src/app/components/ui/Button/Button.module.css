@@ -34,8 +34,8 @@
   /* top: 1dvh; */
   /* right: 1dvh; */
   cursor: pointer;
-  font-size: xx-large;
-  color: #fff;
+  font-size: 2dvw;
+  color: var(--white);
   transition: 0.2s;
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@
 }
 
 .icon:hover {
-  transform: scale(1.2)
+  transform: scale(1.2);
   /* transform: rotate(180deg); */
 }
 

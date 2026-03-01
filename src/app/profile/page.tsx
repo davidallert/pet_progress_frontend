@@ -1,16 +1,18 @@
 "use client";
-
+// BUG: Remove a pet -> Edit a pet -> Save pets.
+// The removed pet will not be removed properly, it will remain in the pets array and therefore upserted when save is clicked.
 import styles from "./page.module.css";
 import formStyles from '../components/forms/form.module.css'
 import axios from '../libraries/axios';
 import { AxiosError } from 'axios';
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, JSX } from "react";
 import { useRouter } from 'next/navigation';
 import PopupContext from '@/app/context/popup/context';
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import Svg from "../components/ui/Svg/Svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark, faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faOtter, faXmark, faPlus, faArrowRight, faTimeline, faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 
 import { getUserData } from '../hooks/getUserData';
 
@@ -123,20 +125,21 @@ export default function Profile() {
 
   return (
     <main className={styles.main}>
-      <h1>Welcome {user?.name}!</h1>
-      <h2>My Pets</h2>
+      <h1>{user?.name}'s pets!</h1>
       <section className={styles.cards}>
         {pets.map((pet, index) => (
           <div id={String(pet.id)} className={styles.card} key={pet.id}>
+            <Svg type="primary" index={index}/>
+            <Svg type="secondary" index={index}/>
             <form key={index}>
-            <div className={styles.iconGroup}>
-              <Button icon={true} onClick={(e) => handleAddEvent(e, pet.id)}>
-                <FontAwesomeIcon icon={faPlus}/>
-              </Button>
-              <Button icon={true} onClick={(e) => handleRemovePet(e, pet.id)}>
-                <FontAwesomeIcon icon={faXmark}/>
-              </Button>
-            </div>
+              <div className={styles.iconGroup}>
+                <Button icon={true} onClick={(e) => handleAddEvent(e, pet.id)}>
+                  <FontAwesomeIcon icon={faPlus}/>
+                </Button>
+                <Button icon={true} onClick={(e) => handleRemovePet(e, pet.id)}>
+                  <FontAwesomeIcon icon={faXmark}/>
+                </Button>
+              </div>
             <label className={formStyles.formLabel} htmlFor="name">Name</label>
               <Input
                 id="name"
@@ -175,7 +178,7 @@ export default function Profile() {
               />
               <div className={styles.arrow}>
               <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)}>
-                <FontAwesomeIcon icon={faArrowRight}/>
+                <FontAwesomeIcon icon={faBarsStaggered}/>
               </Button>
               </div>
             </form>

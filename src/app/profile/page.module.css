@@ -1,10 +1,14 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 1dvw;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* gap: 1dvw; */
   width: 100%;
   height: 100%;
+  min-height: 100dvh;
   padding: 5dvw;
+  overflow: hidden;
 }
 
 .loading {
@@ -19,14 +23,15 @@
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1dvw;
+  gap: 10dvw;
+  margin: 10dvh auto;
 }
 
 .card {
   position: relative;
-  width: 30%;
-  background-color: var(--accent);
-  padding: 2dvw;
+  width: 25%;
+  /* background-color: var(--accent); */
+  padding: 3dvw;
   border-radius: var(--radius);
 }
 
@@ -35,19 +40,23 @@
   display: flex;
   flex-direction: row;
   gap: 1dvw;
+  margin-top: 10dvh;
 }
 
 .iconGroup {
   position: absolute;
-  top: 2dvh;
-  right: 2dvh;
+  top: 3dvh;
+  right: -2dvh;
   display: flex;
   flex-direction: row;
   justify-content: flex;
+  gap: 1dvh;
+  transform: rotate(30deg);
 }
 
 .arrow {
   position: absolute;
-  bottom: 2dvh;
-  right: 2dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -1dvh;
 }
