@@ -22,6 +22,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
   const { user, pets, setPets } = getUserData(router, setLoading, setPopup);
+  console.log(pets)
 
   const savePets = async () => {
     try {
@@ -57,7 +58,7 @@ export default function Profile() {
   const removePet = async (id:Number) => {
     try {
       const response = await axios.post('/api/remove/pet', {id: id});
-      console.log(pets);
+      // console.log(pets);
       setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
@@ -140,6 +141,7 @@ export default function Profile() {
                   <FontAwesomeIcon icon={faXmark}/>
                 </Button>
               </div>
+            <img className={styles.avatar} src={pet.imagePath}></img>
             <label className={formStyles.formLabel} htmlFor="name">Name</label>
               <Input
                 id="name"

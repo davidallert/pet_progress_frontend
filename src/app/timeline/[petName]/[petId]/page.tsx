@@ -35,6 +35,8 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
   const { petName, petId } = React.use(params);
   const [stable, setStable] = useState(false);
 
+  // console.log(events)
+
   useEffect(() => {
     const getEvents = async () => {
       try {
@@ -151,13 +153,6 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
     <main id="main" className={`${styles.main} ${styles.bg}`}>
       <section className={styles.timelineWrapper} aria-label="Timeline section">
         <div id="timelineBar" className={`${stable ? styles.timelineBar : styles.hidden}`}></div>
-        {/* <div className={styles.timelineStart}>
-          <h1>Timeline</h1>
-          <div aria-label="First timeline event">
-            <h2>{petName.charAt(0).toUpperCase() + petName.slice(1)}'s birthday</h2>
-            <h3>2023-12-24</h3>
-          </div>
-        </div> */}
         <div className={`${styles.timelineStart}`}>
             <h1 className={`${styles.timelineStartText} ${styles.timelineStartTextLeft}`}>{petName.charAt(0).toUpperCase() + petName.slice(1)} 🐶</h1>
             <svg className={styles.timelineStartIconLeft} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">

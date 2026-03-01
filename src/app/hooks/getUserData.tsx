@@ -20,8 +20,9 @@ export const getUserData = (
 
   interface Pet {
     id: number,
-    user_id: number,
+    userId: number,
     name: string,
+    imagePath: string,
     birthday: string,
     species: string,
     breed: string,

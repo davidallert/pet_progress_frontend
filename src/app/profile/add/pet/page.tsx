@@ -20,6 +20,7 @@ export default function Pet() {
   const [form, setForm] = useState({
     user_id: '',
     name: '',
+    image: null as File | null,
     species: '',
     breed: '',
     birthday: ''
@@ -42,10 +43,12 @@ export default function Pet() {
     getUser();
   }, []);
 
-  const addPet = async () => {
+  const addPet = async (formData: FormData) => {
     try {
       setLoadingAdd(true);
-      const response = await axios.post('/api/add/pet', form);
+      const response = await axios.post('/api/add/pet', formData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
       console.log(response);
       router.push('/profile')
     } catch (error) {
@@ -75,11 +78,26 @@ export default function Pet() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await addPet();
+
+      console.log(form);
+
+      const formData = new FormData();
+      formData.append('user_id', form.user_id);
+      formData.append('name', form.name);
+      if (form.image) formData.append('image', form.image);
+      formData.append('species', form.species);
+      formData.append('breed', form.breed);
+      formData.append('birthday', form.birthday);
+
+      await addPet(formData);
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({...form, [e.target.name]: e.target.value})
+    if (e.target.type === 'file') {
+      setForm({...form, [e.target.name]: e.target.files?.[0] || null});
+    } else {
+    setForm({...form, [e.target.name]: e.target.value});
+    }
   };
 
   // Return an empty page, just displaying the header and footer.
@@ -87,7 +105,7 @@ export default function Pet() {
 
   return (
     <main className={styles.main}>
-        <form className={formStyles.form} onSubmit={handleSubmit}>
+        <form className={formStyles.form} onSubmit={handleSubmit} encType="multipart/form-data">
         <fieldset className={formStyles.formFieldset}>
           <legend className={formStyles.formLegend}>Add New Pet</legend>
           <label className={formStyles.formLabel} htmlFor="name">Name</label>
@@ -96,6 +114,13 @@ export default function Pet() {
               type="text"
               name="name"
               value={form.name}
+              onChange={handleChange}
+            />
+          <label className={formStyles.formLabel} htmlFor="image">Avatar</label>
+            <Input
+              id="image"
+              type="file"
+              name="image"
               onChange={handleChange}
             />
           <label className={formStyles.formLabel} htmlFor="species">Species</label>

@@ -90,8 +90,8 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
       formData.append('type', form.type);
       formData.append('date', form.date);
 
-      console.log('FormData image:', formData.get('image'));
-      console.log('FormData entries:', Array.from(formData.entries()));
+      // console.log('FormData image:', formData.get('image'));
+      // console.log('FormData entries:', Array.from(formData.entries()));
 
      await addEvent(formData);
   }
@@ -133,7 +133,6 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
               id="image"
               type="file"
               name="image"
-              // value={form.image}
               onChange={handleChange}
             />
           <label className={formStyles.formLabel} htmlFor="type">Type</label>
