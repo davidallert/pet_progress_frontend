@@ -23,7 +23,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10dvw;
+  gap: 30dvh 10dvw;
   margin: 10dvh auto;
 }
 
@@ -63,10 +63,11 @@
 
 .avatar {
   position: absolute;
-  top: -10dvh;
-  left: -3dvh;
-  width: 7dvw;
-  height: 7dvw;
+  top: -18dvh;
+  left: -8dvh;
+  width: 10dvw;
+  height: 10dvw;
   border-radius: 100%;
   object-fit: cover;
+  border: 1.5dvh solid var(--white);
 }
