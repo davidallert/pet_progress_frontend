@@ -45,7 +45,13 @@
 
 .icon:hover {
   transform: scale(1.2);
+
   /* transform: rotate(180deg); */
+}
+
+.icon:hover svg {
+  animation: spinPulse 1s infinite;
+  animation-timing-function: linear;
 }
 
 .button,
@@ -61,4 +67,36 @@
 .submit:hover {
   filter: drop-shadow(1px 1px 5px #c3c3c36b);
   transition-duration: 0.3s;
+}
+
+@keyframes spinPulse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.5);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.tt {
+  width: max-content;
+  position: absolute;
+  font-size: large;
+  background-color: var(--foreground);
+  top: -5dvh;
+  padding: 1dvh;
+  color: var(--light);
+  border-radius: var(--radius);
+  z-index: 5;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1300px) {
+  .icon {
+    font-size: x-large;
+  }
 }

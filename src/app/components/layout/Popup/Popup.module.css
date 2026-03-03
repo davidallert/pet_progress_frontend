@@ -16,22 +16,27 @@
 
 .popup {
   transition-duration: 0.3s;
-  width: 15dvw;
-  position: absolute;
+  /* width: 15dvw; */
+  width: max-content;
+  position: fixed;
   top: 0;
   right: 0;
   padding: 1dvw;
   color: #fff;
-  border-radius: 25px;
+  border-radius: var(--radius);
+  font-size: larger;
   margin: 1dvw;
+  z-index: 10;
 }
 
 .popupHidden {
   visibility: hidden;
   opacity: 0;
+  transform: scale(0);
 }
 
 .popupVisible {
   visibility: visible;
   opacity: 1;
+  transform: scale(1);
 }

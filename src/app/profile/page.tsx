@@ -134,10 +134,10 @@ export default function Profile() {
             <Svg type="secondary" index={index}/>
             <form key={index}>
               <div className={styles.iconGroup}>
-                <Button icon={true} onClick={(e) => handleAddEvent(e, pet.id)}>
+                <Button icon={true} tooltip="Add timeline event" onClick={(e) => handleAddEvent(e, pet.id)}>
                   <FontAwesomeIcon icon={faPlus}/>
                 </Button>
-                <Button icon={true} onClick={(e) => handleRemovePet(e, pet.id)}>
+                <Button icon={true} tooltip="Remove pet" onClick={(e) => handleRemovePet(e, pet.id)}>
                   <FontAwesomeIcon icon={faXmark}/>
                 </Button>
               </div>
@@ -178,7 +178,7 @@ export default function Profile() {
                 onChange={handleChange}
                 data-index={index}
               />
-              <div className={styles.arrow}>
+              <div className={styles.timelineIcon}>
               <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)}>
                 <FontAwesomeIcon icon={faBarsStaggered}/>
               </Button>

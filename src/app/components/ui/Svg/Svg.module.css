@@ -21,9 +21,8 @@
 }
 
 .svg2 {
-  --rotation: 9deg;
+  --rotation: 350deg;
   transform: rotate(var(--rotation));
-  left: -43%;
 
   --height: 220%;
   height: var(--height);
@@ -39,7 +38,7 @@
 }
 
 .svg3 {
-  --rotation: 166deg;
+  --rotation: 150deg;
   transform: rotate(var(--rotation));
 
   --height: 200%;
@@ -82,5 +81,12 @@
 
   100% {
     opacity: 0.5;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .primary,
+  .secondary {
+    visibility: hidden;
   }
 }
