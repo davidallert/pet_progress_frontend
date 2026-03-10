@@ -21,10 +21,10 @@
   position: fixed;
   top: 0;
   right: 0;
-  padding: 1dvw;
+  padding: 2dvh;
   color: #fff;
   border-radius: var(--radius);
-  font-size: larger;
+  font-size: medium;
   margin: 1dvw;
   z-index: 10;
 }

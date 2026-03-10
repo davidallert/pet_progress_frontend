@@ -8,6 +8,7 @@ import Footer from './components/layout/Footer';
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import TooltipProvider from "./context/tooltip/provider";
 config.autoAddCss = false
 
 const petrona = Petrona({
@@ -48,7 +49,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} ${petrona.variable} ${spaceGrotesk.variable}`}>
         <Header />
         <PopupProvider>
-          {children}
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
         </PopupProvider>
         <Footer />
       </body>

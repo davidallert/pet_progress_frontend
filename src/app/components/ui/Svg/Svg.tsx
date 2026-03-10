@@ -35,3 +35,5 @@ export default  function Svg({type, index}: Svg) {
     svg[index]
   )
 }
+
+// fb8181

@@ -7,22 +7,24 @@ import axios from '../libraries/axios';
 import { AxiosError } from 'axios';
 import { useEffect, useState, useContext, JSX } from "react";
 import { useRouter } from 'next/navigation';
+
 import PopupContext from '@/app/context/popup/context';
+
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Svg from "../components/ui/Svg/Svg";
+
+import { useUserData } from '../hooks/useUserData';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter, faXmark, faPlus, faArrowRight, faTimeline, faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
-
-import { getUserData } from '../hooks/getUserData';
 
 export default function Profile() {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
-  const { user, pets, setPets } = getUserData(router, setLoading, setPopup);
-  console.log(pets)
+  const { user, pets, setPets } = useUserData(router, setLoading, setPopup);
 
   const savePets = async () => {
     try {
@@ -134,10 +136,10 @@ export default function Profile() {
             <Svg type="secondary" index={index}/>
             <form key={index}>
               <div className={styles.iconGroup}>
-                <Button icon={true} tooltip="Add timeline event" onClick={(e) => handleAddEvent(e, pet.id)}>
+                <Button icon={true} animation="spinPulse" tooltip="Add timeline event" onClick={(e) => handleAddEvent(e, pet.id)}>
                   <FontAwesomeIcon icon={faPlus}/>
                 </Button>
-                <Button icon={true} tooltip="Remove pet" onClick={(e) => handleRemovePet(e, pet.id)}>
+                <Button icon={true} animation="spinPulseReverse" tooltip="Remove pet" onClick={(e) => handleRemovePet(e, pet.id)}>
                   <FontAwesomeIcon icon={faXmark}/>
                 </Button>
               </div>
@@ -179,7 +181,7 @@ export default function Profile() {
                 data-index={index}
               />
               <div className={styles.timelineIcon}>
-              <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)}>
+              <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)} tooltip={`View ${pet.name}'s timeline`}>
                 <FontAwesomeIcon icon={faBarsStaggered}/>
               </Button>
               </div>
@@ -189,11 +191,11 @@ export default function Profile() {
       </section>
       <section className={styles.buttonGroup}>
         {pets.length > 0 &&
-          <Button type="submit" onClick={handleSave} loading={loadingSave}>
+          <Button type="submit" onClick={handleSave} loading={loadingSave} tooltip="Save all pets">
             Save
           </Button>
         }
-        <Button type="submit" onClick={handleAdd}>
+        <Button type="submit" onClick={handleAdd} tooltip="Add a new pet">
           Add
         </Button>
       </section>

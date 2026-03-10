@@ -1,76 +1,55 @@
 import styles from './Button.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOtter } from '@fortawesome/free-solid-svg-icons'
+import TooltipContext from '@/app/context/tooltip/context'
+import { useContext, useEffect } from 'react'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
   icon?: boolean
   tooltip?: string
+  animation?: string
 }
 
-export default function Button({loading=false, icon=false, tooltip= "", children, ...props}: ButtonProps) {
+export default function Button({loading=false, icon=false, animation="", tooltip= "", children, ...props}: ButtonProps) {
+  const { setTooltip } = useContext(TooltipContext);
 
-  /**
-   * Create a tooltip element on hover if the tooltip prop is populated.
-   */
-  const handleMouseEnter = (e: any) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (tooltip) {
-      const tt = document.createElement("div");
-
-      tt.className = styles.tt;
-      tt.id = "tt";
-      tt.innerText = tooltip;
-
-      e.target.parentElement.append(tt);
-
-      // const rotation = getRotation(tt);
-
-      // tt.style.transform = `rotate(${rotation}deg)`;
+      const x = e.pageX;
+      const y = e.pageY;
+      setTooltip({text: tooltip, isVisible: true, x: x, y: y});
     }
+
+  }
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const x = e.pageX;
+    const y = e.pageY;
+    setTooltip({text: '', isVisible: false, x: x, y: y});
   }
 
-  const handleMouseLeave = () => {
-    const tt = document.getElementById("tt");
-    tt?.remove();
-  }
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setTooltip(prev => ({ ...prev, isVisible: false }));
 
-  /**
-   * Recursively get the rotal rotation of any parent elements.
-   * Inverse that rotation in order to align the tooltip correctly.
-   * Issue: doesn't center the tooltip directly over the button. Deactivating for now.
-   */
-  // const getRotation = (element: HTMLElement  | null): number => {
-  //   let totalRotation = 0;
-
-  //   while (element) {
-  //     const transform = window.getComputedStyle(element).transform;
-
-  //     if (transform && transform !== 'none' && transform !== 'matrix(1, 0, 0, 1, 0, 0)') {
-  //       const matrix = new DOMMatrix(transform);
-  //       const rotation = Math.atan2(matrix.b, matrix.a) * (180 / Math.PI);
-  //       totalRotation += rotation;
-  //     }
-
-  //     element = element.parentElement;
-  //   }
-
-  //   const inverseRotation = totalRotation * -1;
-
-  //   return inverseRotation;
-  // }
+    if (props.onClick) {
+      props.onClick(e);
+    }
+  };
 
   const className = [
     icon ? styles.icon : styles.button,
+    animation ? styles[animation] : '',
     props.type === 'submit' ? styles.submit : ''
   ].join(' ').trim();
 
   return (
     <button
+      {...props}
+      onClick={handleClick}
       onMouseEnter={(e) => handleMouseEnter(e)}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={(e) => handleMouseLeave(e)}
       className={className}
       disabled={loading}
-      {...props}
       >
       {loading ? <FontAwesomeIcon icon={faOtter} spinPulse/> : children}
     </button>

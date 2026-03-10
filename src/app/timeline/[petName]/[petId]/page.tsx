@@ -8,6 +8,7 @@ import { AxiosError } from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter } from '@fortawesome/free-solid-svg-icons';
 
+
   interface Events {
     id: number,
     petId: number,
@@ -156,11 +157,11 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
         <div className={`${styles.timelineStart}`}>
             <h1 className={`${styles.timelineStartText} ${styles.timelineStartTextLeft}`}>{petName.charAt(0).toUpperCase() + petName.slice(1)} 🐶</h1>
             <svg className={styles.timelineStartIconLeft} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-              <path d="M320 0v240a160 160 0 1 0-320 0v240h160V240a160 160 0 1 0 320 0V0H320Z" fill="#808"></path>
+              <path d="M320 0v240a160 160 0 1 0-320 0v240h160V240a160 160 0 1 0 320 0V0H320Z" fill="#9d7aff"></path>
             </svg>
           <h1 className={`${styles.timelineStartText} ${styles.timelineStartTextRight}`}>{pet?.birthday} 🥳</h1>
           <svg className={styles.timelineStartIconRight} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-            <path d="M240 0a240 240 0 1 0 0 480 240 240 0 0 0 0-480Zm0 360a120 120 0 1 1 0-240 120 120 0 0 1 0 240Z" fill="#808"></path>
+            <path d="M240 0a240 240 0 1 0 0 480 240 240 0 0 0 0-480Zm0 360a120 120 0 1 1 0-240 120 120 0 0 1 0 240Z" fill="#A7F0BA"></path>
           </svg>
         </div>
         {events.map((event, index) =>

@@ -1,0 +1,25 @@
+.tooltip {
+  transition-duration: 0.3s;
+  width: max-content;
+  min-width: 100px;
+  position: absolute;
+  font-size: large;
+  background-color: var(--foreground);
+  padding: 1dvh;
+  color: var(--light);
+  border-radius: var(--radius);
+  z-index: 10;
+  text-align: center;
+}
+
+.tooltipHidden {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.tooltipVisible {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}

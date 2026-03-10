@@ -36,3 +36,9 @@
 .form input {
   background-color: var(--light) !important;
 }
+
+@media screen and (max-width: 1080px) {
+  .form {
+    width: 80%;
+  }
+}

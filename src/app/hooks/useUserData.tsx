@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import type { PopupState } from '@/app/context/popup/interface';
 
-export const getUserData = (
+export const useUserData = (
     router: AppRouterInstance,
     setLoading: Dispatch<SetStateAction<boolean>>,
     setPopup: Dispatch<SetStateAction<PopupState>>
