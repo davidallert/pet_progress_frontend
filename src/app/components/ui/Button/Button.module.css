@@ -63,19 +63,6 @@
   transition-duration: 0.3s;
 }
 
-/* .tt {
-  width: max-content;
-  position: absolute;
-  font-size: large;
-  background-color: var(--foreground);
-  top: -5dvh;
-  padding: 1dvh;
-  color: var(--light);
-  border-radius: var(--radius);
-  z-index: 5;
-  text-align: center;
-} */
-
 .spinPulse:hover {
   animation: spinPulse 1s infinite;
   animation-timing-function: linear;
@@ -87,7 +74,7 @@
   }
   50% {
     transform: rotate(180deg) scale(1.5);
-    color: var(--turquoise);
+    /* color: var(--foreground); */
   }
 
   100% {
@@ -106,7 +93,7 @@
   }
   50% {
     transform: rotate(-180deg) scale(1.5);
-    color: var(--orange);
+    color: var(--foreground);
   }
 
   100% {

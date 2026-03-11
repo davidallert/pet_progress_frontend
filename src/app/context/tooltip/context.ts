@@ -5,9 +5,7 @@ import { TooltipState, TooltipContextType } from "./interface";
 
 export const defaultTooltipState: TooltipState = {
   text: '',
-  isVisible: false,
-  x: 0,
-  y: 0
+  isVisible: false
 };
 
 const TooltipContext = createContext<TooltipContextType>({

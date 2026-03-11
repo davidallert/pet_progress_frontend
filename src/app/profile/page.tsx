@@ -134,7 +134,7 @@ export default function Profile() {
           <div id={String(pet.id)} className={styles.card} key={pet.id}>
             <Svg type="primary" index={index}/>
             <Svg type="secondary" index={index}/>
-            <form key={index}>
+            <form className={styles.form} key={index}>
               <div className={styles.iconGroup}>
                 <Button icon={true} animation="spinPulse" tooltip="Add timeline event" onClick={(e) => handleAddEvent(e, pet.id)}>
                   <FontAwesomeIcon icon={faPlus}/>
@@ -191,7 +191,7 @@ export default function Profile() {
       </section>
       <section className={styles.buttonGroup}>
         {pets.length > 0 &&
-          <Button type="submit" onClick={handleSave} loading={loadingSave} tooltip="Save all pets">
+          <Button type="submit" onClick={handleSave} loading={loadingSave} tooltip="Update all pets">
             Save
           </Button>
         }

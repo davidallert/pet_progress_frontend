@@ -123,7 +123,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
           <label className={formStyles.formLabel} htmlFor="description">Description</label>
             <Input
               id="description"
-              type="text"
+              type="textarea"
               name="description"
               value={form.description}
               onChange={handleChange}

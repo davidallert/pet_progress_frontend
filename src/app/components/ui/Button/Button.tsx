@@ -16,16 +16,11 @@ export default function Button({loading=false, icon=false, animation="", tooltip
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (tooltip) {
-      const x = e.pageX;
-      const y = e.pageY;
-      setTooltip({text: tooltip, isVisible: true, x: x, y: y});
+      setTooltip({text: tooltip, isVisible: true});
     }
-
   }
   const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const x = e.pageX;
-    const y = e.pageY;
-    setTooltip({text: '', isVisible: false, x: x, y: y});
+    setTooltip({text: '', isVisible: false});
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {

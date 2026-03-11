@@ -33,7 +33,8 @@
   font-size: larger;
 }
 
-.form input {
+.form input,
+.form textarea {
   background-color: var(--light) !important;
 }
 

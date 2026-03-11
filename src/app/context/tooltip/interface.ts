@@ -1,8 +1,6 @@
 interface TooltipState {
   text: string;
   isVisible: boolean;
-  x: number;
-  y: number;
 }
 
 interface TooltipContextType {

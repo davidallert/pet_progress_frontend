@@ -23,17 +23,17 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 30dvh 10dvw;
+  gap: 20dvw;
   margin: 10dvh auto;
 }
 
 .card {
   position: relative;
-  /* width: 25%; */
   width: auto;
+  min-width: 30%;
   /* background-color: transparent !important; */
   padding: 4dvw;
-  font-size: larger;
+  font-size: large;
   border-radius: var(--radius);
 }
 

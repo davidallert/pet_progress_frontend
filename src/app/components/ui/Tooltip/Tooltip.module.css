@@ -1,5 +1,6 @@
 .tooltip {
   transition-duration: 0.3s;
+  transition-property: transform, visibility, opacity;
   width: max-content;
   min-width: 100px;
   position: absolute;
