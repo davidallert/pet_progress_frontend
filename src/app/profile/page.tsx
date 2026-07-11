@@ -17,7 +17,7 @@ import Svg from "../components/ui/Svg/Svg";
 import { useUserData } from '../hooks/useUserData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark, faPlus, faArrowRight, faTimeline, faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
+import { faOtter, faXmark, faPlus, faArrowRight, faAngleDown, faAngleUp, faTimeline, faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 
 export default function Profile() {
   const { setPopup } = useContext(PopupContext);
@@ -25,6 +25,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
   const { user, pets, setPets } = useUserData(router, setLoading, setPopup);
+  const [expandedRowId, setExpandedRowId] = useState<Number | null>(0);
 
   const savePets = async () => {
     try {
@@ -123,6 +124,11 @@ export default function Profile() {
     router.push(`/timeline/${name}/${id}`);
   }
 
+  const toggleExpand = (id:Number) => {
+    console.log(id)
+    id === expandedRowId ? setExpandedRowId(null) : setExpandedRowId(id);
+  }
+
   // Return an empty page, just displaying the header and footer.
   if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
@@ -131,61 +137,81 @@ export default function Profile() {
       <h1>{user?.name}'s pets!</h1>
       <section className={styles.cards}>
         {pets.map((pet, index) => (
-          <div id={String(pet.id)} className={styles.card} key={pet.id}>
-            <Svg type="primary" index={index}/>
-            <Svg type="secondary" index={index}/>
-            <form className={styles.form} key={index}>
-              <div className={styles.iconGroup}>
-                <Button icon={true} animation="spinPulse" tooltip="Add timeline event" onClick={(e) => handleAddEvent(e, pet.id)}>
-                  <FontAwesomeIcon icon={faPlus}/>
-                </Button>
-                <Button icon={true} animation="spinPulseReverse" tooltip="Remove pet" onClick={(e) => handleRemovePet(e, pet.id)}>
-                  <FontAwesomeIcon icon={faXmark}/>
-                </Button>
-              </div>
-            <img className={styles.avatar} src={pet.imagePath}></img>
-            <label className={formStyles.formLabel} htmlFor="name">Name</label>
-              <Input
-                id="name"
-                type="text"
-                name="name"
-                value={pet.name}
-                onChange={handleChange}
-                data-index={index}
-              />
-            <label className={formStyles.formLabel} htmlFor="species">Species</label>
-              <Input
-                id="species"
-                type="text"
-                name="species"
-                value={pet.species}
-                onChange={handleChange}
-                data-index={index}
-              />
-            <label className={formStyles.formLabel} htmlFor="breed">Breed</label>
-              <Input
-                id="breed"
-                type="text"
-                name="breed"
-                value={pet.breed}
-                onChange={handleChange}
-                data-index={index}
-              />
-            <label className={formStyles.formLabel} htmlFor="birthday">Birthday</label>
-              <Input
-                id="birthday"
-                type="date"
-                name="birthday"
-                value={pet.birthday}
-                onChange={handleChange}
-                data-index={index}
-              />
-              <div className={styles.timelineIcon}>
-              <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)} tooltip={`View ${pet.name}'s timeline`}>
-                <FontAwesomeIcon icon={faBarsStaggered}/>
+          expandedRowId === index ? (
+          <div className={styles.expandedRow} key={pet.id} id={String(pet.id)}>
+            <div className={styles.toggleCollapseBtn}>
+              <Button icon={true} onClick={(e) => toggleExpand(index)} tooltip={`Show/hide`} style={{color: "#000"}}>
+                <FontAwesomeIcon icon={faAngleUp}/>
               </Button>
-              </div>
-            </form>
+            </div>
+            <div className={styles.petCol}>
+            <div className={styles.card}>
+              <Svg type="primary" index={index}/>
+              <Svg type="secondary" index={index}/>
+              <form className={styles.form} key={index}>
+                <div className={styles.iconGroup}>
+                  <Button icon={true} animation="spinPulse" tooltip="Add timeline event" onClick={(e) => handleAddEvent(e, pet.id)}>
+                    <FontAwesomeIcon icon={faPlus}/>
+                  </Button>
+                  <Button icon={true} animation="spinPulseReverse" tooltip="Remove pet" onClick={(e) => handleRemovePet(e, pet.id)}>
+                    <FontAwesomeIcon icon={faXmark}/>
+                  </Button>
+                </div>
+              <img className={styles.avatar} src={pet.imagePath}></img>
+              <label className={formStyles.formLabel} htmlFor="name">Name</label>
+                <Input
+                  id="name"
+                  type="text"
+                  name="name"
+                  value={pet.name}
+                  onChange={handleChange}
+                  data-index={index}
+                />
+              <label className={formStyles.formLabel} htmlFor="species">Species</label>
+                <Input
+                  id="species"
+                  type="text"
+                  name="species"
+                  value={pet.species}
+                  onChange={handleChange}
+                  data-index={index}
+                />
+              <label className={formStyles.formLabel} htmlFor="breed">Breed</label>
+                <Input
+                  id="breed"
+                  type="text"
+                  name="breed"
+                  value={pet.breed}
+                  onChange={handleChange}
+                  data-index={index}
+                />
+              <label className={formStyles.formLabel} htmlFor="birthday">Birthday</label>
+                <Input
+                  id="birthday"
+                  type="date"
+                  name="birthday"
+                  value={pet.birthday}
+                  onChange={handleChange}
+                  data-index={index}
+                />
+                <div className={styles.timelineIcon}>
+                  <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)} tooltip={`View ${pet.name}'s timeline`}>
+                    <FontAwesomeIcon icon={faBarsStaggered}/>
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className={styles.eventCol}>eventCol</div>
+          </div>
+          ) : 
+          <div className={styles.collapsedRow} key={pet.id}>
+            {pet.name}
+            <div className={styles.toggleExpandBtn}>
+              <Button icon={true} onClick={(e) => toggleExpand(index)} tooltip={`Show/hide`} style={{color: "#000"}}>
+                <FontAwesomeIcon icon={faAngleDown}/>
+              </Button>
+            </div>
           </div>
         ))}
       </section>
@@ -195,7 +221,7 @@ export default function Profile() {
             Save
           </Button>
         }
-        <Button type="submit" onClick={handleAdd} tooltip="Add a new pet">
+        <Button type="submit" onClick={handleAdd} tooltip="Add new pet">
           Add
         </Button>
       </section>
