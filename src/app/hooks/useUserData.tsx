@@ -26,6 +26,15 @@ export const useUserData = (
     birthday: string,
     species: string,
     breed: string,
+    events: Array<{
+      date: string,
+      id: number,
+      petId: number,
+      title: string,
+      description: string,
+      imagePath: string
+      type: string,
+    }>
   }
 
   const [user, setUser] = useState<User | null>(null);
@@ -35,8 +44,9 @@ export const useUserData = (
     const getUser = async () => {
       try {
         const response = await axios.get('/api/user/data', { withCredentials: true });
+        console.log(response)
         setUser(response.data.user);
-        setPets(response.data.pets);
+        setPets(response.data.user.pets);
         setLoading(false);
       }
       catch (e) {

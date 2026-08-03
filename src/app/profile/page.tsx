@@ -25,7 +25,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
   const { user, pets, setPets } = useUserData(router, setLoading, setPopup);
-  const [expandedRowId, setExpandedRowId] = useState<Number | null>(0);
+  const [expandedRowId, setExpandedRowId] = useState<number | null>(0);
 
   const savePets = async () => {
     try {
@@ -105,28 +105,31 @@ export default function Profile() {
     router.push('/profile/add/pet');
   }
 
-  const handleRemovePet = (e:React.MouseEvent<HTMLButtonElement>, id:Number) => {
+  const handleRemovePet = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
     e.preventDefault();
     const div = document.getElementById(String(id))
     div?.remove()
     removePet(id);
   }
 
-  const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, id:Number) => {
+  const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
     e.preventDefault();
     router.push(`/profile/add/event/${id}`);
   }
 
-  const routeToTimeline = (e:React.MouseEvent<HTMLButtonElement>, name:String, id:Number) => {
+  const routeToTimeline = (e:React.MouseEvent<HTMLButtonElement>, name:string, id:number) => {
     e.preventDefault();
 
     name = name.toLowerCase();
     router.push(`/timeline/${name}/${id}`);
   }
 
-  const toggleExpand = (id:Number) => {
-    console.log(id)
-    id === expandedRowId ? setExpandedRowId(null) : setExpandedRowId(id);
+  const toggleExpand = (index: number, id: number) => {
+    index === expandedRowId ? setExpandedRowId(null) : setExpandedRowId(index);
+    
+    setTimeout(() => {
+      document.getElementById(id.toString())?.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }, 100);
   }
 
   // Return an empty page, just displaying the header and footer.
@@ -135,12 +138,12 @@ export default function Profile() {
   return (
     <main className={styles.main}>
       <h1>{user?.name}'s pets!</h1>
-      <section className={styles.cards}>
+      <section id="cards" className={styles.cards}>
         {pets.map((pet, index) => (
           expandedRowId === index ? (
           <div className={styles.expandedRow} key={pet.id} id={String(pet.id)}>
             <div className={styles.toggleCollapseBtn}>
-              <Button icon={true} onClick={(e) => toggleExpand(index)} tooltip={`Show/hide`} style={{color: "#000"}}>
+              <Button icon={true} onClick={(e) => toggleExpand(index, pet.id)} tooltip={`Show/hide`} style={{color: "#000"}}>
                 <FontAwesomeIcon icon={faAngleUp}/>
               </Button>
             </div>
@@ -202,13 +205,30 @@ export default function Profile() {
               </form>
             </div>
           </div>
-          <div className={styles.eventCol}>eventCol</div>
+          <div className={styles.eventCol}>
+            <h2>Events</h2>
+            <div className={styles.timeline}>
+             {pet.events.map((event, index) => (
+                <div className={styles.timeline} key={index}>
+                  <h3>{event.title}</h3>
+                  <h4><i>{event.date}</i></h4>
+                  {index < pet.events.length - 1 && (
+                    <div className={styles.dots}>
+                      <div className={styles.dot}></div>
+                      <div className={styles.dot}></div>
+                      <div className={styles.dot}></div>
+                    </div>
+                  )}
+                </div>
+              ))}
+              </div>
+          </div>
           </div>
           ) : 
-          <div className={styles.collapsedRow} key={pet.id}>
+          <div className={styles.collapsedRow} onClick={(e) => toggleExpand(index, pet.id)} key={pet.id}>
             {pet.name}
             <div className={styles.toggleExpandBtn}>
-              <Button icon={true} onClick={(e) => toggleExpand(index)} tooltip={`Show/hide`} style={{color: "#000"}}>
+              <Button icon={true} onClick={(e) => toggleExpand(index, pet.id)} tooltip={`Show/hide`} style={{color: "#000"}}>
                 <FontAwesomeIcon icon={faAngleDown}/>
               </Button>
             </div>

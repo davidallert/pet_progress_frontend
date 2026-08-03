@@ -61,9 +61,11 @@
 
 .eventCol {
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
-  border: 1px dotted black;
+  /* border: 1px dotted black; */
 }
 
 .card {
@@ -111,6 +113,27 @@
   object-fit: cover;
   border: 1.5dvh solid var(--white);
   /* z-index: 1; */
+}
+
+.timeline {
+  text-align: center;
+  margin: 10px;
+}
+
+.dots {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dot {
+  height: 5px;
+  width: 5px;
+  background-color: #2f2f2f;
+  border-radius: 100px;
 }
 
 /* @media only screen and (max-width: 1920px) {
