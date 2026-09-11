@@ -30,6 +30,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: row;
   margin: 10dvw;
 }
 
@@ -58,15 +59,6 @@
   display: flex;
   justify-content: center;
   flex: 1;
-}
-
-.eventCol {
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  /* border: 1px dotted black; */
 }
 
 .card {
@@ -116,25 +108,48 @@
   /* z-index: 1; */
 }
 
-.timeline {
-  text-align: center;
-  margin: 10px;
+.eventCol {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  /* align-items: center; */
+  flex: 1;
+  /* border: 1px dotted black; */
 }
 
-.dots {
-  margin: 10px;
+.event {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: flex-start; /* flex-start if left aligned */
+  align-items: center;
+}
+
+.timelineSection {
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
+  height: 100%;
+  margin-top: 10dvh;
 }
 
 .dot {
-  height: 5px;
-  width: 5px;
-  background-color: #2f2f2f;
-  border-radius: 100px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--foreground);
+  border-radius: 100%;
+}
+
+.timeline {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background-color: black;
+}
+
+.eventContent {
+  display: flex;
+  flex-direction: column;
 }
 
 /* @media only screen and (max-width: 1920px) {

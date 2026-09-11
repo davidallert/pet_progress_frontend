@@ -206,22 +206,23 @@ export default function Profile() {
             </div>
           </div>
           <div className={styles.eventCol}>
-            <h2>Events</h2>
-            <div className={styles.timeline}>
-             {pet.events.map((event, index) => (
-                <div className={styles.timeline} key={index}>
-                  <h3>{event.title}</h3>
-                  <h4><i>{event.date}</i></h4>
-                  {index < pet.events.length - 1 && (
-                    <div className={styles.dots}>
-                      <div className={styles.dot}></div>
-                      <div className={styles.dot}></div>
-                      <div className={styles.dot}></div>
+            <h2>Recent Events</h2>
+              {pet.events.map((event, index) => (
+                  <div className={styles.event} key={index}>
+                      <div className={styles.timelineSection}>
+                        <div className={styles.dot}></div>
+                        {index !== pet.events.length - 1 &&
+                        <div className={styles.timeline}></div>
+                        }
                     </div>
-                  )}
-                </div>
+                    <div><i className="fa-solid fa-paw"></i></div>
+                    <div className={styles.eventContent}>
+                      <h3>{event.title}</h3>
+                      <p>{event.description}</p>
+                      <h4><i>{event.date}</i></h4>
+                    </div>
+                  </div>
               ))}
-              </div>
           </div>
           </div>
           ) : 
