@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next"
 import PopupProvider from "./context/popup/provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
@@ -54,6 +55,7 @@ export default function RootLayout({
           </TooltipProvider>
         </PopupProvider>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
