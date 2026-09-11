@@ -209,13 +209,13 @@ export default function Profile() {
             <h2>Recent Events</h2>
               {pet.events.map((event, index) => (
                   <div className={styles.event} key={index}>
-                      <div className={styles.timelineSection}>
-                        <div className={styles.dot}></div>
-                        {index !== pet.events.length - 1 &&
+                    <div className={styles.timelineSection}>
+                      <div className={styles.dot}></div>
+                      {index !== pet.events.length - 1 &&
                         <div className={styles.timeline}></div>
-                        }
+                      }
                     </div>
-                    <div><i className="fa-solid fa-paw"></i></div>
+                    <div className={styles.eventIcon}><i className="fa-solid fa-paw"></i></div>
                     <div className={styles.eventContent}>
                       <h3>{event.title}</h3>
                       <p>{event.description}</p>

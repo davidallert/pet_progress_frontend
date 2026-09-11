@@ -112,9 +112,7 @@
   display: flex;
   justify-content: start;
   flex-direction: column;
-  /* align-items: center; */
   flex: 1;
-  /* border: 1px dotted black; */
 }
 
 .event {
@@ -130,7 +128,7 @@
   display: flex;
   justify-content: center;
   height: 100%;
-  margin-top: 10dvh;
+  margin-top: 15dvh;
 }
 
 .dot {
@@ -145,6 +143,14 @@
   width: 2px;
   height: 100%;
   background-color: black;
+}
+
+.eventIcon {
+  font-size: x-large;
+  background-color: var(--light);
+  padding: 10px;
+  border-radius: 100%;
+  color: var(--foreground);
 }
 
 .eventContent {
