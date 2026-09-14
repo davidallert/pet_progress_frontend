@@ -1,7 +1,7 @@
 "use client";
 
 import axios from '../libraries/axios';
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import { useEffect, useContext, useState } from "react";
 import { useRouter } from 'next/navigation'
 import PopupContext from '@/app/context/popup/context';
@@ -24,14 +24,16 @@ export default function Logout() {
         setPopup({messages: ["You are now logged out."], type: 'success', isVisible: true})
       }
       catch (e) {
-        if (e instanceof(AxiosError)) {
+        if (isAxiosError(e)) {
           if (e.response?.status !== 419) {
             setPopup({messages: [e.response?.data?.message + "."], type: 'error', isVisible: true})
           }
         }
       }
-      setLoading(false);
-      router.push('/');
+      finally {
+        setLoading(false);
+        router.replace('/'); // Replace doesn't add /logout to the browser's history (unlike push).
+      }
     }
     logout()
   }, []);

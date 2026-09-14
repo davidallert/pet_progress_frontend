@@ -14,18 +14,22 @@
   background-color: var(--accent);
 }
 
-.popup {
-  transition-duration: 0.3s;
-  /* width: 15dvw; */
-  width: max-content;
+.container {
   position: fixed;
   top: 0;
   right: 0;
-  padding: 2dvh;
-  color: #fff;
+  margin-top: 2dvw;
+}
+
+.popup {
+  transition-duration: 0.3s;
+  width: max-content;
+  position: relative;
+  padding: 15px;
+  color: var(--white);
   border-radius: var(--radius);
   font-size: medium;
-  margin: 1dvw;
+  margin: 10px 3dvw 0;
   z-index: 10;
 }
 

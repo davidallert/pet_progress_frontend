@@ -4,9 +4,11 @@ interface PopupState {
   isVisible: boolean;
 }
 
+type PopupInput = Omit<PopupState, "isVisible"> & Partial<Pick<PopupState, "isVisible">>;
+
 interface PopupContextType {
   popup: PopupState;
-  setPopup: React.Dispatch<React.SetStateAction<PopupState>>;
+  setPopup: (popup: PopupInput) => void;
 }
 
-export type { PopupState, PopupContextType }
+export type { PopupState, PopupInput, PopupContextType };

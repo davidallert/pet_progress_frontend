@@ -2,12 +2,12 @@ import { useEffect, useState, useContext, Dispatch, SetStateAction } from "react
 import axios from '../libraries/axios';
 import { AxiosError } from 'axios';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import type { PopupState } from '@/app/context/popup/interface';
+import type { PopupInput } from '@/app/context/popup/interface';
 
 export const useUserData = (
     router: AppRouterInstance,
     setLoading: Dispatch<SetStateAction<boolean>>,
-    setPopup: Dispatch<SetStateAction<PopupState>>
+    setPopup: (popup: PopupInput) => void
 ) => {
   interface User {
     id: number,

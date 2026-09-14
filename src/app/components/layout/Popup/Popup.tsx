@@ -9,13 +9,15 @@ export default function Popup() {
 
   return (
     <>
-      <div className={`
-        ${styles[popup.type]}
-        ${styles.popup}
-        ${popup.isVisible ? styles.popupVisible : styles.popupHidden}
-      `}>
+      <div className={styles.container}>
         {popup.messages.map((msg, index) => (
-          <p key={index}>{msg}<br /></p>
+          <div key={index} className={`
+            ${styles[popup.type]}
+            ${styles.popup}
+            ${popup.isVisible ? styles.popupVisible : styles.popupHidden}
+          `}>
+            <p>{msg}<br /></p>
+          </div>
         ))}
       </div>
   </>

@@ -1,8 +1,10 @@
 .button {
   width: 100%;
-  height: 2dvh;
+  /* height: 2dvh;
   padding: 4dvh;
-  margin: 0 0 5dvh 0;
+  margin: 0 0 5dvh 0; */
+  padding: 4%;
+  margin: 0 0 5% 0;
   font-size: larger;
   border-radius: var(--radius);
   transition-duration: 0.3s;
@@ -54,7 +56,7 @@
 }
 
 .submit:hover {
-  background-color: var(--accent);
+  background-color: var(--main-dark);
 }
 
 .button:hover,
@@ -74,7 +76,7 @@
   }
   50% {
     transform: rotate(180deg) scale(1.5);
-    /* color: var(--foreground); */
+    /* color: var(--success); */
   }
 
   100% {
@@ -93,7 +95,7 @@
   }
   50% {
     transform: rotate(-180deg) scale(1.5);
-    color: var(--foreground);
+    /* color: var(--warning); */
   }
 
   100% {

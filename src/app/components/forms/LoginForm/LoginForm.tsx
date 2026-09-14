@@ -1,5 +1,5 @@
 "use client";
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import axios from '../../../libraries/axios';
 import React, { FormEvent, useState, useContext } from 'react';
 import styles from '../form.module.css';
@@ -30,26 +30,26 @@ export default function LoginForm() {
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('/api/login', form);
       console.log('Success:', response.data.message);
-      setPopup({messages: [response.data.message], type: 'success', isVisible: true});
+      setPopup({messages: [response.data.message], type: 'success'});
       router.push('/profile');
-    } catch (error) {
-      if (error instanceof AxiosError) { // Handle Axios errors.
-        console.error('Error response:', error.response?.data);
-        console.error('Error status:', error.response?.status);
-        console.error('Error message:', error.message);
+    } catch (e) {
+      if (isAxiosError(e)) { // Handle Axios errors.
+        console.error('Error response:', e.response?.data);
+        console.error('Error status:', e.response?.status);
+        console.error('Error message:', e.message);
         let errorMessage: any = 'Something went wrong.';
 
         // Deal with the response from the server.
-        if (typeof(error.response?.data?.error) === "string") {
-          errorMessage = [error.response?.data?.error];
-        } else if (typeof(error.response?.data?.error)  === "object") {
-          errorMessage = Object.values(error.response?.data?.error);
+        if (typeof(e.response?.data?.error) === "string") {
+          errorMessage = [e.response?.data?.error];
+        } else if (typeof(e.response?.data?.error)  === "object") {
+          errorMessage = Object.values(e.response?.data?.error);
         }
 
         setPopup({messages: errorMessage, type: 'error', isVisible: true});
       } else {
         // Handle non-Axios errors.
-        console.error('Unexpected error:', error);
+        console.error('Unexpected error:', e);
         setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
       }
     } finally {
