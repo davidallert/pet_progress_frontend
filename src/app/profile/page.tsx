@@ -216,11 +216,13 @@ export default function Profile() {
                       }
                     </div>
                     <div className={styles.eventIcon}><i className="fa-solid fa-paw"></i></div>
-                    <div className={styles.eventContent}>
-                      <h3>{event.title}</h3>
-                      <p>{event.description}</p>
-                      <h4><i>{event.date}</i></h4>
-                    </div>
+                    <div className={styles.eventContentContainer}>
+                      <div className={styles.eventContent}>
+                          <h3>{event.title}</h3>
+                          <p>{event.description}</p>
+                      </div>
+                        <h4><i>{event.date}</i></h4>
+                      </div>
                   </div>
               ))}
           </div>

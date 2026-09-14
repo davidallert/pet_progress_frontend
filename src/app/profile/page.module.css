@@ -43,9 +43,12 @@
 
 .toggleCollapseBtn {
   position: absolute;
+  background-color: var(--light);
+  padding: 10px 5px;
+  border-radius: 100%;
   top: 0;
   right: 0;
-  border-bottom: 1px solid var(--foreground);
+  /* border-bottom: 1px solid var(--foreground); */
 }
 
 .toggleExpandBtn {
@@ -113,22 +116,33 @@
   justify-content: start;
   flex-direction: column;
   flex: 1;
+  z-index: -3;
+
 }
 
 .event {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  height: 100px;
   justify-content: flex-start; /* flex-start if left aligned */
   align-items: center;
+}
+
+.event:nth-child(odd) {
+  /* background-color: var(--light); */
+  background: #FFF;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(244, 244, 244, 1) 100%);
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
 }
 
 .timelineSection {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 100%;
-  margin-top: 15dvh;
 }
 
 .dot {
@@ -140,17 +154,26 @@
 
 .timeline {
   position: absolute;
+  transform: translateY(50%);
   width: 2px;
   height: 100%;
-  background-color: black;
+  background-color: var(--foreground);
 }
 
 .eventIcon {
   font-size: x-large;
-  background-color: var(--light);
+  background-color: var(--foreground);
   padding: 10px;
   border-radius: 100%;
-  color: var(--foreground);
+  color: var(--white);
+}
+
+.eventContentContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 80%;
 }
 
 .eventContent {
