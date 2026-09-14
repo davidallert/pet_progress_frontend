@@ -17,8 +17,10 @@ export default function Logout() {
   useEffect(() => {
     const logout = async () => {
       try {
-        const response = await axios.post('/api/logout', { withCredentials: true });
+        const response = await axios.post('/api/logout');
+
         console.log(response);
+
         setPopup({messages: ["You are now logged out."], type: 'success', isVisible: true})
       }
       catch (e) {
@@ -27,9 +29,9 @@ export default function Logout() {
             setPopup({messages: [e.response?.data?.message + "."], type: 'error', isVisible: true})
           }
         }
-        setLoading(false);
-        router.push('/');
       }
+      setLoading(false);
+      router.push('/');
     }
     logout()
   }, []);
