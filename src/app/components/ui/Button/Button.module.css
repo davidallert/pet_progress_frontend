@@ -105,6 +105,6 @@
 
 @media only screen and (max-width: 1300px) {
   .icon {
-    font-size: x-large;
+    font-size: 3dvw;
   }
 }
