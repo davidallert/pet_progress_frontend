@@ -102,14 +102,13 @@
 
 .avatar {
   position: absolute;
-  top: -160px;
-  left: -60px;
+  top: -10rem;
+  left: -2rem;
   width: 200px;
   height: 200px;
   border-radius: 100%;
   object-fit: cover;
   border: 1.5dvh solid var(--white);
-  /* z-index: 1; */
 }
 
 .eventCol {
@@ -211,11 +210,6 @@
     gap: 10dvh;
     margin: 20dvh 0 5dvh;
   }
-  
-  .avatar {
-    top: -190px;
-    left: -40px;
-  }
 
   .iconGroup {
     display: none;
@@ -246,19 +240,43 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-aspect-ratio: 2/1) {
+  .avatar {
+    width: 300px;
+    height: 300px;
+    top: -17rem;
+    /* left: -2rem; */
+  }
 }
 
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 768px) {
   .avatar {
-    width: 170px;
-    height: 170px;
-    top: -110px;
-    left: -50px;
+    z-index: -1;
   }
 
   .card {
     width: 75%;
     padding: 15%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .avatar {
+    top: -8.5rem;
+    left: -4rem;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+}
+
+@media only screen and (max-width: 320px) {
+  .card {
+    width: 100%;
+    padding: 25%;
+  }
+
+  .avatar {
+    display: none;
   }
 }
