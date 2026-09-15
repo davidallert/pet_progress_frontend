@@ -43,7 +43,7 @@ export const useUserData = (
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axios.get('/api/user/data', { withCredentials: true });
+        const response = await axios.get('/api/user/data');
         console.log(response)
         setUser(response.data.user);
         setPets(response.data.user.pets);
