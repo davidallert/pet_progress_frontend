@@ -63,6 +63,7 @@
   display: flex;
   justify-content: center;
   flex: 1;
+  align-items: center;
 }
 
 .card {
@@ -117,14 +118,13 @@
   flex-direction: column;
   flex: 1;
   z-index: -3;
-
 }
 
 .event {
   display: flex;
   flex-direction: row;
   gap: 20px;
-  height: 100px;
+  min-height: 10rem;
   justify-content: flex-start; /* flex-start if left aligned */
   align-items: center;
 }
@@ -138,11 +138,11 @@
 }
 
 .timelineSection {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dot {
@@ -150,14 +150,24 @@
   height: 10px;
   background-color: var(--foreground);
   border-radius: 100%;
+  z-index: 1;
 }
 
-.timeline {
-  position: absolute;
-  transform: translateY(50%);
-  width: 2px;
-  height: 100%;
-  background-color: var(--foreground);
+.timelineUpper,
+.timelineLower {
+    position: absolute;
+    width: 2px;
+    background-color: var(--light);
+}
+
+.timelineUpper {
+    top: 0;
+    bottom: 50%;
+}
+
+.timelineLower {
+    top: 50%;
+    bottom: 0;
 }
 
 .eventIcon {
@@ -173,7 +183,8 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  width: 80%;
+  width: 85%;
+  margin: 1rem auto;
 }
 
 .eventContent {

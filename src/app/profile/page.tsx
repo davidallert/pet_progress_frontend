@@ -211,9 +211,14 @@ export default function Profile() {
               {pet.events.map((event, index) => (
                   <div className={styles.event} key={index}>
                     <div className={styles.timelineSection}>
+                      {/* Skip the first line */}
+                      {index !== 0 &&
+                      <div className={styles.timelineUpper}></div>
+                      }
                       <div className={styles.dot}></div>
+                      {/* Skip the last line */}
                       {index !== pet.events.length - 1 &&
-                        <div className={styles.timeline}></div>
+                        <div className={styles.timelineLower}></div>
                       }
                     </div>
                     <div className={styles.eventIcon}><i className="fa-solid fa-paw"></i></div>
