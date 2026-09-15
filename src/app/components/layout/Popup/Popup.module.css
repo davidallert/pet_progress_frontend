@@ -19,6 +19,7 @@
   top: 0;
   right: 0;
   margin-top: 2dvw;
+  z-index: 1;
 }
 
 .popup {
@@ -30,7 +31,6 @@
   border-radius: var(--radius);
   font-size: medium;
   margin: 10px 3dvw 0;
-  z-index: 1000;
 }
 
 .popupHidden {
