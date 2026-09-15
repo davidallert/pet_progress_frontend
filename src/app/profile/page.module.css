@@ -235,11 +235,14 @@
   }
 
   .toggleCollapseBtn {
-    top: -4%;
-    /* right: 15%; */
-    padding: 40px 35px;
     background-color: var(--white);
     filter: drop-shadow(1px 1px 10px var(--light));
+  }
+
+  .toggleCollapseBtn button {
+    top: -4%;
+    padding: 20px;
+    font-size: 5dvw;
   }
 }
 
