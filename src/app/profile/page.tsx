@@ -142,12 +142,13 @@ export default function Profile() {
         {pets.map((pet, index) => (
           expandedRowId === index ? (
           <div className={styles.expandedRow} key={pet.id} id={String(pet.id)}>
+
+            <div className={styles.petCol}>
             <div className={styles.toggleCollapseBtn}>
               <Button icon={true} onClick={(e) => toggleExpand(index, pet.id)} tooltip={`Show/hide`} style={{color: "#000"}}>
                 <FontAwesomeIcon icon={faAngleUp}/>
               </Button>
             </div>
-            <div className={styles.petCol}>
             <div className={styles.card}>
               <Svg type="primary" index={index}/>
               <Svg type="secondary" index={index}/>
