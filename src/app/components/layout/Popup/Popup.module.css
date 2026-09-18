@@ -1,24 +1,24 @@
 .success {
   background: rgb(var(--main-rgb) / 75%);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--main));
 }
 
 .error {
   background: rgb(var(--error-rgb) / 75%);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--error));
 }
 
 .warning {
   background: rgb(var(--warning-rgb) / 75%);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--warning));
 }
 
 .info {
   background: rgb(var(--info-rgb) / 75%);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--info));
 }
 
@@ -27,7 +27,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  margin-top: 2dvw;
+  margin: 1rem;
   z-index: 1;
   display: flex;
   justify-content: center;
@@ -44,7 +44,7 @@
   color: var(--white);
   border-radius: var(--radius);
   font-size: large;
-  margin: 0.5rem 2rem;
+  margin: 0.5rem;
   z-index: 1;
 }
 
