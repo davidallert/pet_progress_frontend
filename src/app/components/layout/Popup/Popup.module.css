@@ -1,24 +1,24 @@
 .success {
   background: rgb(var(--main-rgb) / 75%);
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--main));
 }
 
 .error {
   background: rgb(var(--error-rgb) / 75%);
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--error));
 }
 
 .warning {
   background: rgb(var(--warning-rgb) / 75%);
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--warning));
 }
 
 .info {
   background: rgb(var(--info-rgb) / 75%);
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(2px);
   filter: drop-shadow(1px 1px 5px var(--info));
 }
 
@@ -35,6 +35,10 @@
   flex-direction: column;
 }
 
+.containerHidden {
+  display: none;
+}
+
 .popup {
   transition-duration: 0.3s;
   width: fit-content;
@@ -45,7 +49,6 @@
   border-radius: var(--radius);
   font-size: large;
   margin: 0.5rem;
-  z-index: 1;
 }
 
 .popupHidden {
@@ -58,4 +61,5 @@
   visibility: visible;
   opacity: 1;
   transform: scale(1);
+  z-index: 1;
 }

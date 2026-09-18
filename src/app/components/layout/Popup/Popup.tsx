@@ -9,7 +9,7 @@ export default function Popup() {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={`${popup.isVisible ? styles.container : styles.containerHidden}`}>
         {popup.messages.map((msg, index) => (
           <div key={index} className={`
             ${styles[popup.type]}
