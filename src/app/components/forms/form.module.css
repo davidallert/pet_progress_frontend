@@ -28,9 +28,10 @@
   display: block;
   width: 100%;
   padding: 0 2% 0.5%;
-  font-style: italic;
   margin: 0 0 1% 0;
   font-size: larger;
+  font-style: italic;
+  font-weight: 400;
 }
 
 .form input,
