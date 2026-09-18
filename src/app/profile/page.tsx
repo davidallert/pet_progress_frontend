@@ -128,7 +128,10 @@ export default function Profile() {
     index === expandedRowId ? setExpandedRowId(null) : setExpandedRowId(index);
     
     setTimeout(() => {
-      document.getElementById(id.toString())?.scrollIntoView({behavior: 'smooth', block: 'center'});
+      document.getElementById(id.toString())?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }, 100);
   }
 
@@ -141,8 +144,7 @@ export default function Profile() {
       <section id="cards" className={styles.cards}>
         {pets.map((pet, index) => (
           expandedRowId === index ? (
-          <div className={styles.expandedRow} key={pet.id} id={String(pet.id)}>
-
+          <div className={styles.expandedRow} key={pet.id} >
             <div className={styles.petCol}>
             <div className={styles.toggleCollapseBtn}>
               <Button icon={true} onClick={(e) => toggleExpand(index, pet.id)} tooltip={`Show/hide`} style={{color: "#000"}}>
@@ -161,7 +163,7 @@ export default function Profile() {
                     <FontAwesomeIcon icon={faXmark}/>
                   </Button>
                 </div>
-              <img className={styles.avatar} src={pet.imagePath}></img>
+              <img className={styles.avatar} src={pet.imagePath} id={String(pet.id)}></img>
               <label className={formStyles.formLabel} htmlFor="name">Name</label>
                 <Input
                   id="name"
