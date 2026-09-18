@@ -1,6 +1,7 @@
 .primary {
   position: absolute;
-  z-index: -1;
+  z-index: -3;
+  opacity: 1;
 }
 
 .svg1 {
@@ -56,7 +57,7 @@
 
 .secondary {
   position: absolute;
-  z-index: -2;
+  z-index: -1;
   opacity: 0.5;
   height: calc(var(--height) + 7.5%);
   width: calc(var(--width) + 7.5%);
@@ -70,17 +71,21 @@
 
 @keyframes shift {
   0% {
-    opacity: 0.5;
+    opacity: 0.25;
+    filter: blur(25px);
   }
 
   50% {
-    opacity: 0.25;
-    transform: rotate(calc(var(--rotation) + 5deg)) translate(1%, 1%);
-    filter: blur(5px);
+    opacity: 0.5;
+    transform: rotate(calc(var(--rotation) + 10deg)) translate(1%, -1%);
+    filter: blur(10px);
+    top: calc(var(--top) + 1%);
+    left: calc(var(--left) + 1%);
   }
 
   100% {
-    opacity: 0.5;
+    opacity: 0.25;
+    filter: blur(25px);
   }
 }
 

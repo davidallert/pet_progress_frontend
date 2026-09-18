@@ -163,7 +163,9 @@ export default function Profile() {
                     <FontAwesomeIcon icon={faXmark}/>
                   </Button>
                 </div>
-              <img className={styles.avatar} src={pet.imagePath} id={String(pet.id)}></img>
+              <div className={styles.avatarContainer}>
+                <img className={styles.avatar} src={pet.imagePath} id={String(pet.id)}></img>
+              </div>
               <label className={formStyles.formLabel} htmlFor="name">Name</label>
                 <Input
                   id="name"
