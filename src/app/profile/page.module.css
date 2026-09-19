@@ -31,7 +31,7 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin: 15dvh 0 10dvh;
+  margin: 15dvw 0 10dvh;
   gap: 2.5dvw;
 }
 
@@ -253,6 +253,7 @@
   .expandedRow {
     flex-direction: column;
     gap: 10dvh;
+    margin: 20dvh 0 5dvh;
   }
 
   .iconGroup {
