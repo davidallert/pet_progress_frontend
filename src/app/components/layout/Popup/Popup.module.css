@@ -1,27 +1,26 @@
 .success {
-  background: rgb(var(--main-rgb) / 75%);
-  backdrop-filter: blur(2px);
+  background: rgb(var(--main-rgb) / 80%);
+  backdrop-filter: blur(1px);
   filter: drop-shadow(1px 1px 5px var(--main));
 }
 
 .error {
-  background: rgb(var(--error-rgb) / 75%);
-  backdrop-filter: blur(2px);
+  background: rgb(var(--error-rgb) / 80%);
+  backdrop-filter: blur(1px);
   filter: drop-shadow(1px 1px 5px var(--error));
 }
 
 .warning {
-  background: rgb(var(--warning-rgb) / 75%);
-  backdrop-filter: blur(2px);
+  background: rgb(var(--warning-rgb) / 80%);
+  backdrop-filter: blur(1px);
   filter: drop-shadow(1px 1px 5px var(--warning));
 }
 
 .info {
-  background: rgb(var(--info-rgb) / 75%);
-  backdrop-filter: blur(2px);
+  background: rgb(var(--info-rgb) / 80%);
+  backdrop-filter: blur(1px);
   filter: drop-shadow(1px 1px 5px var(--info));
 }
-
 
 .container {
   position: fixed;
@@ -33,10 +32,7 @@
   justify-content: center;
   align-items: flex-end;
   flex-direction: column;
-}
-
-.containerHidden {
-  display: none;
+  pointer-events: none;
 }
 
 .popup {
