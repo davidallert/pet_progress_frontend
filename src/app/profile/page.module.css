@@ -7,7 +7,7 @@
   width: 100%;
   height: 100%;
   min-height: 100dvh;
-  padding: 6dvw;
+  padding: 0 5dvw;
   overflow: hidden;
 }
 
@@ -31,8 +31,8 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin: 10dvw;
-  gap: 5dvw;
+  margin: 15dvh 0 5dvh;
+  gap: 2.5dvw;
 }
 
 .collapsedRow {
@@ -85,13 +85,13 @@
 
 .iconGroup {
   position: absolute;
-  top: 10px;
-  right: -10px;
+  top: 1%;
+  right: 1%;
   display: flex;
   flex-direction: row;
   justify-content: flex;
   gap: 2dvh;
-  transform: rotate(30deg);
+  transform: rotate(25deg);
 }
 
 .timelineIcon {
@@ -134,24 +134,37 @@
   justify-content: start;
   flex-direction: column;
   flex: 1;
-  z-index: -3;
 }
 
 .event {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 1rem;
   min-height: 10rem;
   justify-content: flex-start; /* flex-start if left aligned */
   align-items: center;
+  z-index: -2;
 }
 
 .event:nth-child(odd) {
   /* background-color: var(--light); */
   background: #FFF;
   background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(244, 244, 244, 1) 100%);
-  border-top-right-radius: var(--radius);
-  border-bottom-right-radius: var(--radius);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.eventBtns {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.eventBtns button {
+  flex: 1 1 0;
 }
 
 .timelineSection {
@@ -160,14 +173,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  background-color: var(--foreground);
-  border-radius: 100%;
-  z-index: 1;
 }
 
 .timelineUpper,
@@ -190,9 +195,14 @@
 .eventIcon {
   font-size: x-large;
   background-color: var(--foreground);
-  padding: 10px;
-  border-radius: 100%;
+  padding: 15px;
+  border-radius: var(--radius);
   color: var(--white);
+  background-color: var(--foreground);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .eventContentContainer {
@@ -208,27 +218,34 @@
   display: flex;
   flex-direction: column;
 }
- 
-@media only screen and (max-width: 1920px) {
-  .card {
-    width: 70%;
-    padding: 10%;
+
+@media only screen and (min-width: 3000px) {
+  .avatar {
+    width: 300px;
+    height: 300px;
   }
 
   .iconGroup {
-    top: 40px;
-    right: 5px;
+    top: 0;
+    right: 0;
+  }
+}
+
+@media only screen and (max-width: 1920px) {
+  .card {
+    width: 60%;
+    padding: 7.5%;
+  }
+
+  .iconGroup {
+    top: 2%;
+    right: 2%;
   }
 }
 
 @media only screen and (max-width: 1200px) {
   .card {
-    width: 80%;
-    padding: 10%;
-  }
-
-  .iconGroup {
-    right: -10px;
+    width: 70%;
   }
 }
 
@@ -236,7 +253,6 @@
   .expandedRow {
     flex-direction: column;
     gap: 10dvh;
-    margin: 20dvh 0 5dvh;
   }
 
   .iconGroup {
@@ -260,28 +276,17 @@
   .toggleCollapseBtn {
     background-color: var(--white);
     filter: drop-shadow(1px 1px 10px var(--light));
+    top: -4%;
+    right: 4%;
   }
 
   .toggleCollapseBtn button {
-    top: -4%;
     padding: 20px;
     font-size: 5dvw;
   }
 }
 
-@media only screen and (min-width: 3000px) {
-  .avatar {
-    width: 300px;
-    height: 300px;
-    top: -17rem;
-  }
-}
-
 @media only screen and (max-width: 768px) {
-  .avatar {
-    z-index: -1;
-  }
-
   .card {
     width: 75%;
     padding: 15%;
@@ -289,9 +294,19 @@
 }
 
 @media only screen and (max-width: 425px) {
-  .avatar {
-    top: -8.5rem;
-    left: -4rem;
+  .card {
+    width: 75%;
+    padding: 12.5%;
+  }
+
+  .avatar, .avatarContainer {
+    width: 150px;
+    height: 150px;
+  }
+
+  .avatarContainer {
+    top: -7rem;
+    left: -2rem;
   }
 }
 

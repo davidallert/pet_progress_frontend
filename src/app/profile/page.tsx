@@ -1,11 +1,9 @@
 "use client";
-// BUG: Remove a pet -> Edit a pet -> Save pets.
-// The removed pet will not be removed properly, it will remain in the pets array and therefore upserted when save is clicked.
 import styles from "./page.module.css";
 import formStyles from '../components/forms/form.module.css'
 import axios from '../libraries/axios';
 import { AxiosError } from 'axios';
-import { useEffect, useState, useContext, JSX } from "react";
+import { useState, useContext, useMemo, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 import PopupContext from '@/app/context/popup/context';
@@ -24,8 +22,16 @@ export default function Profile() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
-  const { user, pets, setPets } = useUserData(router, setLoading, setPopup);
+  const { user, pets, setPets } = useUserData(router, setLoading, setPopup, {eventLimit: 4});
   const [expandedRowId, setExpandedRowId] = useState<number | null>(0);
+
+  // Window is not available during server-side rendering in Next.js. useEffect runs after the component mounts.
+  useEffect(() => {
+    const storedExpandedRowId = window.sessionStorage.getItem("expandedRowId");
+    if (storedExpandedRowId) {
+      setExpandedRowId(Number(storedExpandedRowId));
+    }
+  }, []);
 
   const savePets = async () => {
     try {
@@ -124,140 +130,223 @@ export default function Profile() {
     router.push(`/timeline/${name}/${id}`);
   }
 
-  const toggleExpand = (index: number, id: number) => {
+  const toggleExpand = (index: number) => {
     index === expandedRowId ? setExpandedRowId(null) : setExpandedRowId(index);
-    
-    setTimeout(() => {
-      document.getElementById(`avatar${id.toString()}`)?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 100);
+
+    window.sessionStorage.setItem("expandedRowId", String(index));
+
+    window.scrollTo({
+      top: 100,
+      left: 100,
+      behavior: "smooth"
+    });
   }
 
   // Return an empty page, just displaying the header and footer.
   if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
-  return (
-    <main className={styles.main}>
-      <h1>{user?.name}'s pets!</h1>
-      <section id="cards" className={styles.cards}>
-        {pets.map((pet, index) => (
-          expandedRowId === index ? (
-          <div className={styles.expandedRow} key={pet.id} id={String(pet.id)}>
-            <div className={styles.petCol}>
+
+const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
+
+return (
+  <main className={styles.main}>
+    {/* <h1>{user?.name}'s pets!</h1> */}
+
+
+    <section id="cards" className={styles.cards}>
+      {expandedPet && expandedRowId !== null && (
+        <div className={styles.expandedRow} key={expandedPet.id} id={String(expandedPet.id)}>
+          <div className={styles.petCol}>
             <div className={styles.toggleCollapseBtn}>
-              <Button icon={true} onClick={(e) => toggleExpand(index, pet.id)} tooltip={`Show/hide`} style={{color: "#000"}}>
-                <FontAwesomeIcon icon={faAngleUp}/>
+              <Button
+                icon={true}
+                onClick={(e) => toggleExpand(expandedRowId)}
+                tooltip="Show/hide"
+                style={{ color: "#000" }}
+              >
+                <FontAwesomeIcon icon={faAngleUp} />
               </Button>
             </div>
+
             <div className={styles.card}>
-              <Svg type="primary" index={index}/>
-              <Svg type="secondary" index={index}/>
-              <form className={styles.form} key={index}>
+              <Svg type="primary" index={expandedRowId} />
+              <Svg type="secondary" index={expandedRowId} />
+
+              <form className={styles.form}>
                 <div className={styles.iconGroup}>
-                  <Button icon={true} animation="spinPulse" tooltip="Add timeline event" onClick={(e) => handleAddEvent(e, pet.id)}>
-                    <FontAwesomeIcon icon={faPlus}/>
+                  <Button
+                    icon={true}
+                    animation="spinPulse"
+                    tooltip="Add timeline event"
+                    onClick={(e) => handleAddEvent(e, expandedPet.id)}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
                   </Button>
-                  <Button icon={true} animation="spinPulseReverse" tooltip="Remove pet" onClick={(e) => handleRemovePet(e, pet.id)}>
-                    <FontAwesomeIcon icon={faXmark}/>
+
+                  <Button
+                    icon={true}
+                    animation="spinPulseReverse"
+                    tooltip="Remove pet"
+                    onClick={(e) => handleRemovePet(e, expandedPet.id)}
+                  >
+                    <FontAwesomeIcon icon={faXmark} />
                   </Button>
                 </div>
-              <div className={styles.avatarContainer} id={`avatar${String(pet.id)}`}>
-                <img className={styles.avatar} src={pet.imagePath}></img>
-              </div>
-              <label className={formStyles.formLabel} htmlFor="name">Name</label>
+
+                <div
+                  className={styles.avatarContainer}
+                  id={`avatar${expandedPet.id}`}
+                >
+                  <img
+                    className={styles.avatar}
+                    src={expandedPet.imagePath}
+                    alt={expandedPet.name}
+                  />
+                </div>
+
+                <label className={formStyles.formLabel} htmlFor="name">
+                  Name
+                </label>
                 <Input
                   id="name"
                   type="text"
                   name="name"
-                  value={pet.name}
+                  value={expandedPet.name}
                   onChange={handleChange}
-                  data-index={index}
+                  data-index={expandedRowId}
                 />
-              <label className={formStyles.formLabel} htmlFor="species">Species</label>
+
+                <label className={formStyles.formLabel} htmlFor="species">
+                  Species
+                </label>
                 <Input
                   id="species"
                   type="text"
                   name="species"
-                  value={pet.species}
+                  value={expandedPet.species}
                   onChange={handleChange}
-                  data-index={index}
+                  data-index={expandedRowId}
                 />
-              <label className={formStyles.formLabel} htmlFor="breed">Breed</label>
+
+                <label className={formStyles.formLabel} htmlFor="breed">
+                  Breed
+                </label>
                 <Input
                   id="breed"
                   type="text"
                   name="breed"
-                  value={pet.breed}
+                  value={expandedPet.breed}
                   onChange={handleChange}
-                  data-index={index}
+                  data-index={expandedRowId}
                 />
-              <label className={formStyles.formLabel} htmlFor="birthday">Birthday</label>
+
+                <label className={formStyles.formLabel} htmlFor="birthday">
+                  Birthday
+                </label>
                 <Input
                   id="birthday"
                   type="date"
                   name="birthday"
-                  value={pet.birthday}
+                  value={expandedPet.birthday}
                   onChange={handleChange}
-                  data-index={index}
+                  data-index={expandedRowId}
                 />
+
                 <div className={styles.timelineIcon}>
-                  <Button icon={true} onClick={(e) => routeToTimeline(e, pet.name, pet.id)} tooltip={`View ${pet.name}'s timeline`}>
-                    <FontAwesomeIcon icon={faBarsStaggered}/>
+                  <Button
+                    icon={true}
+                    onClick={(e) =>
+                      routeToTimeline(e, expandedPet.name, expandedPet.id)
+                    }
+                    tooltip={`View ${expandedPet.name}'s timeline`}
+                  >
+                    <FontAwesomeIcon icon={faBarsStaggered} />
                   </Button>
                 </div>
               </form>
             </div>
           </div>
+
           <div className={styles.eventCol}>
             <h2>Recent Events</h2>
-              {pet.events.map((event, index) => (
-                  <div className={styles.event} key={index}>
-                    <div className={styles.timelineSection}>
-                      {/* Skip the first line */}
-                      {index !== 0 &&
-                      <div className={styles.timelineUpper}></div>
-                      }
-                      <div className={styles.dot}></div>
-                      {/* Skip the last line */}
-                      {index !== pet.events.length - 1 &&
-                        <div className={styles.timelineLower}></div>
-                      }
-                    </div>
-                    <div className={styles.eventIcon}><i className="fa-solid fa-paw"></i></div>
-                    <div className={styles.eventContentContainer}>
-                      <div className={styles.eventContent}>
-                          <h3>{event.title}</h3>
-                          <p>{event.description}</p>
-                      </div>
-                        <h4><i>{event.date}</i></h4>
-                      </div>
+
+            {expandedPet.events.map((event, index) => (
+              <div className={styles.event} key={index}>
+                <div className={styles.timelineSection}>
+                  {index !== 0 && <div className={styles.timelineUpper} />}
+                  <div className={styles.eventIcon}>
+                    <i className="fa-solid fa-paw" />
                   </div>
-              ))}
-          </div>
-          </div>
-          ) : 
-          <div className={styles.collapsedRow} onClick={(e) => toggleExpand(index, pet.id)} key={pet.id}>
-            {pet.name}
-            <div className={styles.toggleExpandBtn}>
-              <Button icon={true} onClick={(e) => toggleExpand(index, pet.id)} tooltip={`Show/hide`} style={{color: "#000"}}>
-                <FontAwesomeIcon icon={faAngleDown}/>
+                  {index !== expandedPet.events.length - 1 && (
+                    <div className={styles.timelineLower} />
+                  )}
+                </div>
+
+                <div className={styles.eventContentContainer}>
+                  <div className={styles.eventContent}>
+                    <h3>{event.title}</h3>
+                    <p>{event.description}</p>
+                  </div>
+                  <div>
+                    <p>{event.date}</p>
+                    <p>{event.date ? new Date(event.date).toDateString() : ""}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <div className={styles.eventBtns}>
+              <Button type="submit" onClick={(e) => handleAddEvent(e, expandedPet.id)}>
+                Add Event
+              </Button>
+              <Button type="submit" onClick={(e) => handleAddEvent(e, expandedPet.id)}>
+                Manage Events
               </Button>
             </div>
           </div>
-        ))}
-      </section>
-      <section className={styles.buttonGroup}>
-        {pets.length > 0 &&
-          <Button type="submit" onClick={handleSave} loading={loadingSave} tooltip="Update all pets">
-            Save
-          </Button>
-        }
-        <Button type="submit" onClick={handleAdd} tooltip="Add new pet">
-          Add
+        </div>
+      )}
+
+      {pets.map((pet, index) =>
+        index !== expandedRowId ? (
+          <div
+            className={styles.collapsedRow}
+            onClick={(e) => toggleExpand(index)}
+            key={pet.id}
+          >
+            {pet.name}
+
+            <div className={styles.toggleExpandBtn}>
+              <Button
+                icon={true}
+                onClick={(e) => toggleExpand(index)}
+                tooltip="Show/hide"
+                style={{ color: "#000" }}
+              >
+                <FontAwesomeIcon icon={faAngleDown} />
+              </Button>
+            </div>
+          </div>
+        ) : null
+      )}
+    </section>
+
+    <section className={styles.buttonGroup}>
+      {pets.length > 0 && (
+        <Button
+          type="submit"
+          onClick={handleSave}
+          loading={loadingSave}
+          tooltip="Update all pets"
+        >
+          Save
         </Button>
-      </section>
-    </main>
-  );
+      )}
+
+      <Button type="submit" onClick={handleAdd} tooltip="Add new pet">
+        Add
+      </Button>
+    </section>
+  </main>
+);
 }
