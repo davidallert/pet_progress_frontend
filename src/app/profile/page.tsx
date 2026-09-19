@@ -89,6 +89,7 @@ export default function Profile() {
         setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
       }
     } finally {
+      router.push("/profile")
     }
   }
 
