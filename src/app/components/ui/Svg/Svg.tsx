@@ -9,7 +9,7 @@ interface Svg  {
     index: number
 }
 
-export default  function Svg({type, index}: Svg) {
+export default function Svg({type, index}: Svg) {
 
     const svg = [
       <svg className={`${styles[type]} ${styles.svg1}`} viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
