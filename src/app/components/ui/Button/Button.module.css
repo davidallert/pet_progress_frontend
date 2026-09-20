@@ -1,6 +1,6 @@
 .button {
   width: 100%;
-  padding: 4%;
+  padding: clamp(25px, 4%, 75px);
   max-height: 75px;
   margin: 0 0 5% 0;
   font-size: larger;
@@ -30,7 +30,7 @@
 .icon {
   all: unset;
   cursor: pointer;
-  font-size: 2dvw;
+  font-size: clamp(20px, 2dvw, 50px);
   color: var(--white);
   transition: 0.2s;
   display: flex;
@@ -41,7 +41,6 @@
 
 .icon:hover {
   transform: scale(1.2);
-  /* transform: rotate(180deg); */
 }
 
 .button,
@@ -70,7 +69,6 @@
   }
   50% {
     transform: rotate(180deg) scale(1.5);
-    /* color: var(--success); */
   }
 
   100% {
@@ -89,25 +87,9 @@
   }
   50% {
     transform: rotate(-180deg) scale(1.5);
-    /* color: var(--warning); */
   }
 
   100% {
     transform: rotate(-360deg) scale(1);
-  }
-}
-
-@media only screen and (min-width: 3000px) {
-  .button {
-    padding: 50px;
-  }
-  .icon {
-    font-size: 50px;
-  }
-}
-
-@media only screen and (max-width: 1300px) {
-  .icon {
-    font-size: 3dvw;
   }
 }

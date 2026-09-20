@@ -183,7 +183,7 @@ return (
                   <Button
                     icon={true}
                     animation="spinPulse"
-                    tooltip="Add timeline event"
+                    tooltip="Add Event"
                     onClick={(e) => handleAddEvent(e, expandedPet.id)}
                   >
                     <FontAwesomeIcon icon={faPlus} />
@@ -192,7 +192,7 @@ return (
                   <Button
                     icon={true}
                     animation="spinPulseReverse"
-                    tooltip="Remove pet"
+                    tooltip="Remove Pet :("
                     onClick={(e) => handleRemovePet(e, expandedPet.id)}
                   >
                     <FontAwesomeIcon icon={faXmark} />
@@ -264,7 +264,7 @@ return (
                     onClick={(e) =>
                       routeToTimeline(e, expandedPet.name, expandedPet.id)
                     }
-                    tooltip={`View ${expandedPet.name}'s timeline`}
+                    tooltip={`View ${expandedPet.name}'s Timeline`}
                   >
                     <FontAwesomeIcon icon={faBarsStaggered} />
                   </Button>
@@ -340,13 +340,12 @@ return (
           type="submit"
           onClick={handleSave}
           loading={loadingSave}
-          tooltip="Update all pets"
         >
           Save Changes
         </Button>
       )}
 
-      <Button type="submit" onClick={handleAdd} tooltip="Add new pet">
+      <Button type="submit" onClick={handleAdd}>
         Add New Pet
       </Button>
     </section>

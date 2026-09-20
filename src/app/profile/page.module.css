@@ -22,7 +22,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* gap: 10px; */
 }
 
 .expandedRow {
@@ -68,12 +67,14 @@
 
 .card {
   position: relative;
-  width: 50%;
-  max-width: 750px;
-  /* background-color: transparent !important; */
-  padding: 5%;
+  width: clamp(100px, 50%, 750px);
+  padding: clamp(50px, 5%, 100px);
   font-size: large;
   border-radius: var(--radius);
+}
+
+.card form label {
+  color: var(--white);
 }
 
 .buttonGroup {
@@ -157,7 +158,7 @@
 }
 
 .manageBtn {
-  margin-top: 50px;
+  margin-top: clamp(25px, 5dvh, 100px);
 }
 
 .timelineSection {
@@ -238,7 +239,8 @@
 
 @media only screen and (max-width: 1200px) {
   .card {
-    width: 70%;
+    width: 80%;
+    padding: 10%;
   }
 }
 
@@ -289,8 +291,7 @@
 
 @media only screen and (max-width: 425px) {
   .card {
-    width: 75%;
-    padding: 12.5%;
+    width: 100%;
   }
 
   .avatar, .avatarContainer {
@@ -305,14 +306,10 @@
 }
 
 @media only screen and (max-width: 375px) {
-  .card {
-    padding: 15%;
-  }
 }
 
 @media only screen and (max-width: 320px) {
   .card {
-    width: 100%;
     padding: 25%;
     font-size: small;
   }
