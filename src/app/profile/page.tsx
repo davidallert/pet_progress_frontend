@@ -124,6 +124,11 @@ export default function Profile() {
     router.push(`/profile/add/event/${id}`);
   }
 
+  const handleManageEvents = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
+    e.preventDefault();
+    router.push(`/profile/manage/events/${id}`);
+  }
+
   const routeToTimeline = (e:React.MouseEvent<HTMLButtonElement>, name:string, id:number) => {
     e.preventDefault();
 
@@ -296,11 +301,8 @@ return (
               </div>
             ))}
 
-            <div className={styles.eventBtns}>
-              <Button type="submit" onClick={(e) => handleAddEvent(e, expandedPet.id)}>
-                Add Event
-              </Button>
-              <Button type="submit" onClick={(e) => handleAddEvent(e, expandedPet.id)}>
+            <div className={styles.manageBtn}>
+              <Button type="submit" onClick={(e) => handleManageEvents(e, expandedPet.id)}>
                 Manage Events
               </Button>
             </div>
@@ -340,12 +342,12 @@ return (
           loading={loadingSave}
           tooltip="Update all pets"
         >
-          Save
+          Save Changes
         </Button>
       )}
 
       <Button type="submit" onClick={handleAdd} tooltip="Add new pet">
-        Add
+        Add New Pet
       </Button>
     </section>
   </main>
