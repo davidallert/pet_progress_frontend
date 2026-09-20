@@ -88,10 +88,3 @@
     filter: blur(25px);
   }
 }
-
-/* @media only screen and (max-width: 768px) {
-  .primary,
-  .secondary {
-    visibility: hidden;
-  }
-} */
