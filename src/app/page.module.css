@@ -10,3 +10,8 @@
   margin: 1%;
   cursor: pointer;
 }
+
+.underConstruction {
+  margin: 5dvh 5dvw;
+  text-align: center;
+}

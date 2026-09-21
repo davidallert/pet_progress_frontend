@@ -16,7 +16,9 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {/* <h1>Track your pet's progress!</h1> */}
+      <div className={styles.underConstruction}>
+        <p>Petfolio is currently under construction - functionality may be missing or unfinished. Thanks for your patience!</p>
+      </div>
       {isLoginForm ? <LoginForm /> : <RegisterForm />}
       <h3 className={styles.switchForm} onClick={toggleFormType}>{isLoginForm ? "Register new user" : "Login with existing user"}</h3>
     </main>
