@@ -6,8 +6,8 @@
   gap: 5dvw;
   width: 100%;
   height: 100%;
-  min-height: 100dvh;
-  padding: 0 5dvw;
+  /* min-height: 100dvh; */
+  padding: clamp(25px, 5%, 100px);
   overflow: hidden;
 }
 
@@ -30,7 +30,8 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin: 15dvw 0 10dvh;
+  margin-top: clamp(150px, 5%, 250px);
+  margin-bottom: clamp(20px, 10%, 500px);
   gap: 2.5dvw;
 }
 
@@ -77,12 +78,32 @@
   color: var(--white);
 }
 
-.buttonGroup {
-  width: 30%;
+.buttonArea {
+  width: clamp(100px, 100%, 750px);
+  padding: 25px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--foreground);
+  border-radius: var(--radius);
+}
+
+.buttonGroup {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
-  gap: 1dvw;
-  margin-top: 10dvh;
+  gap: 20px;
+}
+
+.buttonGroup button {
+  background-color: var(--white);
+  color: var(--foreground);
+}
+
+.buttonGroup button:hover {
+  color: var(--white);
 }
 
 .iconGroup {
@@ -150,12 +171,14 @@
 }
 
 .event:nth-child(odd) {
-  /* background-color: var(--light); */
   background: #FFF;
   background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(244, 244, 244, 1) 100%);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 75px;
 }
+
+/* .event:nth-child(4n+1) {
+} */
 
 .manageBtn {
   margin-top: clamp(25px, 5dvh, 100px);
@@ -206,11 +229,20 @@
   flex-direction: row;
   width: 85%;
   margin: 1rem;
+  gap: 10px;
 }
 
 .eventContent {
   display: flex;
   flex-direction: column;
+}
+
+.eventDate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  white-space: nowrap
 }
 
 @media only screen and (min-width: 3000px) {
@@ -248,7 +280,7 @@
   .expandedRow {
     flex-direction: column;
     gap: 10dvh;
-    margin: 20dvh 0 5dvh;
+    /* margin: 20dvh 0 5dvh; */
   }
 
   .iconGroup {
@@ -262,11 +294,6 @@
   .card {
     width: 70%;
     font-size: medium;
-  }
-
-  .buttonGroup {
-    width: 100%;
-    margin-top: 5dvh;
   }
 
   .toggleCollapseBtn {
@@ -287,11 +314,21 @@
     width: 75%;
     padding: 15%;
   }
+
+  .eventContentContainer {
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .eventContent, .eventDate {
+    align-items: flex-start;
+  }
 }
 
 @media only screen and (max-width: 425px) {
   .card {
-    width: 100%;
+    padding: 17.5%;
   }
 
   .avatar, .avatarContainer {
@@ -303,6 +340,11 @@
     top: -7rem;
     left: -2rem;
   }
+
+  .buttonGroup {
+    width: 90%;
+    flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: 375px) {
@@ -310,7 +352,8 @@
 
 @media only screen and (max-width: 320px) {
   .card {
-    padding: 25%;
+    width: 100%;
+    padding: 15%;
     font-size: small;
   }
 

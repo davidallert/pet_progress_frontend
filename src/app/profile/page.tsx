@@ -15,7 +15,7 @@ import Svg from "../components/ui/Svg/Svg";
 import { useUserData } from '../hooks/useUserData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark, faPlus, faArrowRight, faAngleDown, faAngleUp, faTimeline, faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
+import { faOtter, faXmark, faPlus, faArrowRight, faAngleDown, faAngleUp, faTimeline, faBarsStaggered, faFeatherPointed, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 export default function Profile() {
   const { setPopup } = useContext(PopupContext);
@@ -192,7 +192,7 @@ return (
                   <Button
                     icon={true}
                     animation="spinPulseReverse"
-                    tooltip="Remove Pet :("
+                    tooltip="Remove Pet"
                     onClick={(e) => handleRemovePet(e, expandedPet.id)}
                   >
                     <FontAwesomeIcon icon={faXmark} />
@@ -293,9 +293,9 @@ return (
                     <h3>{event.title}</h3>
                     <p>{event.description}</p>
                   </div>
-                  <div>
+                  <div className={styles.eventDate}>
                     <p>{event.date}</p>
-                    <p>{event.date ? new Date(event.date).toDateString() : ""}</p>
+                    <p>{event.date ? `(${new Date(event.date).toDateString()})` : ""}</p>
                   </div>
                 </div>
               </div>
@@ -304,6 +304,7 @@ return (
             <div className={styles.manageBtn}>
               <Button type="submit" onClick={(e) => handleManageEvents(e, expandedPet.id)}>
                 Manage Events
+                <FontAwesomeIcon icon={faFeatherPointed}/>
               </Button>
             </div>
           </div>
@@ -334,21 +335,25 @@ return (
       )}
     </section>
 
-    <section className={styles.buttonGroup}>
-      {pets.length > 0 && (
-        <Button
-          type="submit"
-          onClick={handleSave}
-          loading={loadingSave}
-        >
-          Save Changes
-        </Button>
-      )}
+    <div className={styles.buttonArea}>
+      <div className={styles.buttonGroup}>
+        {pets.length > 0 && (
+          <Button
+            type="submit"
+            onClick={handleSave}
+            loading={loadingSave}
+          >
+            Save Changes
+            <FontAwesomeIcon icon={faCloudArrowUp}/>
+          </Button>
+        )}
 
-      <Button type="submit" onClick={handleAdd}>
-        Add New Pet
-      </Button>
-    </section>
+        <Button type="submit" onClick={handleAdd}>
+          Add New Pet
+          <FontAwesomeIcon icon={faOtter}/>
+        </Button>
+      </div>
+    </div>
   </main>
 );
 }
