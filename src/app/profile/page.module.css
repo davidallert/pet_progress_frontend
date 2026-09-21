@@ -6,7 +6,7 @@
   gap: 5dvw;
   width: 100%;
   height: 100%;
-  /* min-height: 100dvh; */
+  min-height: 100dvh;
   padding: clamp(25px, 5%, 100px);
   overflow: hidden;
 }
