@@ -1,8 +1,8 @@
 .button {
   width: 100%;
-  padding: clamp(25px, 4%, 75px);
-  max-height: 75px;
-  margin: 0 0 5% 0;
+  /* padding: clamp(25px, 4%, 75px); */
+  height: clamp(25px, 75px, 100px);
+  /* margin: 0 0 5% 0; */
   font-size: larger;
   border-radius: var(--radius);
   transition-duration: 0.3s;
@@ -12,6 +12,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.button svg {
+  margin: auto 5px;
 }
 
 .button:disabled {
