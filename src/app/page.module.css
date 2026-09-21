@@ -7,6 +7,6 @@
 }
 
 .switchForm {
-  margin: 1%;
+  margin: min(50px, 5%);
   cursor: pointer;
 }
