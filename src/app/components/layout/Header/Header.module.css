@@ -1,6 +1,6 @@
 .header {
   width: 100dvw;
-  height: 10dvh;
+  height: clamp(100px, 10dvh, 200px);
   display: flex;
   justify-content: center;
   align-items: center;
