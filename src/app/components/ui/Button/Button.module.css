@@ -1,8 +1,7 @@
 .button {
   width: 100%;
-  /* padding: clamp(25px, 4%, 75px); */
-  height: clamp(25px, 75px, 100px);
-  /* margin: 0 0 5% 0; */
+  /* padding: clamp(10px, 5%, 20px); */
+  height: clamp(50px, 10dvw, 75px);
   font-size: larger;
   border-radius: var(--radius);
   transition-duration: 0.3s;
@@ -95,5 +94,11 @@
 
   100% {
     transform: rotate(-360deg) scale(1);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .button {
+    font-size: medium;
   }
 }
