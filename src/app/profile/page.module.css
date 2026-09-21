@@ -79,6 +79,7 @@
 }
 
 .buttonArea {
+  margin-top: auto;
   width: clamp(100px, 100%, 750px);
   padding: 25px;
   display: flex;
