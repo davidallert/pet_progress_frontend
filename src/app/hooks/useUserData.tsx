@@ -3,38 +3,12 @@ import axios from '../libraries/axios';
 import { isAxiosError } from 'axios';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import type { PopupInput } from '@/app/context/popup/interface';
+import type User from '@/types/user';
+import type Pet from '@/types/pet';
 
 interface UseUserDataOptions {
   // petLimit?: number,
   eventLimit?: number,
-}
-
-interface User {
-  id: number,
-  name: string,
-  email: string,
-  email_verified_at: null,
-  created_at: null,
-  updated_at: null
-}
-
-interface Pet {
-  id: number,
-  userId: number,
-  name: string,
-  imagePath: string,
-  birthday: string,
-  species: string,
-  breed: string,
-  events: Array<{
-    date: string,
-    id: number,
-    petId: number,
-    title: string,
-    description: string,
-    imagePath: string
-    type: string,
-  }>
 }
 
 export const useUserData = (
