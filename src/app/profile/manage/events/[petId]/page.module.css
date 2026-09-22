@@ -1,0 +1,91 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5dvw;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  padding: clamp(25px, 5%, 100px);
+  overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: row;
+}
+
+.thead {
+    border-top-left-radius: calc(var(--radius) / 2);
+    border-bottom-left-radius: calc(var(--radius) / 3);
+    border-top-right-radius: calc(var(--radius) / 3);
+    border-bottom-right-radius: calc(var(--radius) / 2);
+    background-color: var(--foreground);
+}
+
+.th {
+    font-size: x-large;
+    font-weight: 400;
+    padding: clamp(10px, 5dvh, 20px) clamp(10px, 5dvw, 20px);
+    color: var(--light);
+}
+
+/* .th:last-of-type {
+    background-color: var(--white);
+} */
+
+.td:last-of-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.td:last-of-type button:first-of-type svg {
+    background-color: var(--main);
+}
+
+.td:last-of-type svg {
+    background-color: var(--foreground);
+    border-radius: var(--radius);
+    padding: 10px 5px;
+    /* color: var(--foreground)!important; */
+}
+
+.thead > .tr,
+.tbody > .tr > form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 4fr) 1fr;
+}
+
+.tbody .tr:not(:last-of-type) .td:not(:last-of-type) {
+    border-bottom: 1px solid var(--light);
+}
+
+.td:not(:last-of-type) {
+    border-right: 1px solid var(--light);
+}
+
+.td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.td svg {
+    font-size: xx-large;
+}
+
+@media screen and (max-width: 1024px) {
+    .thead .tr {
+        display: none;
+    }
+
+    .tbody .tr form {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

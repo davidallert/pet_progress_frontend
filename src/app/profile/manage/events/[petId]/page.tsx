@@ -1,17 +1,17 @@
 "use client";
 
-import styles from "@/app/profile/page.module.css";
+import styles from "./page.module.css";
 import formStyles from '@/app/components/forms/form.module.css'
 import { AxiosError } from 'axios';
 import React, { FormEvent, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation'
 import PopupContext from '@/app/context/popup/context';
-import Input from "@/app/components/ui/Input";
 import Button from "@/app/components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faOtter } from '@fortawesome/free-solid-svg-icons'
-import { useUserData } from '@/app/hooks/useUserData';
+import { faOtter, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { useUserData } from '@/hooks/useUserData';
 import type Pet from '@/types/pet';
+import TableInput from "@/app/components/ui/TableInput/TableInput";
 
 export default function Manage({params}: PageProps<'/profile/manage/events/[petId]'>) {
   const { setPopup } = useContext(PopupContext);
@@ -30,50 +30,90 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
   return (
     <main className={styles.main}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Image</th>
-            <th>Type</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {pet.events.map((event) => (
-            <tr key={event.id}>
-              <td>
-                <Input
-                  value={event.title}
-                />
-              </td>
-              <td>
-                <Input
-                  value={event.description}
-                  type="textarea"
-                />
-              </td>
-              <td>
-                <Input
-                  value={event.imagePath}
-                />
-              </td>
-              <td>
-                <Input
-                  value={event.type}
-                />
-              </td>
-              <td>
-                <Input
-                  value={event.date}
-                />
-              </td>                                                        
-            </tr>
+        <div className={styles.table} role="table">
+          <div className={styles.thead} role="rowgroup">
+            <div className={styles.tr} role="row">
+              <div className={styles.th} role="columnheader">
+                Title
+              </div>
+              <div className={styles.th} role="columnheader">
+                Description
+              </div>
+              <div className={styles.th} role="columnheader">
+                Image
+              </div>
+              <div className={styles.th} role="columnheader">
+                Type
+              </div>
+              <div className={styles.th} role="columnheader">
+                Date
+              </div>
+              <div className={styles.th} role="columnheader">
+                {/* Last th - empty */}
+              </div>
+            </div>
+          </div>
+          <div className={styles.tbody} role="rowgroup">
+            {pet.events.map((event) => (
+              <div className={styles.tr} key={event.id} role="row">
+                <form className={styles.form}>
+                  <div className={styles.td} role="cell">
+                    <TableInput
+                      id="title"
+                      type="text"
+                      name="title"
+                      defaultValue={event.title}
+                    />
+                  </div>
+                  <div className={styles.td} role="cell">
+                    <TableInput
+                      id="description"
+                      name="description"
+                      type="text"
+                      defaultValue={event.description}
+                    />
+                  </div>
+                  <div className={styles.td} role="cell">
+                    <TableInput
+                      id="image"
+                      name="image"
+                      type="file"
+                      defaultValue="" // ?
+                    />
+                  </div>
+                  <div className={styles.td} role="cell">
+                    <TableInput
+                      id="type"
+                      name="type"
+                      type="text"
+                      defaultValue={event.type}
+                    />
+                  </div>
+                  <div className={styles.td} role="cell">
+                    <TableInput
+                      id="type"
+                      name="type"
+                      type="date"
+                      defaultValue={event.date}
+                    />
+                  </div>
+                  <div className={styles.td} role="cell">
+                    <Button
+                      icon={true}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </Button>
+                    <Button
+                      icon={true}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </Button>
+                  </div>
+              </form>
+            </div>
           ))}
-        </tbody>
-      </table>
+          </div>
+        </div>
     </main>
   );
 }
