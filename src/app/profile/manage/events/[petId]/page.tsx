@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import PopupContext from '@/app/context/popup/context';
 import Button from "@/app/components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faOtter, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faOtter, faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useUserData } from '@/hooks/useUserData';
 import type Pet from '@/types/pet';
 import TableInput from "@/app/components/ui/TableInput/TableInput";
@@ -69,7 +69,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     <TableInput
                       id="description"
                       name="description"
-                      type="text"
+                      type="textarea"
                       defaultValue={event.description}
                     />
                   </div>
@@ -101,7 +101,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     <Button
                       icon={true}
                     >
-                      <FontAwesomeIcon icon={faCheck} />
+                      <FontAwesomeIcon icon={faCloudArrowUp} />
                     </Button>
                     <Button
                       icon={true}

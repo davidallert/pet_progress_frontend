@@ -13,8 +13,8 @@
 
 .table {
     width: 100%;
-    display: grid;
-    grid-auto-flow: row;
+    /* display: grid; */
+    /* grid-auto-flow: row; */
 }
 
 .thead {
@@ -62,7 +62,7 @@
     grid-template-columns: repeat(5, 4fr) 1fr;
 }
 
-.tbody .tr:not(:last-of-type) .td:not(:last-of-type) {
+.tbody .tr:not(:last-of-type) .td {
     border-bottom: 1px solid var(--light);
 }
 

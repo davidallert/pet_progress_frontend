@@ -3,7 +3,7 @@ import styles from './TableInput.module.css'
 export default function TableInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
   if (props.type === "textarea") {
-    return <textarea rows="2" className={styles.input} {...(props as any)} />;
+    return <textarea rows="1" className={styles.input} {...(props as any)} />;
   }
 
   return (
