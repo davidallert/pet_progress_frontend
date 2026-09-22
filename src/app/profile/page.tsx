@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import formStyles from '../components/forms/form.module.css'
-import axios from '../libraries/axios';
+import axios from '../../libraries/axios';
 import { AxiosError } from 'axios';
 import { useState, useContext, useMemo, useEffect } from "react";
 import { useRouter } from 'next/navigation';
@@ -12,7 +12,7 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Svg from "../components/ui/Svg/Svg";
 
-import { useUserData } from '../hooks/useUserData';
+import { useUserData } from '@/hooks/useUserData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter, faXmark, faPlus, faArrowRight, faAngleDown, faAngleUp, faTimeline, faBarsStaggered, faFeatherPointed, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -168,7 +168,7 @@ return (
                 icon={true}
                 onClick={(e) => toggleExpand(expandedRowId)}
                 tooltip="Show/hide"
-                style={{ color: "#000" }}
+                style={{ color: "#171717" }}
               >
                 <FontAwesomeIcon icon={faAngleUp} />
               </Button>
