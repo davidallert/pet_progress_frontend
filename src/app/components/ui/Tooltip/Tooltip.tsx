@@ -1,4 +1,4 @@
-import useMousePosition from '@/app/hooks/useMousePosition';
+import useMousePosition from '@/hooks/useMousePosition';
 import styles from './Tooltip.module.css';
 import { useEffect, useState, useRef, useContext } from 'react';
 import TooltipContext from '@/app/context/tooltip/context';

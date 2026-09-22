@@ -2,7 +2,7 @@
 
 import styles from "@/app/profile/page.module.css";
 import formStyles from '@/app/components/forms/form.module.css'
-import axios from '@/app/libraries/axios';
+import axios from '@/libraries/axios';
 import { AxiosError } from 'axios';
 import React, { FormEvent, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation'

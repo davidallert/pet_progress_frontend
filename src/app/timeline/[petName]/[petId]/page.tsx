@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 import React, { useEffect, useState, useContext } from "react";
 import PopupContext from '@/app/context/popup/context';
-import axios from '@/app/libraries/axios';
+import axios from '@/libraries/axios';
 import { AxiosError } from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter } from '@fortawesome/free-solid-svg-icons';
