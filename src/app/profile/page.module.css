@@ -80,8 +80,7 @@
 }
 
 .buttonArea {
-  /* margin: clamp(25px, 5%, 100px); */
-  /* margin: clamp(25px, 20dvh, 100px) clamp(25px, 10dvh, 100px) 0; */
+  margin: clamp(25px, 10dvh, 100px) 0 clamp(12.5px, 5dvh, 50px) 0;
   width: clamp(100px, 100%, 750px);
   padding: 25px;
   display: flex;
@@ -184,7 +183,7 @@
 } */
 
 .manageBtn {
-  margin: clamp(25px, 5dvh, 100px) 0;
+  margin: clamp(25px, 4dvh, 100px) 0;
 }
 
 .timelineSection {
@@ -326,6 +325,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 0;
   }
 
   .buttonGroup {

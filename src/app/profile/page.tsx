@@ -279,10 +279,32 @@ return (
           <div className={styles.eventCol}>
             <h2>Recent Events</h2>
 
+            {expandedPet.events.length === 0 && (
+
+              <div className={styles.event}>
+                <div className={styles.timelineSection}>
+                  <div className={styles.eventIcon}>
+                    <i className="fa-solid fa-paw" />
+                  </div>
+                  <div className={styles.timelineLower} />
+                </div>
+
+                <div className={styles.eventContentContainer}>
+                  <div className={styles.eventContent}>
+                    <h3>You don't have any events yet</h3>
+                    <p>Click on the button below to get started.</p>
+                  </div>
+                </div>
+              </div>
+
+            )}
+
             {expandedPet.events.map((event, index) => (
               <div className={styles.event} key={index}>
                 <div className={styles.timelineSection}>
-                  {index !== 0 && <div className={styles.timelineUpper} />}
+                  {index !== 0 && (
+                    <div className={styles.timelineUpper} />
+                    )}
                   <div className={styles.eventIcon}>
                     <i className="fa-solid fa-paw" />
                   </div>
