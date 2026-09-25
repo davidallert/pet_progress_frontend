@@ -312,7 +312,7 @@ return (
             </div>
 
             {pets.length > 1 && (
-              <h2>{user?.name}'s pets!</h2>
+              <h2>{user?.name}'s pets</h2>
             )}
             {pets.map((pet, index) =>
               index !== expandedRowId ? (
