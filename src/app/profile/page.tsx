@@ -67,7 +67,7 @@ export default function Profile() {
   const removePet = async (id:Number) => {
     try {
       const response = await axios.post('/api/remove/pet', {id: id});
-      // console.log(pets);
+      console.log(pets);
       setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
@@ -89,6 +89,7 @@ export default function Profile() {
         setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
       }
     } finally {
+      window.sessionStorage.removeItem("expandedRowId");
       window.location.reload();
     }
   }
@@ -156,14 +157,13 @@ const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets
 
 return (
   <main className={styles.main}>
-    {/* <h1>{user?.name}'s pets!</h1> */}
-
 
     <section id="cards" className={styles.cards}>
       {expandedPet && expandedRowId !== null && (
         <div className={styles.expandedRow} key={expandedPet.id} id={String(expandedPet.id)}>
           <div className={styles.petCol}>
-            <div className={styles.toggleCollapseBtn}>
+
+            {/* <div className={styles.toggleCollapseBtn}>
               <Button
                 icon={true}
                 onClick={(e) => toggleExpand(expandedRowId)}
@@ -172,11 +172,25 @@ return (
               >
                 <FontAwesomeIcon icon={faAngleUp} />
               </Button>
-            </div>
+            </div> */}
 
             <div className={styles.card}>
               <Svg type="primary" index={expandedRowId} />
               <Svg type="secondary" index={expandedRowId} />
+
+              {expandedPet.imagePath && (
+                <div
+                  className={styles.avatarContainer}
+                  id={`avatar${expandedPet.id}`}
+                >
+                  
+                  <img
+                    className={styles.avatar}
+                    src={expandedPet.imagePath}
+                    alt={expandedPet.name}
+                  />
+                </div>
+              )}
 
               <form className={styles.form}>
                 <div className={styles.iconGroup}>
@@ -197,17 +211,6 @@ return (
                   >
                     <FontAwesomeIcon icon={faXmark} />
                   </Button>
-                </div>
-
-                <div
-                  className={styles.avatarContainer}
-                  id={`avatar${expandedPet.id}`}
-                >
-                  <img
-                    className={styles.avatar}
-                    src={expandedPet.imagePath}
-                    alt={expandedPet.name}
-                  />
                 </div>
 
                 <label className={formStyles.formLabel} htmlFor="name">
@@ -307,31 +310,35 @@ return (
                 <FontAwesomeIcon icon={faFeatherPointed}/>
               </Button>
             </div>
+
+            {pets.length > 1 && (
+              <h2>{user?.name}'s pets!</h2>
+            )}
+            {pets.map((pet, index) =>
+              index !== expandedRowId ? (
+                <div
+                  className={styles.collapsedRow}
+                  onClick={(e) => toggleExpand(index)}
+                  key={pet.id}
+                >
+                  {pet.name}
+
+                  <div className={styles.toggleExpandBtn}>
+                    <Button
+                      icon={true}
+                      onClick={(e) => toggleExpand(index)}
+                      tooltip="Show/hide"
+                      style={{ color: "#000" }}
+                    >
+                      <FontAwesomeIcon icon={faAngleDown} />
+                    </Button>
+                  </div>
+                </div>
+              ) : null
+            )}
+
           </div>
         </div>
-      )}
-
-      {pets.map((pet, index) =>
-        index !== expandedRowId ? (
-          <div
-            className={styles.collapsedRow}
-            onClick={(e) => toggleExpand(index)}
-            key={pet.id}
-          >
-            {pet.name}
-
-            <div className={styles.toggleExpandBtn}>
-              <Button
-                icon={true}
-                onClick={(e) => toggleExpand(index)}
-                tooltip="Show/hide"
-                style={{ color: "#000" }}
-              >
-                <FontAwesomeIcon icon={faAngleDown} />
-              </Button>
-            </div>
-          </div>
-        ) : null
       )}
     </section>
 

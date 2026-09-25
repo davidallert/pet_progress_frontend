@@ -1,12 +1,11 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
   height: 100%;
   min-height: 100dvh;
-  padding: clamp(25px, 5%, 100px);
   overflow: hidden;
 }
 
@@ -16,11 +15,12 @@
 }
 
 .cards {
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 185px;
 }
 
 .expandedRow {
@@ -29,8 +29,6 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-top: clamp(150px, 5%, 250px);
-  margin-bottom: clamp(20px, 10%, 500px);
   gap: clamp(20px, 10dvw, 50px)
 }
 
@@ -39,6 +37,10 @@
   width: 100%;
   border-bottom: 1px solid var(--light);
   padding: 20px 0;
+}
+
+.collapsedRow:nth-of-type(1) {
+  border-bottom: 1px solid var(--foreground);
 }
 
 .toggleCollapseBtn {
@@ -78,7 +80,8 @@
 }
 
 .buttonArea {
-  margin-top: auto;
+  /* margin: clamp(25px, 5%, 100px); */
+  /* margin: clamp(25px, 20dvh, 100px) clamp(25px, 10dvh, 100px) 0; */
   width: clamp(100px, 100%, 750px);
   padding: 25px;
   display: flex;
@@ -181,7 +184,7 @@
 } */
 
 .manageBtn {
-  margin-top: clamp(25px, 5dvh, 100px);
+  margin: clamp(25px, 5dvh, 100px) 0;
 }
 
 .timelineSection {
@@ -251,6 +254,10 @@
     height: 300px;
   }
 
+  .cards {
+    margin-top: 300px;
+  }
+
   .iconGroup {
     top: 0;
     right: 0;
@@ -277,6 +284,10 @@
 }
 
 @media only screen and (max-width: 1024px) {
+  .main {
+    justify-content: space-between;
+  }
+
   .expandedRow {
     flex-direction: column;
     gap: 10dvh;
@@ -307,6 +318,19 @@
     padding: 20px;
     font-size: 5dvw;
   }
+
+  .buttonArea {
+    width: 100%;
+    padding: 25px 0;
+    border-radius: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .buttonGroup {
+    width: 90%;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -327,6 +351,10 @@
 }
 
 @media only screen and (max-width: 425px) {
+  .cards {
+    margin-top: 150px;
+  }
+
   .card {
     padding: 17.5%;
   }
@@ -351,6 +379,11 @@
 }
 
 @media only screen and (max-width: 320px) {
+
+  .cards {
+    margin-top: 100px;
+  }
+
   .card {
     width: 100%;
     padding: 15%;
