@@ -128,6 +128,7 @@ export default function Pet() {
               id="species"
               type="text"
               name="species"
+              placeholder="Dog"
               value={form.species}
               onChange={handleChange}
             />
@@ -136,6 +137,7 @@ export default function Pet() {
               id="breed"
               type="text"
               name="breed"
+              placeholder="Golden Retriever"
               value={form.breed}
               onChange={handleChange}
             />
