@@ -5,6 +5,8 @@
 
 .main {
   display: flex;
+  justify-content: center; /* Remove this when uncommenting */
+  align-items: center; /* Remove this when uncommenting */
   flex-direction: column;
   gap: 1dvw;
   width: 100%;

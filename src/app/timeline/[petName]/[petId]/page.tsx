@@ -144,7 +144,11 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
     }
 
     removeTransitionDuration();
-  }, [stable])
+  }, [stable]);
+
+  return (<main className={styles.main}>
+    <h4>Petfolio is currently under development - features may be missing or incomplete.</h4>
+  </main>)
 
   // Return an empty page, just displaying the header and footer.
   if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
