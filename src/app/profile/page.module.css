@@ -10,6 +10,14 @@
   gap: 10dvh;
 }
 
+.mainInit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
 .loading {
   justify-content: center;
   align-items: center;
@@ -385,4 +393,36 @@
   .avatar, .avatarContainer {
     display: none;
   }
+}
+
+/* Fix inital layout */
+.buttonAreaInit {
+  position: static;
+  bottom: 0;
+  margin: clamp(25px, 10dvh, 100px) 0 clamp(12.5px, 5dvh, 50px) 0;
+  width: clamp(100px, 100%, 750px);
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--foreground);
+  border-radius: var(--radius);
+}
+
+.buttonGroupInit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.buttonGroupInit button {
+  background-color: var(--white);
+  color: var(--foreground);
+}
+
+.buttonGroupInit button:hover {
+  color: var(--white);
 }

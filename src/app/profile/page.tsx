@@ -155,6 +155,21 @@ export default function Profile() {
 
 const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
 
+if (pets.length === 0) {
+  return (
+    <main className={styles.mainInit}>
+    <div className={styles.buttonAreaInit}>
+      <div className={styles.buttonGroupInit}>
+        <Button type="submit" onClick={handleAdd}>
+          Add New Pet
+          <FontAwesomeIcon icon={faOtter}/>
+        </Button>
+      </div>
+    </div>
+    </main>
+  )
+}
+
 return (
   <main className={styles.main}>
 
@@ -359,7 +374,6 @@ return (
 
     <div className={styles.buttonArea}>
       <div className={styles.buttonGroup}>
-        {pets.length > 0 && (
           <Button
             type="submit"
             onClick={handleSave}
@@ -368,7 +382,6 @@ return (
             Save Changes
             <FontAwesomeIcon icon={faCloudArrowUp}/>
           </Button>
-        )}
 
         <Button type="submit" onClick={handleAdd}>
           Add New Pet
