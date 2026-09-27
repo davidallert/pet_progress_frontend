@@ -162,21 +162,19 @@ return (
       {expandedPet && expandedRowId !== null && (
         <div className={styles.expandedRow} key={expandedPet.id} id={String(expandedPet.id)}>
           <div className={styles.petCol}>
-
-            {/* <div className={styles.toggleCollapseBtn}>
-              <Button
-                icon={true}
-                onClick={(e) => toggleExpand(expandedRowId)}
-                tooltip="Show/hide"
-                style={{ color: "#171717" }}
-              >
-                <FontAwesomeIcon icon={faAngleUp} />
-              </Button>
-            </div> */}
-
             <div className={styles.card}>
               <Svg type="primary" index={expandedRowId} />
               <Svg type="secondary" index={expandedRowId} />
+
+                <div className={styles.removePet}>
+                  <Button
+                    icon={true}
+                    tooltip="Remove Pet"
+                    onClick={(e) => handleRemovePet(e, expandedPet.id)}
+                  >
+                    <FontAwesomeIcon icon={faXmark} />
+                  </Button>
+                </div>
 
               {expandedPet.imagePath && (
                 <div
@@ -193,26 +191,6 @@ return (
               )}
 
               <form className={styles.form}>
-                <div className={styles.iconGroup}>
-                  <Button
-                    icon={true}
-                    animation="spinPulse"
-                    tooltip="Add Event"
-                    onClick={(e) => handleAddEvent(e, expandedPet.id)}
-                  >
-                    <FontAwesomeIcon icon={faPlus} />
-                  </Button>
-
-                  <Button
-                    icon={true}
-                    animation="spinPulseReverse"
-                    tooltip="Remove Pet"
-                    onClick={(e) => handleRemovePet(e, expandedPet.id)}
-                  >
-                    <FontAwesomeIcon icon={faXmark} />
-                  </Button>
-                </div>
-
                 <label className={formStyles.formLabel} htmlFor="name">
                   Name
                 </label>
@@ -261,7 +239,7 @@ return (
                   data-index={expandedRowId}
                 />
 
-                <div className={styles.timelineIcon}>
+                {/* <div className={styles.timelineIcon}>
                   <Button
                     icon={true}
                     onClick={(e) =>
@@ -271,13 +249,28 @@ return (
                   >
                     <FontAwesomeIcon icon={faBarsStaggered} />
                   </Button>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
 
           <div className={styles.eventCol}>
-            <h2>Recent Events</h2>
+            <div className={styles.eventHead}>
+              <h2>Recent Events</h2>
+
+              <div className={styles.viewTimeline}>
+                <Button
+                  icon={true}
+                  style={{ color: "#171717" }}
+                  onClick={(e) =>
+                    routeToTimeline(e, expandedPet.name, expandedPet.id)
+                  }
+                  tooltip={`View Timeline`}
+                >
+                  <FontAwesomeIcon icon={faBarsStaggered} />
+                </Button>
+              </div>
+            </div>
 
             {expandedPet.events.length === 0 && (
 
