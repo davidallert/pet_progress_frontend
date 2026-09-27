@@ -125,7 +125,7 @@
 
 .removePet button {
   position: absolute;
-  top: -15%;
+  top: -10%;
   right: -10%;
   color: var(--foreground);
   height: clamp(75px, 5dvw, 100px);
