@@ -147,7 +147,7 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
   }, [stable]);
 
   return (<main className={styles.main}>
-    <h4>Petfolio is currently under development - features may be missing or incomplete.</h4>
+    <h4 style={{textAlign: "center"}}>Petfolio is currently under development - features may be missing or incomplete.</h4>
   </main>)
 
   // Return an empty page, just displaying the header and footer.

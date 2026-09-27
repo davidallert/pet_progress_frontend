@@ -43,7 +43,7 @@
 }
 
 .icon:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .button,
@@ -51,7 +51,7 @@
   border: none;
 }
 
-.submit:hover {
+.submit:hover:not(.icon) {
   background-color: var(--main-dark);
 }
 

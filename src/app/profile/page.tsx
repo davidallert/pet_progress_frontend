@@ -319,6 +319,9 @@ return (
                   {index !== expandedPet.events.length - 1 && (
                     <div className={styles.timelineLower} />
                   )}
+                  {expandedPet.events.length === 1 && (
+                    <div className={styles.timelineLower} />
+                  )}
                 </div>
 
                 <div className={styles.eventContentContainer}>
@@ -334,12 +337,22 @@ return (
               </div>
             ))}
 
-            <div className={styles.manageBtn}>
-              <Button type="submit" onClick={(e) => handleManageEvents(e, expandedPet.id)}>
-                Manage Events
-                <FontAwesomeIcon icon={faFeatherPointed}/>
-              </Button>
-            </div>
+            {expandedPet.events.length === 0 && (
+              <div className={styles.eventBtn}>
+                <Button type="submit" onClick={(e) => handleAddEvent(e, expandedPet.id)}>
+                  Add Event
+                  <FontAwesomeIcon icon={faFeatherPointed}/>
+                </Button>
+              </div>
+            )}
+            {expandedPet.events.length > 0 && (
+              <div className={styles.eventBtn}>
+                <Button type="submit" onClick={(e) => handleManageEvents(e, expandedPet.id)}>
+                  Manage Events
+                  <FontAwesomeIcon icon={faFeatherPointed}/>
+                </Button>
+              </div>
+            )}
 
             {pets.length > 1 && (
               <h2>{user?.name}'s pets</h2>

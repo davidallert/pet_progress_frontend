@@ -212,7 +212,7 @@
 /* .event:nth-child(4n+1) {
 } */
 
-.manageBtn {
+.eventBtn {
   margin: clamp(25px, 4dvh, 100px) 0;
 }
 
