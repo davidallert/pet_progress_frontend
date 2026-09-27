@@ -33,7 +33,7 @@
 .icon {
   all: unset;
   cursor: pointer;
-  font-size: clamp(20px, 2dvw, 50px);
+  font-size: clamp(30px, 1rem, 40px);
   color: var(--white);
   transition: 0.2s;
   display: flex;
