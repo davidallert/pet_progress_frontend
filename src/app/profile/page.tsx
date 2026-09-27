@@ -150,7 +150,7 @@ export default function Profile() {
   }
 
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+  if (loading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
 
 const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
