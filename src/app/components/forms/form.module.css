@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35%;
+  width: 50%;
 }
 
 .formFieldset {
@@ -31,8 +31,8 @@
   background-color: var(--light) !important;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1024px) {
   .form {
-    width: 80%;
+    width: 90%;
   }
 }

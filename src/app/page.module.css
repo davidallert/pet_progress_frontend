@@ -4,9 +4,10 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: min(50px, 5%);
 }
 
 .switchForm {
-  margin: min(50px, 5%);
+  margin-top: min(50px, 5%);
   cursor: pointer;
 }
