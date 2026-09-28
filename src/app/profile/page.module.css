@@ -267,6 +267,8 @@
 .eventContent {
   display: flex;
   flex-direction: column;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .eventDate {
@@ -274,7 +276,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  white-space: nowrap
+  white-space: nowrap;
 }
 
 @media only screen and (min-width: 3000px) {

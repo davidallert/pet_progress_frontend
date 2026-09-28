@@ -62,7 +62,6 @@
     background-color: var(--foreground);
     border-radius: var(--radius);
     padding: 10px 5px;
-    /* color: var(--foreground)!important; */
 }
 
 .thead > .tr,
@@ -97,6 +96,15 @@
 
     .tbody .tr form {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .td {
+        border-right: 0 !important;
+        border-bottom: 1px solid var(--light);
+    }
+
+    .btnCell {
+        height: 100px;
     }
 }
 

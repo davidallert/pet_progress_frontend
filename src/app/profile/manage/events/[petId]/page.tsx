@@ -218,7 +218,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     defaultValue={String(pet.id)}
                   />
 
-                  <div className={styles.td} role="cell">
+                  <div className={`${styles.td} ${styles.btnCell}`} role="cell">
                     <Button
                       type="submit"
                       icon={true}

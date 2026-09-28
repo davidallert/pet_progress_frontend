@@ -15,14 +15,14 @@ import Svg from "../components/ui/Svg/Svg";
 import { useUserData } from '@/hooks/useUserData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark, faPlus, faArrowRight, faAngleDown, faAngleUp, faTimeline, faBarsStaggered, faFeatherPointed, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faOtter, faXmark, faPlus, faArrowRight, faAngleDown, faAngleUp, faTimeline, faBarsStaggered, faFeatherPointed, faCloudArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
 
 export default function Profile() {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
-  const { user, pets, setPets } = useUserData(router, setLoading, setPopup, {eventLimit: 4});
+  const { user, pets, setPets } = useUserData(router, setLoading, setPopup, {eventLimit: 3});
   const [expandedRowId, setExpandedRowId] = useState<number | null>(0);
 
   // Window is not available during server-side rendering in Next.js. useEffect runs after the component mounts.
@@ -144,11 +144,7 @@ export default function Profile() {
 
     window.sessionStorage.setItem("expandedRowId", String(index));
 
-    window.scrollTo({
-      top: 100,
-      left: 100,
-      behavior: "smooth"
-    });
+    window.scrollTo({top: 100, behavior: "smooth"});
   }
 
   // Return an empty page, just displaying the header and footer.
@@ -177,7 +173,7 @@ return (
 
     <section id="cards" className={styles.cards}>
       {expandedPet && expandedRowId !== null && (
-        <div className={styles.expandedRow} key={expandedPet.id} id={String(expandedPet.id)}>
+        <div id={String(expandedPet.id)} className={styles.expandedRow} key={expandedPet.id}>
           <div className={styles.petCol}>
             <div className={styles.card}>
               <Svg type="primary" index={expandedRowId} />
@@ -255,18 +251,6 @@ return (
                   onChange={handleChange}
                   data-index={expandedRowId}
                 />
-
-                {/* <div className={styles.timelineIcon}>
-                  <Button
-                    icon={true}
-                    onClick={(e) =>
-                      routeToTimeline(e, expandedPet.name, expandedPet.id)
-                    }
-                    tooltip={`View ${expandedPet.name}'s Timeline`}
-                  >
-                    <FontAwesomeIcon icon={faBarsStaggered} />
-                  </Button>
-                </div> */}
               </form>
             </div>
           </div>
@@ -275,7 +259,7 @@ return (
             <div className={styles.eventHead}>
               <h2>Recent Events</h2>
 
-              <div className={styles.viewTimeline}>
+              {/* <div className={styles.viewTimeline}>
                 <Button
                   icon={true}
                   style={{ color: "#171717" }}
@@ -286,7 +270,7 @@ return (
                 >
                   <FontAwesomeIcon icon={faBarsStaggered} />
                 </Button>
-              </div>
+              </div> */}
             </div>
 
             {expandedPet.events.length === 0 && (
@@ -365,6 +349,23 @@ return (
                 >
                   {pet.name}
 
+                  {index === expandedRowId &&
+                  
+                  <div className={styles.toggleExpandBtn}>
+                    <Button
+                      icon={true}
+                      onClick={(e) => toggleExpand(index)}
+                      style={{ color: "#000" }}
+                      tooltip="Active"
+                    >
+                      <FontAwesomeIcon icon={faEye} />
+                    </Button>
+                  </div>
+
+                  }
+
+                  {index !== expandedRowId &&
+                  
                   <div className={styles.toggleExpandBtn}>
                     <Button
                       icon={true}
@@ -375,9 +376,10 @@ return (
                       <FontAwesomeIcon icon={faAngleDown} />
                     </Button>
                   </div>
+
+                  }
                 </div>
             )}
-
           </div>
         </div>
       )}

@@ -6,5 +6,5 @@
   align-items: center;
   background-color: var(--foreground);
   color: var(--background);
-  gap: 1dvw;
+  gap: 2dvh;
 }
