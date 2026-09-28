@@ -40,16 +40,44 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
     const formData = new FormData(form);
 
-    const payload = {
-      id: Number(formData.get('id')),
-      title: String(formData.get('title') ?? ''),
-      description: String(formData.get('description') ?? ''),
-      type: String(formData.get('type') ?? ''),
-      date: String(formData.get('date') ?? ''),
-    };
-
-    console.log('upsert', payload);
+    upsertEvent(formData);
   };
+
+  const upsertEvent = async (formData: FormData) => {
+    try {
+
+      const response = await axios.post('/api/event/upsert', formData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+
+      setPopup({messages: [response.data.message], type: 'success'});
+
+      console.log(response);
+
+    } catch (e) {
+
+      if (e instanceof AxiosError) { // Handle Axios errors.
+        console.error('Error response:', e.response?.data);
+        console.error('Error status:', e.response?.status);
+        console.error('Error message:', e.message);
+
+        let errorMessage: any = 'Something went wrong.';
+
+        if (typeof(e.response?.data?.error) === "string") {
+          errorMessage = [e.response?.data?.error];
+        } else if (typeof(e.response?.data?.error)  === "object") {
+          errorMessage = Object.values(e.response?.data?.error);
+        }
+
+        setPopup({messages: errorMessage, type: 'error'});
+
+      } else {
+        console.error('Unexpected error:', e);
+
+        setPopup({messages: ['Something went wrong.'], type: 'error'});
+      }
+    } // finally {}
+  }
 
   const handleRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -71,7 +99,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
   const removeEvent = async (payload: {id: number}) => {
     try {
       const response = await axios.post('/api/event/remove', payload, {
-        headers: {'Content-Type': 'multipart/form-data'},
+        headers: {'Content-Type': 'application/json'},
       });
       setPopup({messages: [response.data.message], type: 'success'});
       console.log(response);
@@ -182,6 +210,12 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     type="hidden"
                     name="id"
                     defaultValue={String(event.id)}
+                  />
+                  <TableInput
+                    id={`petId-${pet.id}`}
+                    type="hidden"
+                    name="pet_id"
+                    defaultValue={String(pet.id)}
                   />
 
                   <div className={styles.td} role="cell">
