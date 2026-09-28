@@ -138,6 +138,8 @@ export default function Profile() {
   }
 
   const toggleExpand = (index: number) => {
+    if (index === expandedRowId) return;
+
     index === expandedRowId ? setExpandedRowId(null) : setExpandedRowId(index);
 
     window.sessionStorage.setItem("expandedRowId", String(index));
@@ -354,11 +356,8 @@ return (
               </div>
             )}
 
-            {pets.length > 1 && (
-              <h2>{user?.name}'s pets</h2>
-            )}
+            <h2>{user?.name}'s pets</h2>
             {pets.map((pet, index) =>
-              index !== expandedRowId ? (
                 <div
                   className={styles.collapsedRow}
                   onClick={(e) => toggleExpand(index)}
@@ -370,14 +369,13 @@ return (
                     <Button
                       icon={true}
                       onClick={(e) => toggleExpand(index)}
-                      tooltip="Show/hide"
+                      tooltip="Expand"
                       style={{ color: "#000" }}
                     >
                       <FontAwesomeIcon icon={faAngleDown} />
                     </Button>
                   </div>
                 </div>
-              ) : null
             )}
 
           </div>
