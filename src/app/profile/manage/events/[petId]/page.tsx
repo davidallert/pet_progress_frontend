@@ -223,6 +223,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                       type="submit"
                       icon={true}
                       onClick={handleUpsert}
+                      tooltip="Save Event"
                     >
                       <FontAwesomeIcon icon={faCloudArrowUp} />
                     </Button>
@@ -230,6 +231,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                       type="submit"
                       icon={true}
                       onClick={handleRemove}
+                      tooltip="Delete Event"
                     >
                       <FontAwesomeIcon icon={faXmark} />
                     </Button>
