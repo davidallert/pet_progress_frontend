@@ -108,7 +108,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
   if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   return (
-    <main className={styles.main}>
+    <main className={styles.main} style={{padding: "min(50px, 5%)"}}>
         <form className={formStyles.form} onSubmit={handleSubmit} encType="multipart/form-data">
         <fieldset className={formStyles.formFieldset}>
           <legend className={formStyles.formLegend}>Add New Event</legend>
