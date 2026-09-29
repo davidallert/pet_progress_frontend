@@ -89,7 +89,25 @@
     font-size: xx-large;
 }
 
+@media screen and (min-width: 1025px) {
+    .td label {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 1024px) {
+    .main {
+        padding: 0;
+    }
+
+    .mainHeader {
+        padding: clamp(25px, 5%, 100px);
+    }
+
+    .td {
+        padding: 0 clamp(25px, 5%, 100px);
+    }
+
     .thead .tr {
         display: none;
     }
@@ -98,13 +116,45 @@
         grid-template-columns: repeat(1, 1fr);
     }
 
-    .td {
+    .td:not(:nth-of-type(6)) {
         border-right: 0 !important;
         border-bottom: 1px solid var(--light);
+        flex-direction: column-reverse;
+        align-items: start;
+        position: relative;
+    }
+
+    .td label {
+        position: absolute;
+        bottom: 0;
+        right: 15px;
+        text-align: right;
+        margin: 0 0 1% 0;
+        font-size: larger;
+        font-weight: 600;
+        background-color: var(--white);
+        border-radius: var(--radius);
+        padding: 0 5px;
+    }
+
+    .td.btnCell {
+        position: relative;
     }
 
     .btnCell {
-        height: 100px;
+        position: absolute;
+        width: 100%;
+        padding: 25px !important;
+        gap: 20px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--foreground);
+    }
+
+    .btnCell button:last-of-type svg {
+        background-color: var(--white);
+        color: var(--foreground);
     }
 }
 

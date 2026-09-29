@@ -25,7 +25,6 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
   if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   const pet: Pet = pets.filter((pet) => pet.id === Number(petId))[0];
-  console.log(pet);
 
   const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
     e.preventDefault();
@@ -166,6 +165,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
               <div className={styles.tr} key={event.id} role="row">
                 <form className={styles.form} encType="multipart/form-data">
                   <div className={styles.td} role="cell">
+                    <label htmlFor="title">Title</label>
                     <TableInput
                       id={`title-${event.id}`}
                       type="text"
@@ -174,6 +174,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     />
                   </div>
                   <div className={styles.td} role="cell">
+                    <label htmlFor="description">Description</label>
                     <TableInput
                       id={`description-${event.id}`}
                       name="description"
@@ -182,6 +183,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     />
                   </div>
                   <div className={styles.td} role="cell">
+                    <label htmlFor="image">Image</label>
                     <TableInput
                       id={`image-${event.id}`}
                       name="image"
@@ -189,6 +191,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     />
                   </div>
                   <div className={styles.td} role="cell">
+                    <label htmlFor="type">Type</label>
                     <TableInput
                       id={`type-${event.id}`}
                       name="type"
@@ -197,6 +200,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     />
                   </div>
                   <div className={styles.td} role="cell">
+                    <label htmlFor="date">Date</label>
                     <TableInput
                       id={`date-${event.id}`}
                       name="date"
