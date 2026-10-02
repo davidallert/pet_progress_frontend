@@ -1,5 +1,6 @@
 .header {
   width: 100dvw;
+  position: relative;
   height: clamp(100px, 10dvh, 200px);
   display: flex;
   justify-content: center;
@@ -7,4 +8,24 @@
   background-color: var(--dark);
   color: var(--white);
   gap: 2dvh;
+  padding: 0 3dvw;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2dvh;
+}
+
+.logo {
+  position: absolute;
+  width: 75px;
+  left: 50px;
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    display: none;
+  }
 }
