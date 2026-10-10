@@ -6,7 +6,10 @@ export default function Header() {
     <header id="header" className={styles.header}>
       <div className={styles.logo}>
         <Link href="/">
-          <img src="/logo-circle-bg.png"></img>
+          <div className={styles.logoGrp}>
+            <img src="/logo-circle-bg.png"></img>
+            <span className={styles.logoTxt}>petfolio.</span>
+          </div>
         </Link>
       </div>
       <div className={styles.links}>

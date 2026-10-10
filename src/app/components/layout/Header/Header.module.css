@@ -20,8 +20,19 @@
 
 .logo {
   position: absolute;
-  width: 75px;
-  left: 50px;
+  width: 50px;
+  left: 80px;
+}
+
+.logoGrp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoTxt {
+  font-size: xx-large;
 }
 
 @media screen and (max-width: 768px) {

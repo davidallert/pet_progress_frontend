@@ -2,8 +2,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import PopupProvider from "./context/popup/provider";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
-import { Petrona } from 'next/font/google';
+import {Petrona, Alegreya_Sans } from "next/font/google";
 import "./globals.css";
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -19,25 +18,15 @@ const petrona = Petrona({
   weight: ['100', '200', '300', '400', '700'],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ['latin'],
-});
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const alegreya = Alegreya_Sans({
+  variable: "--font-alegreya",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "300"
 });
 
 export const metadata: Metadata = {
   title: "Petfolio",
-  description: "",
+  description: "Create your pet's portfolio.",
 };
 
 export default function RootLayout({
@@ -48,7 +37,7 @@ export default function RootLayout({
       <head>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${petrona.variable} ${spaceGrotesk.variable}`}>
+      <body className={`${petrona.variable} ${alegreya.variable}`}>
         <Header />
         <PopupProvider>
           <TooltipProvider>

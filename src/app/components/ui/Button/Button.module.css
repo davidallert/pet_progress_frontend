@@ -11,6 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 400;
 }
 
 .button svg {
@@ -26,7 +27,6 @@
   cursor: pointer;
   background-color: var(--foreground);
   color: var(--white);
-  font-weight: bold;
   text-align: center;
 }
 
