@@ -63,7 +63,6 @@ export default function RegisterForm() {
           {/* Name. */}
           <label className={styles.formLabel} htmlFor="name">Name</label>
           <Input
-            autoFocus
             type="text"
             name="name"
             value={form.name}
