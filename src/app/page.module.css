@@ -4,10 +4,45 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: min(50px, 5%);
+  /* padding: min(50px, 5%); */
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: min(50px, 5%) 0;
 }
 
 .switchForm {
   margin-top: min(50px, 5%);
   cursor: pointer;
+}
+
+.heroImg {
+  cursor: pointer;
+  width: 100dvw;
+}
+
+.cards {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-auto-flow: column;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  gap: 20px;
+}
+
+.card {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  width: 300px;
+  height: 200px;
+  background-color: var(--main);
+  color: var(--white);
+  border-radius: 10px;
 }
