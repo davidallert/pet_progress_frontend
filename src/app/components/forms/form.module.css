@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45%;
+  width: clamp(750px, 50%, 1000px);
 }
 
 .formFieldset {
