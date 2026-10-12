@@ -13,7 +13,7 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.links}>
-        <Link href="/">Sign in / up</Link>|
+        <Link href="/">Home</Link>|
         <Link href="/profile">My Pets</Link>|
         <Link href="/logout">Log out</Link>
       </div>
