@@ -34,7 +34,7 @@ export const useUserData = (
       catch (e) {
         if (isAxiosError(e)) {
           setPopup({messages: [e.response?.data?.message + "."], type: 'error'});
-          router.replace('/');
+          router.replace('/account');
         }
       }
       finally {
