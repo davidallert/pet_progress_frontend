@@ -15,7 +15,7 @@ import Svg from "../components/ui/Svg/Svg";
 import { useUserData } from '@/hooks/useUserData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark, faPlus, faArrowRight, faAngleDown, faAngleUp, faTimeline, faBarsStaggered, faFeatherPointed, faCloudArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faOtter, faXmark, faAngleDown, faBarsStaggered, faFeatherPointed, faCloudArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
 
 export default function Profile() {
   const { setPopup } = useContext(PopupContext);
