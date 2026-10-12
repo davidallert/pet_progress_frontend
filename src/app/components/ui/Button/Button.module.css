@@ -1,7 +1,7 @@
 .button {
   width: 100%;
   /* padding: clamp(10px, 5%, 20px); */
-  height: clamp(50px, 10dvw, 75px);
+  height: clamp(60px, 10dvw, 75px);
   font-size: larger;
   border-radius: var(--radius);
   transition-duration: 0.3s;
@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .button svg {
