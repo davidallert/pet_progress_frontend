@@ -32,6 +32,9 @@ export default function RegisterForm() {
       const response = await axios.post('/api/register', form);
       console.log('Success:', response.data);
       setPopup({messages: [response.data.message], type: 'success', isVisible: true});
+
+      await axios.post('/api/login', form);
+
       router.push('/profile');
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
