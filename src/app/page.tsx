@@ -2,7 +2,7 @@
 
 import styles from "./page.module.css";
 import Link from 'next/link';
-import { faSignal, faComments, faSyringe } from "@fortawesome/free-solid-svg-icons";
+import { faSignal, faComments, faSyringe, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "./components/ui/Button";
 import { useRouter } from 'next/navigation'
@@ -70,7 +70,7 @@ const routeToAccount = (e: MouseEvent<HTMLButtonElement>) => {
         </div>
       </section>
       <div className={styles.btnContainer}>
-        <Button type="submit" onClick={(e) => routeToAccount(e)}>GET STARTED</Button>
+        <Button type="submit" onClick={(e) => routeToAccount(e)}>CREATE YOUR ACCOUNT <FontAwesomeIcon icon={faArrowRight}/></Button>
       </div>
     </main>
   );
