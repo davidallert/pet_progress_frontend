@@ -4,26 +4,28 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /* padding: min(50px, 5%); */
+  padding-bottom: min(50px, 5%);
+  gap: 50px;
 }
 
-.form {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: min(50px, 5%) 0;
+.h1 {
+  font-size: 3em;
+  font-weight: 600;
+  z-index: 1;
 }
 
-.switchForm {
-  margin-top: min(50px, 5%);
-  cursor: pointer;
+.heroContainer {
+  position: relative;
 }
 
 .heroImg {
-  cursor: pointer;
   width: 100dvw;
+}
+
+.wave {
+  position: absolute;
+  bottom: -7%;
+  left: 0;
 }
 
 .cards {
@@ -33,16 +35,119 @@
   justify-content: center;
   align-items: center;
   justify-items: center;
-  gap: 20px;
+  gap: min(50px, 5%);
+  margin: min(50px, 10%) 0;
 }
 
 .card {
-  /* display: flex;
+  position: relative;
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
+  flex-direction: column;
   width: 300px;
   height: 200px;
-  background-color: var(--main);
   color: var(--white);
   border-radius: 10px;
+}
+
+.cardContent {
+  z-index: 3;
+  text-align: center;
+  width: 250px;
+  font-size: 1.3em;
+  padding: 10px;
+}
+
+.cardContent svg {
+  margin-bottom: 10px;
+}
+
+.cardBg {
+  position: absolute;
+  width: 400px;
+  filter: drop-shadow(1px 1px 5px var(--main));
+  z-index: 2;
+}
+
+.card1 .cardBg {
+  opacity: 0.6;
+  inset: -50% -10% auto auto;
+}
+
+.card2 .cardBg {
+  opacity: 0.7;
+  inset: -56% -22% auto auto;
+  transform: rotate(45deg);
+}
+
+.card3 .cardBg {
+  opacity: 0.8;
+  inset: -45% -25% auto auto;
+}
+
+.iconContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  color: var(--foreground);
+}
+
+.iconBlur {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backdrop-filter: blur(5px);
+  z-index: 1;
+}
+
+.btnContainer {
+  width: 30%;
+  padding: 20px;
+  z-index: 4;
+}
+
+.card:hover .cardBg {
+  animation: gelatine 1s;
+}
+
+@keyframes gelatine {
+  from, to { scale: 1 1; }
+  25% { scale: 0.9 1.1; }
+  50% { scale: 1.1 0.9; }
+  75% { scale: 0.95 1.05; }
+}
+
+.wave {
+  animation: wave 1s;
+  transform-origin: bottom;
+}
+
+@keyframes wave {
+  from {
+    transform: scale(1, 0);
+    width: 150%;
+  }
+  to {
+    transform: scale(1,1);
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .cards {
+    grid-auto-flow: row;
+    gap: 100px
+  }
+
+  .btnContainer {
+    width: 100%;
+  }
 }
