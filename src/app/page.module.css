@@ -151,6 +151,12 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .wave {
+    bottom: 0;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .cards {
     grid-auto-flow: row;
