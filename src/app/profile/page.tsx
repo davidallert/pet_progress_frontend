@@ -156,6 +156,8 @@ const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets
 if (pets.length === 0) {
   return (
     <main className={styles.mainInit}>
+    <h1>Welcome {user?.name ? " " + user.name : ""}</h1>
+    <h2>Add a pet to get started</h2>
     <div className={styles.buttonAreaInit}>
       <div className={styles.buttonGroupInit}>
         <Button type="submit" onClick={handleAdd}>
