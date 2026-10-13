@@ -249,7 +249,7 @@ return (
                   id="birthday"
                   type="date"
                   name="birthday"
-                  value={expandedPet.birthday}
+                  value={expandedPet.birthday ? expandedPet.birthday : ''} // Handle null
                   onChange={handleChange}
                   data-index={expandedRowId}
                 />

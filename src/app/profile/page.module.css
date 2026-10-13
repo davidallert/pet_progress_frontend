@@ -90,8 +90,14 @@
   border-radius: var(--radius);
 }
 
-.card form label {
+.card .form label {
   color: var(--white);
+}
+
+.card .form input {
+  height: auto;
+  max-height: 75px;
+  padding: 4%;
 }
 
 .buttonArea {

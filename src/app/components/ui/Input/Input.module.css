@@ -1,7 +1,7 @@
 .input {
   width: 100%;
-  padding: 4%;
-  max-height: 75px;
+  padding: 0 2%;
+  height: clamp(60px, 10dvw, 75px);
   margin: 0 0 5% 0;
   font-size: large;
   transition-duration: 0.3s;
@@ -15,9 +15,28 @@
   filter: drop-shadow(1px 1px 10px #ffffff6b);
 }
 
-
 textarea.input {
   max-height: 200px;
+}
+
+.input[type="file"] {
+  line-height: clamp(60px, 10dvw, 75px);;
+  cursor: pointer;
+}
+
+input::file-selector-button {
+  border: none;
+  background-color: var(--main);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 10px;
+  filter: drop-shadow(1px 1px 5px var(--main));
+  margin-right: 7.5px;
+  cursor: pointer;
+  border-top-left-radius: calc(var(--radius) / 2);
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: calc(var(--radius) / 2);
+  border-bottom-left-radius: var(--radius);
 }
 
 .submit {

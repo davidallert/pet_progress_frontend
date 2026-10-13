@@ -116,7 +116,7 @@ export default function Pet() {
               value={form.name}
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="image">Avatar</label>
+          <label className={formStyles.formLabel} htmlFor="image">Picture</label>
             <Input
               id="image"
               type="file"
