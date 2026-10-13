@@ -1,11 +1,11 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 3dvw;
   width: 100%;
-  height: 100%;
+  min-height: 75dvh;
   padding: clamp(25px, 5%, 100px);
   overflow: hidden;
 }
@@ -23,8 +23,17 @@
     width: clamp(100px, 100%, 300px);
 }
 
+.tableContainer {
+    width: 100%;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
 .table {
     width: 100%;
+    min-width: 1000px;
+    overflow: visible;
 }
 
 .thead {
@@ -33,6 +42,7 @@
     border-top-right-radius: calc(var(--radius) / 3);
     border-bottom-right-radius: calc(var(--radius) / 2);
     background-color: var(--foreground);
+    width: 100%;
 }
 
 .th {
@@ -51,7 +61,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 10px;
+    padding: 0 20px;
 }
 
 .td:last-of-type button:first-of-type svg {
@@ -89,72 +99,17 @@
     font-size: xx-large;
 }
 
-@media screen and (min-width: 1025px) {
-    .td label {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1200px) {
     .main {
-        padding: 0;
+        padding-right: 0;
     }
 
     .mainHeader {
-        padding: clamp(25px, 5%, 100px);
+        padding-right: clamp(25px, 5%, 100px);
     }
 
-    .td {
-        padding: 0 clamp(25px, 5%, 100px);
-    }
-
-    .thead .tr {
-        display: none;
-    }
-
-    .tbody .tr form {
-        grid-template-columns: repeat(1, 1fr);
-    }
-
-    .td:not(:nth-of-type(6)) {
-        border-right: 0 !important;
-        border-bottom: 1px solid var(--light);
-        flex-direction: column-reverse;
-        align-items: start;
-        position: relative;
-    }
-
-    .td label {
-        position: absolute;
-        bottom: 0;
-        right: 15px;
-        text-align: right;
-        margin: 0 0 1% 0;
-        font-size: larger;
-        font-weight: 600;
-        background-color: var(--white);
-        border-radius: var(--radius);
-        padding: 0 5px;
-    }
-
-    .td.btnCell {
-        position: relative;
-    }
-
-    .btnCell {
-        position: absolute;
-        width: 100%;
-        padding: 25px !important;
-        gap: 20px !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--foreground);
-    }
-
-    .btnCell button:last-of-type svg {
-        background-color: var(--white);
-        color: var(--foreground);
+    .table * {
+        font-size: large;
     }
 }
 

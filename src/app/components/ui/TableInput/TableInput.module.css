@@ -1,7 +1,7 @@
 .input {
   width: 100%;
-  height: auto;
-  padding: clamp(10px, 10dvh, 50px) clamp(10px, 5dvw, 20px);
+  height: 75px;
+  padding: 0 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -13,14 +13,33 @@ textarea.input::-webkit-scrollbar {
   display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 textarea.input {
+  /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+
+  resize: vertical;
+  padding-top: 27px; /* Suboptimal vertical centering fix */
 }
 
-textarea.input {
-  resize: vertical;
+.input[type="file"] {
+  line-height: 75px;
+  cursor: pointer;
+}
+
+input::file-selector-button {
+  border: none;
+  background-color: var(--main);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 10px;
+  /* filter: drop-shadow(1px 1px 5px var(--main)); */
+  margin-right: 7.5px;
+  cursor: pointer;
+  border-top-left-radius: calc(var(--radius) / 2);
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: calc(var(--radius) / 2);
+  border-bottom-left-radius: var(--radius);
 }
 
 .submit {

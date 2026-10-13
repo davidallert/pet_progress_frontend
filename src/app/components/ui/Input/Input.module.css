@@ -4,9 +4,10 @@
   height: clamp(60px, 10dvw, 75px);
   margin: 0 0 5% 0;
   font-size: large;
-  transition-duration: 0.3s;
-  animation-name: autofillFix;
-  animation-fill-mode: both;
+  transition-property: background-color, filter;
+  transition-duration: 0.5s;
+  /* animation-name: autofillFix; */
+  /* animation-fill-mode: both; */
   background-color: var(--white);
   border-top-left-radius: calc(var(--radius) / 2);
   border-top-right-radius: var(--radius);
@@ -16,7 +17,13 @@
 }
 
 textarea.input {
-  max-height: 200px;
+  height: auto;
+  padding: 4%;
+  resize: vertical;
+}
+
+textarea.input::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
 .input[type="file"] {
@@ -59,7 +66,8 @@ input::file-selector-button {
 .input:hover,
 .submit:hover {
   filter: drop-shadow(1px 1px 5px #c3c3c36b);
-  transition-duration: 0.3s;
+  transition-property: background-color, filter;
+  transition-duration: 0.5s;
 }
 
 /* @media screen and (max-width: 1920px) {
