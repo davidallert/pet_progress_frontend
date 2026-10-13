@@ -68,6 +68,7 @@ export default function RegisterForm() {
           <Input
             type="text"
             name="name"
+            autoFocus
             value={form.name}
             onChange={handleChange}
           />
