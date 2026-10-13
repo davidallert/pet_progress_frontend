@@ -22,7 +22,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
   const { user, pets, setPets } = useUserData(router, setLoading, setPopup, {eventLimit: 100});
 
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+  if (loading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   const pet: Pet = pets.filter((pet) => pet.id === Number(petId))[0];
 
