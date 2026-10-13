@@ -69,6 +69,7 @@
   width: 400px;
   filter: drop-shadow(1px 1px 5px var(--main));
   z-index: 2;
+
 }
 
 .card1 .cardBg {
@@ -115,7 +116,15 @@
   z-index: 4;
 }
 
-.card:hover .cardBg {
+.gelatine {
+  animation: gelatine 1s;
+}
+
+.card1 .cardBg { animation-delay: 0.25s; }
+.card2 .cardBg { animation-delay: 0.5s; }
+.card3 .cardBg { animation-delay: 0.75s; }
+
+.observed:hover .cardBg {
   animation: gelatine 1s;
 }
 

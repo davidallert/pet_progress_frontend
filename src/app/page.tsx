@@ -6,15 +6,50 @@ import { faSignal, faComments, faSyringe, faArrowRight } from "@fortawesome/free
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "./components/ui/Button";
 import { useRouter } from 'next/navigation'
-import type { MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 
 export default function Home() {
+
 const router = useRouter()
 
 const routeToAccount = (e: MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
   router.replace("/account");
 };
+
+useEffect(() => {
+  const callback = (entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const background = entry.target;
+
+        observer.unobserve(background);
+
+        background.addEventListener("animationend", () => {
+            background.parentElement?.classList.add(styles.observed);
+            background.classList.remove(styles.gelatine);
+          },
+          { once: true }
+        );
+
+        background.classList.add(styles.gelatine);
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(callback, {
+    threshold: 0.1,
+  });
+
+  const cards = document.querySelectorAll(`.${styles.cardBg}`);
+
+  cards.forEach((card) => {
+    observer.observe(card);
+  });
+
+  return () => observer.disconnect(); // Clean up the observer when the component unmounts
+}, []);
+
 
   return (
     <main className={styles.main}>
