@@ -30,10 +30,11 @@
     border: 1px solid var(--light);
     scrollbar-width: none;
     margin-top: 10px;
-    position-area: bottom span-right; /* Anchors the top edge of the window to the bottom edge of the select */
+    /* position-area: bottom span-right; /* Anchors the top edge of the window to the bottom edge of the select */
     position-try-fallbacks: none;
     min-height: 500px;
     line-height: clamp(60px, 10dvw, 75px);
+
 }
 
 .option {
@@ -42,4 +43,11 @@
 
 .option:hover {
     background-color: var(--light) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .select::picker(select) {
+    min-width: 250px;
+    position-area: bottom center;
+  }
 }
