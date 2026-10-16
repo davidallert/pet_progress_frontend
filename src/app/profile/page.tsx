@@ -12,6 +12,7 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Svg from "../components/ui/Svg/Svg";
 import Select from "../components/ui/Select";
+import speciesIcons from "@/libraries/species-icons";
 
 import getErrorMessages from "@/utils/getErrorMessages";
 
@@ -30,6 +31,7 @@ export default function Profile() {
   const { user, pets, setPets, userLoading, userError } = useUserData({eventLimit: 3});
   const { species, speciesLoading, speciesError } = useSpecies();
 
+  console.log(pets)
   // States.
   const [expandedRowId, setExpandedRowId] = useState<number | null>(0);
   const [loadingSave, setLoadingSave] = useState(false);
@@ -113,17 +115,22 @@ export default function Profile() {
     const index = Number(e.target.getAttribute('data-index'));
     const { name, value } = e.target;
 
-    updatePets(index, name, value);
+    const iconKey = e.target.selectedOptions[0].dataset.icon;
 
-    // const iconKey = e.target.selectedOptions[0].dataset.icon;
-
-    // if (iconKey) setSelectedSpeciesIcon(iconKey);
+    updatePets(index, name, value, iconKey);
   };
 
-  const updatePets = (index: number, name: string, value: string) => {
+  const updatePets = (index: number, name: string, value: string, iconKey: string | void) => {
     setPets(prev => {
       const updatedPets = [...prev];
       updatedPets[index] = { ...updatedPets[index], [name] : value }
+
+      if (iconKey) {
+        updatedPets[index] = {
+          ...updatedPets[index],
+          species: { ...updatedPets[index].species, icon: iconKey },
+        }
+      }
 
       return updatedPets;
     })
@@ -241,6 +248,7 @@ export default function Profile() {
 
                   <label className={formStyles.formLabel} htmlFor="species_id">
                     Species
+                    <FontAwesomeIcon icon={speciesIcons[expandedPet.species.icon]}/>
                   </label>
                   <Select
                     id="species_id"

@@ -6,6 +6,10 @@ interface Pet {
   birthday: string,
   species_id: number,
   breed: string,
+  species: {
+    icon: string,
+    name: string
+  }
   events: Array<{
     date: string,
     id: number,
