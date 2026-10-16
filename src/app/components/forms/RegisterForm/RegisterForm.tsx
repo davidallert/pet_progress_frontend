@@ -29,11 +29,11 @@ export default function RegisterForm() {
     try {
       setLoading(true);
       await axios.get('/sanctum/csrf-cookie');
-      const response = await axios.post('/api/register', form);
+      const response = await axios.post('/register', form);
       console.log('Success:', response.data);
       setPopup({messages: [response.data.message], type: 'success', isVisible: true});
 
-      await axios.post('/api/login', form);
+      await axios.post('/login', form);
 
       router.push('/profile');
     } catch (error) {

@@ -6,8 +6,6 @@
   font-size: large;
   transition-property: background-color, filter;
   transition-duration: 0.5s;
-  /* animation-name: autofillFix; */
-  /* animation-fill-mode: both; */
   background-color: var(--white);
   border-top-left-radius: calc(var(--radius) / 2);
   border-top-right-radius: var(--radius);

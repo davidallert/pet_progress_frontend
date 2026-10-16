@@ -28,8 +28,10 @@ export default function LoginForm() {
     try {
       setLoading(true);
       await axios.get('/sanctum/csrf-cookie');
-      const response = await axios.post('/api/login', form);
+      const response = await axios.post('/login', form);
+
       console.log('Success:', response.data.message);
+
       setPopup({messages: [response.data.message], type: 'success'});
       router.push('/profile');
     } catch (e) {
@@ -46,11 +48,11 @@ export default function LoginForm() {
           errorMessage = Object.values(e.response?.data?.error);
         }
 
-        setPopup({messages: errorMessage, type: 'error', isVisible: true});
+        setPopup({messages: [errorMessage], type: 'error'});
       } else {
         // Handle non-Axios errors.
         console.error('Unexpected error:', e);
-        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
+        setPopup({messages: ['Something went wrong.'], type: 'error'});
       }
     } finally {
       setLoading(false);

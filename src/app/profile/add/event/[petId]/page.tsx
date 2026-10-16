@@ -31,7 +31,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axios.get('/api/user/data', { withCredentials: true });
+        const response = await axios.get('/user/data', { withCredentials: true });
         setForm({...form, user_id: response.data.user.id, pet_id: petId});
         setLoading(false);
       }
@@ -48,7 +48,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
   const addEvent = async (formData: FormData) => {
     try {
       setLoadingAdd(true);
-      const response = await axios.post('/api/event/add', formData, {
+      const response = await axios.post('/event/add', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
       console.log(response);
@@ -112,7 +112,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
         <form className={formStyles.form} onSubmit={handleSubmit} encType="multipart/form-data">
         <fieldset className={formStyles.formFieldset}>
           <legend className={formStyles.formLegend}>Add New Event</legend>
-          <label className={formStyles.formLabel} htmlFor="title">Title</label>
+          <label className={formStyles.formLabel} htmlFor="title">Title*</label>
             <Input
               id="title"
               type="text"
@@ -135,7 +135,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
               name="image"
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="type">Type</label>
+          <label className={formStyles.formLabel} htmlFor="type">Category</label>
             <Input
               id="type"
               type="text"

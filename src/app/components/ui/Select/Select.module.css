@@ -1,0 +1,45 @@
+.select {
+  width: 100%;
+  height: clamp(60px, 10dvw, 75px);
+  margin: 0 0 5% 0;
+  font-size: large;
+  transition-property: background-color, filter;
+  transition-duration: 0.5s;
+  background-color: var(--white);
+  border-top-left-radius: calc(var(--radius) / 2);
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: calc(var(--radius) / 2);
+  border-bottom-left-radius: var(--radius);
+  filter: drop-shadow(1px 1px 10px #ffffff6b);
+  line-height: clamp(60px, 10dvw, 75px);
+  cursor: pointer;
+  padding: 0 2%;
+  appearance: base-select;
+  border: none;
+}
+
+.select:hover {
+  filter: drop-shadow(1px 1px 5px #c3c3c36b);
+  transition-property: background-color, filter;
+  transition-duration: 0.5s;
+}
+
+.select::picker(select) {
+    appearance: base-select;
+    border-radius: var(--radius);
+    border: 1px solid var(--light);
+    scrollbar-width: none;
+    margin-top: 10px;
+    position-area: bottom span-right; /* Anchors the top edge of the window to the bottom edge of the select */
+    position-try-fallbacks: none;
+    min-height: 500px;
+    line-height: clamp(60px, 10dvw, 75px);
+}
+
+.option {
+    padding: 0 10px;
+}
+
+.option:hover {
+    background-color: var(--light) !important;
+}

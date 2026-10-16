@@ -1,10 +1,10 @@
 interface Pet {
   id: number,
-  userId: number,
+  user_id: number,
   name: string,
   imagePath: string,
   birthday: string,
-  species: string,
+  species_id: number,
   breed: string,
   events: Array<{
     date: string,

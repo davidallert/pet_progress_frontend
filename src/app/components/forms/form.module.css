@@ -18,7 +18,9 @@
 }
 
 .formLabel {
-  display: block;
+  display: flex; /* Prev: block */
+  align-items: center;
+  gap: 2.5px;
   width: 100%;
   padding: 0 2% 0.5%;
   margin: 0 0 1% 0;
@@ -27,7 +29,8 @@
 }
 
 .form input,
-.form textarea {
+.form textarea,
+.form select {
   background-color: var(--light) !important;
 }
 

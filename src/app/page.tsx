@@ -1,12 +1,15 @@
 "use client";
 
 import styles from "./page.module.css";
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
+import { useEffect, type MouseEvent } from "react";
+
+import Button from "./components/ui/Button";
+
 import { faSignal, faComments, faListCheck, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "./components/ui/Button";
-import { useRouter } from 'next/navigation'
-import { useEffect, useState, type MouseEvent } from "react";
 
 export default function Home() {
 

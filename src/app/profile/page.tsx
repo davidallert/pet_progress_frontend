@@ -11,19 +11,43 @@ import PopupContext from '@/app/context/popup/context';
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Svg from "../components/ui/Svg/Svg";
+import Select from "../components/ui/Select";
+
+import getErrorMessages from "@/utils/getErrorMessages";
 
 import { useUserData } from '@/hooks/useUserData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter, faXmark, faAngleDown, faBarsStaggered, faFeatherPointed, faCloudArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
+import { useSpecies } from "@/hooks/useSpecies";
 
 export default function Profile() {
+  // Context.
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [loadingSave, setLoadingSave] = useState(false);
-  const { user, pets, setPets } = useUserData(router, setLoading, setPopup, {eventLimit: 3});
+
+  // Hooks.
+  const { user, pets, setPets, userLoading, userError } = useUserData({eventLimit: 3});
+  const { species, speciesLoading, speciesError } = useSpecies();
+
+  // States.
   const [expandedRowId, setExpandedRowId] = useState<number | null>(0);
+  const [loadingSave, setLoadingSave] = useState(false);
+  const loading = userLoading || speciesLoading;
+  const hasError = userError != null || speciesError != null;
+  const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
+
+  // Error handling.
+  const errors = [userError, speciesError];
+
+  useEffect(() => {
+    if (loading || errors.length === 0) return;
+
+    setPopup({ messages: getErrorMessages(errors), type: 'error'});
+
+    const anyErrors = errors.some((e) => e != null)
+    if (anyErrors) router.replace("/account");
+  }, [loading, userError, speciesError]);
 
   // Window is not available during server-side rendering in Next.js. useEffect runs after the component mounts.
   useEffect(() => {
@@ -36,29 +60,14 @@ export default function Profile() {
   const savePets = async () => {
     try {
       setLoadingSave(true);
+
       const data = {pets: pets};
-      const response = await axios.post('/api/upsert/pet', data);
-      setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
-    } catch (error) {
-      if (error instanceof AxiosError) { // Handle Axios errors.
-        console.error('Error response:', error.response?.data);
-        console.error('Error status:', error.response?.status);
-        console.error('Error message:', error.message);
-        let errorMessage: any = 'Something went wrong.';
 
-        // Deal with the response from the server.
-        if (typeof(error.response?.data?.error) === "string") {
-          errorMessage = [error.response?.data?.error];
-        } else if (typeof(error.response?.data?.error)  === "object") {
-          errorMessage = Object.values(error.response?.data?.error);
-        }
+      const response = await axios.post('/upsert/pet', data);
 
-        setPopup({messages: [errorMessage], type: 'error', isVisible: true});
-      } else {
-        // Handle non-Axios errors.
-        console.error('Unexpected error:', error);
-        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
-      }
+      setPopup({messages: [response?.data?.message], type: 'success'});
+    } catch (e) {
+        setPopup({ messages: getErrorMessages([e]), type: 'error'});
     } finally {
       setLoadingSave(false);
     }
@@ -66,8 +75,7 @@ export default function Profile() {
 
   const removePet = async (id:Number) => {
     try {
-      const response = await axios.post('/api/remove/pet', {id: id});
-      console.log(pets);
+      const response = await axios.post('/remove/pet', {id: id});
       setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
@@ -98,9 +106,25 @@ export default function Profile() {
     const index = Number(e.target.getAttribute('data-index'));
     const { name, value } = e.target;
 
+    updatePets(index, name, value);
+  };
+
+  const handleSpeciesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const index = Number(e.target.getAttribute('data-index'));
+    const { name, value } = e.target;
+
+    updatePets(index, name, value);
+
+    // const iconKey = e.target.selectedOptions[0].dataset.icon;
+
+    // if (iconKey) setSelectedSpeciesIcon(iconKey);
+  };
+
+  const updatePets = (index: number, name: string, value: string) => {
     setPets(prev => {
       const updatedPets = [...prev];
-      updatedPets[index] = { ...updatedPets[index], [name] : value } // Use brackets around e.g. "name" when inserting a variable dynamically.
+      updatedPets[index] = { ...updatedPets[index], [name] : value }
+
       return updatedPets;
     })
   };
@@ -148,262 +172,259 @@ export default function Profile() {
   }
 
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+  if (loading || hasError || !user) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
-
-const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
-
-if (pets.length === 0) {
-  return (
-    <main className={styles.mainInit}>
-    <h1>Welcome {user?.name ? " " + user.name : ""}</h1>
-    <h2>Add a pet to get started</h2>
-    <div className={styles.buttonAreaInit}>
-      <div className={styles.buttonGroupInit}>
-        <Button type="submit" onClick={handleAdd}>
-          Add New Pet
-          <FontAwesomeIcon icon={faOtter}/>
-        </Button>
+  if (pets.length === 0) {
+    return (
+      <main className={styles.mainInit}>
+      <h1>Welcome {user?.name ? " " + user.name : ""}</h1>
+      <h2>Add a pet to get started</h2>
+      <div className={styles.buttonAreaInit}>
+        <div className={styles.buttonGroupInit}>
+          <Button type="submit" onClick={handleAdd}>
+            Add New Pet
+            <FontAwesomeIcon icon={faOtter}/>
+          </Button>
+        </div>
       </div>
-    </div>
-    </main>
-  )
-}
+      </main>
+    )
+  }
 
-return (
-  <main className={styles.main}>
+  return (
+    <main className={styles.main}>
 
-    <section id="cards" className={styles.cards}>
-      {expandedPet && expandedRowId !== null && (
-        <div id={String(expandedPet.id)} className={styles.expandedRow} key={expandedPet.id}>
-          <div className={styles.petCol}>
-            <div className={styles.card}>
-              <Svg type="primary" index={expandedRowId} />
-              <Svg type="secondary" index={expandedRowId} />
+      <section id="cards" className={styles.cards}>
+        {expandedPet && expandedRowId !== null && (
+          <div id={String(expandedPet.id)} className={styles.expandedRow} key={expandedPet.id}>
+            <div className={styles.petCol}>
+              <div className={styles.card}>
+                <Svg type="primary" index={expandedRowId} />
+                <Svg type="secondary" index={expandedRowId} />
 
-                <div className={styles.removePet}>
+                  <div className={styles.removePet}>
+                    <Button
+                      icon={true}
+                      tooltip="Remove Pet"
+                      onClick={(e) => handleRemovePet(e, expandedPet.id)}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </Button>
+                  </div>
+
+                {expandedPet.imagePath && (
+                  <div
+                    className={styles.avatarContainer}
+                    id={`avatar${expandedPet.id}`}
+                  >
+                    
+                    <img
+                      className={styles.avatar}
+                      src={expandedPet.imagePath}
+                      alt={expandedPet.name}
+                    />
+                  </div>
+                )}
+
+                <form className={styles.form}>
+                  <label className={formStyles.formLabel} htmlFor="name">
+                    Name
+                  </label>
+                  <Input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value={expandedPet.name}
+                    onChange={handleChange}
+                    data-index={expandedRowId}
+                  />
+
+                  <label className={formStyles.formLabel} htmlFor="species_id">
+                    Species
+                  </label>
+                  <Select
+                    id="species_id"
+                    name="species_id"
+                    onChange={handleSpeciesChange}
+                    options={species}
+                    data-index={expandedRowId}
+                    defaultValue={expandedPet.species_id}
+                  />
+
+                  <label className={formStyles.formLabel} htmlFor="breed">
+                    Breed
+                  </label>
+                  <Input
+                    id="breed"
+                    type="text"
+                    name="breed"
+                    value={expandedPet.breed ? expandedPet.breed : ''}
+                    onChange={handleChange}
+                    data-index={expandedRowId}
+                  />
+
+                  <label className={formStyles.formLabel} htmlFor="birthday">
+                    Birthday
+                  </label>
+                  <Input
+                    id="birthday"
+                    type="date"
+                    name="birthday"
+                    value={expandedPet.birthday ? expandedPet.birthday : ''} // Handle null
+                    onChange={handleChange}
+                    data-index={expandedRowId}
+                  />
+                </form>
+              </div>
+            </div>
+
+            <div className={styles.eventCol}>
+              <div className={styles.eventHead}>
+                <h2>Recent Events</h2>
+
+                {/* <div className={styles.viewTimeline}>
                   <Button
                     icon={true}
-                    tooltip="Remove Pet"
-                    onClick={(e) => handleRemovePet(e, expandedPet.id)}
+                    style={{ color: "#171717" }}
+                    onClick={(e) =>
+                      routeToTimeline(e, expandedPet.name, expandedPet.id)
+                    }
+                    tooltip={`View Timeline`}
                   >
-                    <FontAwesomeIcon icon={faXmark} />
+                    <FontAwesomeIcon icon={faBarsStaggered} />
                   </Button>
+                </div> */}
+              </div>
+
+              {expandedPet.events.length === 0 && (
+
+                <div className={styles.event}>
+                  <div className={styles.timelineSection}>
+                    <div className={styles.eventIcon}>
+                      <i className="fa-solid fa-paw" />
+                    </div>
+                    <div className={styles.timelineLower} />
+                  </div>
+
+                  <div className={styles.eventContentContainer}>
+                    <div className={styles.eventContent}>
+                      <h3>You don't have any events yet</h3>
+                      <p>Click on the button below to get started.</p>
+                    </div>
+                  </div>
                 </div>
 
-              {expandedPet.imagePath && (
-                <div
-                  className={styles.avatarContainer}
-                  id={`avatar${expandedPet.id}`}
-                >
-                  
-                  <img
-                    className={styles.avatar}
-                    src={expandedPet.imagePath}
-                    alt={expandedPet.name}
-                  />
+              )}
+
+              {expandedPet.events.map((event, index) => (
+                <div className={styles.event} key={index}>
+                  <div className={styles.timelineSection}>
+                    {index !== 0 && (
+                      <div className={styles.timelineUpper} />
+                      )}
+                    <div className={styles.eventIcon}>
+                      <i className="fa-solid fa-paw" />
+                    </div>
+                    {index !== expandedPet.events.length - 1 && (
+                      <div className={styles.timelineLower} />
+                    )}
+                    {expandedPet.events.length === 1 && (
+                      <div className={styles.timelineLower} />
+                    )}
+                  </div>
+
+                  <div className={styles.eventContentContainer}>
+                    <div className={styles.eventContent}>
+                      <h3>{event.title}</h3>
+                      <p>{event.description}</p>
+                    </div>
+                    <div className={styles.eventDate}>
+                      <p>{event.date}</p>
+                      <p>{event.date ? `(${new Date(event.date).toDateString()})` : ""}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {expandedPet.events.length === 0 && (
+                <div className={styles.eventBtn}>
+                  <Button type="submit" onClick={(e) => handleAddEvent(e, expandedPet.id)}>
+                    Add Event
+                    <FontAwesomeIcon icon={faFeatherPointed}/>
+                  </Button>
+                </div>
+              )}
+              {expandedPet.events.length > 0 && (
+                <div className={styles.eventBtn}>
+                  <Button type="submit" onClick={(e) => handleManageEvents(e, expandedPet.id)}>
+                    Manage Events
+                    <FontAwesomeIcon icon={faFeatherPointed}/>
+                  </Button>
                 </div>
               )}
 
-              <form className={styles.form}>
-                <label className={formStyles.formLabel} htmlFor="name">
-                  Name
-                </label>
-                <Input
-                  id="name"
-                  type="text"
-                  name="name"
-                  value={expandedPet.name}
-                  onChange={handleChange}
-                  data-index={expandedRowId}
-                />
+              <h2>{user?.name}'s pets</h2>
+              {pets.map((pet, index) =>
+                  <div
+                    className={styles.collapsedRow}
+                    onClick={(e) => toggleExpand(index)}
+                    key={pet.id}
+                  >
+                    {pet.name}
 
-                <label className={formStyles.formLabel} htmlFor="species">
-                  Species
-                </label>
-                <Input
-                  id="species"
-                  type="text"
-                  name="species"
-                  value={expandedPet.species}
-                  onChange={handleChange}
-                  data-index={expandedRowId}
-                />
+                    {index === expandedRowId &&
+                    
+                    <div className={styles.toggleExpandBtn}>
+                      <Button
+                        icon={true}
+                        onClick={(e) => toggleExpand(index)}
+                        style={{ color: "#000" }}
+                        tooltip="Active"
+                      >
+                        <FontAwesomeIcon icon={faEye} />
+                      </Button>
+                    </div>
 
-                <label className={formStyles.formLabel} htmlFor="breed">
-                  Breed
-                </label>
-                <Input
-                  id="breed"
-                  type="text"
-                  name="breed"
-                  value={expandedPet.breed}
-                  onChange={handleChange}
-                  data-index={expandedRowId}
-                />
+                    }
 
-                <label className={formStyles.formLabel} htmlFor="birthday">
-                  Birthday
-                </label>
-                <Input
-                  id="birthday"
-                  type="date"
-                  name="birthday"
-                  value={expandedPet.birthday ? expandedPet.birthday : ''} // Handle null
-                  onChange={handleChange}
-                  data-index={expandedRowId}
-                />
-              </form>
+                    {index !== expandedRowId &&
+
+                    <div className={styles.toggleExpandBtn}>
+                      <Button
+                        icon={true}
+                        onClick={(e) => toggleExpand(index)}
+                        tooltip="Expand"
+                        style={{ color: "#000" }}
+                      >
+                        <FontAwesomeIcon icon={faAngleDown} />
+                      </Button>
+                    </div>
+
+                    }
+                  </div>
+              )}
             </div>
           </div>
+        )}
+      </section>
 
-          <div className={styles.eventCol}>
-            <div className={styles.eventHead}>
-              <h2>Recent Events</h2>
+      <div className={styles.buttonArea}>
+        <div className={styles.buttonGroup}>
+            <Button
+              type="submit"
+              onClick={handleSave}
+              loading={loadingSave}
+            >
+              Save Changes
+              <FontAwesomeIcon icon={faCloudArrowUp}/>
+            </Button>
 
-              {/* <div className={styles.viewTimeline}>
-                <Button
-                  icon={true}
-                  style={{ color: "#171717" }}
-                  onClick={(e) =>
-                    routeToTimeline(e, expandedPet.name, expandedPet.id)
-                  }
-                  tooltip={`View Timeline`}
-                >
-                  <FontAwesomeIcon icon={faBarsStaggered} />
-                </Button>
-              </div> */}
-            </div>
-
-            {expandedPet.events.length === 0 && (
-
-              <div className={styles.event}>
-                <div className={styles.timelineSection}>
-                  <div className={styles.eventIcon}>
-                    <i className="fa-solid fa-paw" />
-                  </div>
-                  <div className={styles.timelineLower} />
-                </div>
-
-                <div className={styles.eventContentContainer}>
-                  <div className={styles.eventContent}>
-                    <h3>You don't have any events yet</h3>
-                    <p>Click on the button below to get started.</p>
-                  </div>
-                </div>
-              </div>
-
-            )}
-
-            {expandedPet.events.map((event, index) => (
-              <div className={styles.event} key={index}>
-                <div className={styles.timelineSection}>
-                  {index !== 0 && (
-                    <div className={styles.timelineUpper} />
-                    )}
-                  <div className={styles.eventIcon}>
-                    <i className="fa-solid fa-paw" />
-                  </div>
-                  {index !== expandedPet.events.length - 1 && (
-                    <div className={styles.timelineLower} />
-                  )}
-                  {expandedPet.events.length === 1 && (
-                    <div className={styles.timelineLower} />
-                  )}
-                </div>
-
-                <div className={styles.eventContentContainer}>
-                  <div className={styles.eventContent}>
-                    <h3>{event.title}</h3>
-                    <p>{event.description}</p>
-                  </div>
-                  <div className={styles.eventDate}>
-                    <p>{event.date}</p>
-                    <p>{event.date ? `(${new Date(event.date).toDateString()})` : ""}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {expandedPet.events.length === 0 && (
-              <div className={styles.eventBtn}>
-                <Button type="submit" onClick={(e) => handleAddEvent(e, expandedPet.id)}>
-                  Add Event
-                  <FontAwesomeIcon icon={faFeatherPointed}/>
-                </Button>
-              </div>
-            )}
-            {expandedPet.events.length > 0 && (
-              <div className={styles.eventBtn}>
-                <Button type="submit" onClick={(e) => handleManageEvents(e, expandedPet.id)}>
-                  Manage Events
-                  <FontAwesomeIcon icon={faFeatherPointed}/>
-                </Button>
-              </div>
-            )}
-
-            <h2>{user?.name}'s pets</h2>
-            {pets.map((pet, index) =>
-                <div
-                  className={styles.collapsedRow}
-                  onClick={(e) => toggleExpand(index)}
-                  key={pet.id}
-                >
-                  {pet.name}
-
-                  {index === expandedRowId &&
-                  
-                  <div className={styles.toggleExpandBtn}>
-                    <Button
-                      icon={true}
-                      onClick={(e) => toggleExpand(index)}
-                      style={{ color: "#000" }}
-                      tooltip="Active"
-                    >
-                      <FontAwesomeIcon icon={faEye} />
-                    </Button>
-                  </div>
-
-                  }
-
-                  {index !== expandedRowId &&
-                  
-                  <div className={styles.toggleExpandBtn}>
-                    <Button
-                      icon={true}
-                      onClick={(e) => toggleExpand(index)}
-                      tooltip="Expand"
-                      style={{ color: "#000" }}
-                    >
-                      <FontAwesomeIcon icon={faAngleDown} />
-                    </Button>
-                  </div>
-
-                  }
-                </div>
-            )}
-          </div>
-        </div>
-      )}
-    </section>
-
-    <div className={styles.buttonArea}>
-      <div className={styles.buttonGroup}>
-          <Button
-            type="submit"
-            onClick={handleSave}
-            loading={loadingSave}
-          >
-            Save Changes
-            <FontAwesomeIcon icon={faCloudArrowUp}/>
+          <Button type="submit" onClick={handleAdd}>
+            Add New Pet
+            <FontAwesomeIcon icon={faOtter}/>
           </Button>
-
-        <Button type="submit" onClick={handleAdd}>
-          Add New Pet
-          <FontAwesomeIcon icon={faOtter}/>
-        </Button>
+        </div>
       </div>
-    </div>
-  </main>
-);
+    </main>
+  );
 }

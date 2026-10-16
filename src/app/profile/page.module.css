@@ -44,6 +44,8 @@
 
 .collapsedRow {
   position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
   border-bottom: 1px solid var(--light);
   padding: 20px 0;
@@ -94,10 +96,15 @@
   color: var(--white);
 }
 
-.card .form input {
+.card .form input,
+.card .form select {
   height: auto;
   max-height: 75px;
   padding: 4%;
+}
+
+.card .form select {
+  line-height: normal;
 }
 
 .buttonArea {

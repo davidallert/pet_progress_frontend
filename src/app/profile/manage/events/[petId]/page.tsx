@@ -45,7 +45,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
   const upsertEvent = async (formData: FormData) => {
     try {
 
-      const response = await axios.post('/api/event/upsert', formData, {
+      const response = await axios.post('/event/upsert', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
 
@@ -97,7 +97,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
   const removeEvent = async (payload: {id: number}) => {
     try {
-      const response = await axios.post('/api/event/remove', payload, {
+      const response = await axios.post('/event/remove', payload, {
         headers: {'Content-Type': 'application/json'},
       });
       setPopup({messages: [response.data.message], type: 'success'});

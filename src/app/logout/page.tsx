@@ -17,7 +17,7 @@ export default function Logout() {
   useEffect(() => {
     const logout = async () => {
       try {
-        const response = await axios.post('/api/logout');
+        const response = await axios.post('/logout');
 
         console.log(response);
 

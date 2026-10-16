@@ -1,55 +1,77 @@
 "use client";
 
 import styles from "../../page.module.css";
-import formStyles from '../../../components/forms/form.module.css'
-import axios from '../../../../libraries/axios';
+import formStyles from '@/app/components/forms/form.module.css'
+
+import axios from '@/libraries/axios';
 import { AxiosError } from 'axios';
+
 import React, { FormEvent, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation'
+
 import PopupContext from '@/app/context/popup/context';
+
 import Input from "../../../components/ui/Input";
 import Button from "../../../components/ui/Button";
+import Select from "@/app/components/ui/Select/Select";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOtter } from '@fortawesome/free-solid-svg-icons'
+import Species from "@/types/species";
+import speciesIcons from '@/libraries/species-icons'
 
 export default function Pet() {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [loadingAdd, setLoadingAdd] = useState(false);
+  const [species, setSpecies] = useState<Species[]>([]);
+  const [selectedSpecies, setSelectedSpecies] = useState('shield-dog');
+
   const [form, setForm] = useState({
     user_id: '',
     name: '',
     image: null as File | null,
-    species: '',
+    species_id: '',
     breed: '',
     birthday: ''
   });
 
   useEffect(() => {
-    const getUser = async () => {
+    const getInitialData = async () => {
       try {
-        const response = await axios.get('/api/user/data', { withCredentials: true });
-        setForm({...form, user_id: response.data.user.id});
+        const [userResponse, speciesResponse] = await Promise.all([
+          axios.get('/user/data', { withCredentials: true }),
+          axios.get('/species'),
+        ]);
+
+        setForm(prevForm => ({...prevForm, user_id: userResponse.data.user.id}));
+        setSpecies(speciesResponse.data);
+
         setLoading(false);
       }
       catch (e) {
         if (e instanceof(AxiosError)) {
-          setPopup({messages: [e.response?.data?.message + "."], type: 'error', isVisible: true})
+          setPopup({messages: [e.response?.data?.message + "."], type: 'error'})
         }
         router.push('/');
       }
     }
-    getUser();
+    getInitialData();
   }, []);
 
   const addPet = async (formData: FormData) => {
     try {
       setLoadingAdd(true);
-      const response = await axios.post('/api/add/pet', formData, {
+
+      console.log(formData);
+
+      const response = await axios.post('/add/pet', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      console.log(response);
+
+      console.log('Response: ', response);
+
       router.push('/profile')
     } catch (error) {
       if (error instanceof AxiosError) { // Handle Axios errors.
@@ -79,13 +101,11 @@ export default function Pet() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      console.log(form);
-
       const formData = new FormData();
       formData.append('user_id', form.user_id);
       formData.append('name', form.name);
       if (form.image) formData.append('image', form.image);
-      formData.append('species', form.species);
+      formData.append('species_id', form.species_id);
       formData.append('breed', form.breed);
       formData.append('birthday', form.birthday);
 
@@ -100,6 +120,14 @@ export default function Pet() {
     }
   };
 
+  const handleSpeciesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setForm({...form, species_id: e.target.value});
+
+    const iconKey = e.target.selectedOptions[0].dataset.icon;
+
+    if (iconKey) setSelectedSpecies(iconKey);
+  };
+
   // Return an empty page, just displaying the header and footer.
   if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
@@ -108,7 +136,7 @@ export default function Pet() {
         <form className={formStyles.form} onSubmit={handleSubmit} encType="multipart/form-data">
         <fieldset className={formStyles.formFieldset}>
           <legend className={formStyles.formLegend}>Add New Pet</legend>
-          <label className={formStyles.formLabel} htmlFor="name">Name</label>
+          <label className={formStyles.formLabel} htmlFor="name">Name*</label>
             <Input
               id="name"
               type="text"
@@ -116,21 +144,21 @@ export default function Pet() {
               value={form.name}
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="image">Picture</label>
+          <label className={formStyles.formLabel} htmlFor="image">Image*</label>
             <Input
               id="image"
               type="file"
               name="image"
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="species">Species</label>
-            <Input
-              id="species"
-              type="text"
-              name="species"
-              placeholder="Dog"
-              value={form.species}
-              onChange={handleChange}
+          <label className={formStyles.formLabel} htmlFor="species_id">Species*
+            <FontAwesomeIcon icon={speciesIcons[selectedSpecies]}></FontAwesomeIcon>
+          </label>
+            <Select
+              id="species_id"
+              name="species_id"
+              onChange={handleSpeciesChange}
+              options={species}
             />
           <label className={formStyles.formLabel} htmlFor="breed">Breed</label>
             <Input

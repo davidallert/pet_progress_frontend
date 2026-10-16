@@ -41,7 +41,7 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const response = await axios.get('/api/event/get', { params: { id: petId }, withCredentials: true });
+        const response = await axios.get('/event/get', { params: { id: petId }, withCredentials: true });
         setLoading(false);
         setEvents(response.data);
       }
@@ -54,7 +54,7 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
 
     const getPet = async () => {
       try {
-        const response = await axios.get('/api/pet/get', { params: { id: petId }, withCredentials: true });
+        const response = await axios.get('/pet/get', { params: { id: petId }, withCredentials: true });
         setPet(response.data);
       }
       catch (e) {
