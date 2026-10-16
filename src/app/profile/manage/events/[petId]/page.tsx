@@ -13,16 +13,25 @@ import { faOtter, faCloudArrowUp, faXmark, faFeatherPointed } from '@fortawesome
 import { useUserData } from '@/hooks/useUserData';
 import type Pet from '@/types/pet';
 import TableInput from "@/app/components/ui/TableInput/TableInput";
+import getErrorMessages from "@/utils/getErrorMessages";
 
 export default function Manage({params}: PageProps<'/profile/manage/events/[petId]'>) {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const { user, pets, setPets, userLoading, userError } = useUserData({eventLimit: 100});
   const { petId } = React.use(params);
-  const { user, pets, setPets } = useUserData(router, setLoading, setPopup, {eventLimit: 100});
+
+  useEffect(() => {
+    if (userLoading || userError === 0) return;
+
+    setPopup({ messages: getErrorMessages([userError]), type: 'error'});
+
+    const anyErrors = [userError].some((e) => e != null)
+    if (anyErrors) router.replace("/account");
+  }, [userLoading, userError]);
 
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+  if (userLoading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   const pet: Pet = pets.filter((pet) => pet.id === Number(petId))[0];
 
