@@ -17,7 +17,10 @@ interface Pet {
     title: string,
     description: string,
     imagePath: string
-    type: string,
+    category: {
+    icon: string,
+    name: string
+  }
   }>
 }
 

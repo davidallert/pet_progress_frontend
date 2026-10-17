@@ -155,6 +155,7 @@ export default function Pet() {
             <FontAwesomeIcon icon={speciesIcons[selectedSpecies]}></FontAwesomeIcon>
           </label>
             <Select
+              firstOptionText="Select a species"
               id="species_id"
               name="species_id"
               onChange={handleSpeciesChange}

@@ -4,8 +4,8 @@ import type Species from '@/types/species';
 
 export const useSpecies = () => {
   const [species, setSpecies] = useState<Species[]>([]);
-  const [speciesError, setSpeciesError] = useState<unknown | null>(null);
   const [speciesLoading, setSpeciesLoading] = useState(true);
+  const [speciesError, setSpeciesError] = useState<unknown | null>(null);
 
   useEffect(() => {
     const getSpecies = async () => {

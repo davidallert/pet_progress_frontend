@@ -35,9 +35,13 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
   const pet: Pet = pets.filter((pet) => pet.id === Number(petId))[0];
 
-  const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
+  const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, petId:number) => {
     e.preventDefault();
-    router.push(`/profile/add/event/${id}`);
+    if (user && user.id && petId) {
+      router.push(`/profile/add/event/${user.id}/${petId}`);
+    } else {
+      setPopup({messages: ['Something went wrong.'], type: 'error'})
+    }
   }
 
   const handleUpsert = (e: React.MouseEvent<HTMLButtonElement>) => {

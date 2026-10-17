@@ -11,39 +11,40 @@ import Input from "@/app/components/ui/Input";
 import Button from "@/app/components/ui/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOtter } from '@fortawesome/free-solid-svg-icons'
+import { useEventCategories } from "@/hooks/useEventCategories";
+import eventCategoryIcons from "@/libraries/event-category-icons";
+import getErrorMessages from "@/utils/getErrorMessages";
+import Select from "@/app/components/ui/Select";
 
-export default function Event({params}: PageProps<'/profile/add/event/[petId]'>) {
+export default function Event({params}: PageProps<'/profile/add/event/[userId]/[petId]'>) {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+
+  const { eventCategories, eventCategoriesLoading, eventCategoriesError } = useEventCategories();
+  const [selectedEventCategory, setSelectedEventCategory] = useState('camera-retro')
   const [loadingAdd, setLoadingAdd] = useState(false);
-  const { petId } = React.use(params);
+
+  // Error handling.
+  useEffect(() => {
+    if (eventCategoriesLoading || [eventCategoriesError].length === 0) return;
+
+    setPopup({ messages: getErrorMessages([eventCategoriesError]), type: 'error'});
+
+    const anyErrors = [eventCategoriesError].some((e) => e != null)
+    if (anyErrors) router.replace("/profile");
+  }, [eventCategoriesLoading, eventCategoriesError]);
+
+  const { userId, petId } = React.use(params);
+
   const [form, setForm] = useState({
-    user_id: '',
-    pet_id: '',
+    user_id: userId,
+    pet_id: petId,
     title: '',
     description: '',
     image: null as File | null,
-    type: '',
+    category_id: '',
     date: ''
   });
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get('/user/data', { withCredentials: true });
-        setForm({...form, user_id: response.data.user.id, pet_id: petId});
-        setLoading(false);
-      }
-      catch (e) {
-        if (e instanceof(AxiosError)) {
-          setPopup({messages: [e.response?.data?.message + "."], type: 'error', isVisible: true})
-        }
-        router.push('/');
-      }
-    }
-    getUser();
-  }, []);
 
   const addEvent = async (formData: FormData) => {
     try {
@@ -51,28 +52,9 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
       const response = await axios.post('/event/add', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      console.log(response);
-      router.push('/profile')
-    } catch (error) {
-      if (error instanceof AxiosError) { // Handle Axios errors.
-        console.error('Error response:', error.response?.data);
-        console.error('Error status:', error.response?.status);
-        console.error('Error message:', error.message);
-        let errorMessage: any = 'Something went wrong.';
-
-        // Deal with the response from the server.
-        if (typeof(error.response?.data?.error) === "string") {
-          errorMessage = [error.response?.data?.error];
-        } else if (typeof(error.response?.data?.error)  === "object") {
-          errorMessage = Object.values(error.response?.data?.error);
-        }
-
-        setPopup({messages: errorMessage, type: 'error', isVisible: true});
-      } else {
-        // Handle non-Axios errors.
-        console.error('Unexpected error:', error);
-        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
-      }
+      router.push('/profile');
+    } catch (e) {
+      setPopup({ messages: getErrorMessages([e]), type: 'error'});
     } finally {
       setLoadingAdd(false);
     }
@@ -87,7 +69,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
       formData.append('title', form.title);
       formData.append('description', form.description);
       if (form.image) formData.append('image', form.image);
-      formData.append('type', form.type);
+      formData.append('category_id', form.category_id);
       formData.append('date', form.date);
 
       // console.log('FormData image:', formData.get('image'));
@@ -104,8 +86,16 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
     }
   };
 
+  const handleEventCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setForm({...form, category_id: e.target.value});
+
+    const iconKey = e.target.selectedOptions[0].dataset.icon;
+
+    if (iconKey) setSelectedEventCategory(iconKey);
+  };
+
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+  if (eventCategoriesLoading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   return (
     <main className={styles.main} style={{padding: "min(50px, 5%)"}}>
@@ -135,13 +125,16 @@ export default function Event({params}: PageProps<'/profile/add/event/[petId]'>)
               name="image"
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="type">Category</label>
-            <Input
-              id="type"
-              type="text"
-              name="type"
-              value={form.type}
-              onChange={handleChange}
+          <label className={formStyles.formLabel} htmlFor="category_id">
+            Category
+            <FontAwesomeIcon icon={eventCategoryIcons[selectedEventCategory]}/>
+          </label>
+            <Select
+              name="category_id"
+              id="category_id"
+              firstOptionText="Select a category"
+              options={eventCategories}
+              onChange={handleEventCategoryChange}
             />
           <label className={formStyles.formLabel} htmlFor="date">Date</label>
             <Input

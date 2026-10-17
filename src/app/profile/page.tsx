@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import formStyles from '../components/forms/form.module.css'
 import axios from '../../libraries/axios';
 import { AxiosError } from 'axios';
-import { useState, useContext, useMemo, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 import PopupContext from '@/app/context/popup/context';
@@ -13,13 +13,14 @@ import Button from "../components/ui/Button";
 import Svg from "../components/ui/Svg/Svg";
 import Select from "../components/ui/Select";
 import speciesIcons from "@/libraries/species-icons";
+import eventCategoryIcons from "@/libraries/event-category-icons";
 
 import getErrorMessages from "@/utils/getErrorMessages";
 
 import { useUserData } from '@/hooks/useUserData';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faOtter, faXmark, faAngleDown, faBarsStaggered, faFeatherPointed, faCloudArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faPaw, faOtter, faXmark, faAngleDown, faBarsStaggered, faFeatherPointed, faCloudArrowUp, faEye } from '@fortawesome/free-solid-svg-icons';
 import { useSpecies } from "@/hooks/useSpecies";
 
 export default function Profile() {
@@ -31,7 +32,6 @@ export default function Profile() {
   const { user, pets, setPets, userLoading, userError } = useUserData({eventLimit: 3});
   const { species, speciesLoading, speciesError } = useSpecies();
 
-  console.log(pets)
   // States.
   const [expandedRowId, setExpandedRowId] = useState<number | null>(0);
   const [loadingSave, setLoadingSave] = useState(false);
@@ -151,9 +151,14 @@ export default function Profile() {
     removePet(id);
   }
 
-  const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
+  const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, petId:number) => {
     e.preventDefault();
-    router.push(`/profile/add/event/${id}`);
+    if (user && user.id && petId) {
+      router.push(`/profile/add/event/${user?.id}/${petId}`);
+    } else {
+      setPopup({messages: ['Something went wrong'], type: 'error'})
+    }
+    
   }
 
   const handleManageEvents = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
@@ -309,7 +314,7 @@ export default function Profile() {
                 <div className={styles.event}>
                   <div className={styles.timelineSection}>
                     <div className={styles.eventIcon}>
-                      <i className="fa-solid fa-paw" />
+                      <FontAwesomeIcon icon={faPaw}/>
                     </div>
                     <div className={styles.timelineLower} />
                   </div>
@@ -331,7 +336,7 @@ export default function Profile() {
                       <div className={styles.timelineUpper} />
                       )}
                     <div className={styles.eventIcon}>
-                      <i className="fa-solid fa-paw" />
+                      <FontAwesomeIcon icon={eventCategoryIcons[event.category.icon]}/>
                     </div>
                     {index !== expandedPet.events.length - 1 && (
                       <div className={styles.timelineLower} />
