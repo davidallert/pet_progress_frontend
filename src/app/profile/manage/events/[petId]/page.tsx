@@ -206,7 +206,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                       id={`type-${event.id}`}
                       name="type"
                       type="text"
-                      defaultValue={event.type}
+                      // defaultValue={event.category}
                     />
                   </div>
                   <div className={styles.td} role="cell">
