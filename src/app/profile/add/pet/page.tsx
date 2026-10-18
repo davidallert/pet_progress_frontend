@@ -64,8 +64,6 @@ export default function Pet() {
     try {
       setLoadingAdd(true);
 
-      console.log(formData);
-
       const response = await axios.post('/add/pet', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });

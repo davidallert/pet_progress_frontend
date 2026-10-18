@@ -293,6 +293,10 @@
   white-space: nowrap;
 }
 
+.hidden {
+  display: none;
+}
+
 @media only screen and (min-width: 3000px) {
   .avatar {
     width: 300px;

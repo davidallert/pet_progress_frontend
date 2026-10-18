@@ -20,7 +20,6 @@
     appearance: base-select;
     border: none;
     scrollbar-width: none;
-    /* position-area: bottom span-right; /* Anchors the top edge of the window to the bottom edge of the select */
     position-try-fallbacks: none;
     min-height: 300px;
     line-height: clamp(60px, 10dvw, 75px);
@@ -28,11 +27,13 @@
 
 .option {
     background-color: var(--light);
+    border-bottom: 1px solid #ebebeb;
     padding: 0 10px;
 }
 
 .option:hover {
   background-color: var(--white) !important;
+  border-bottom: 1px solid var(--foreground);
 }
 
 @media screen and (max-width: 768px) {

@@ -52,7 +52,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[userId]/[
       const response = await axios.post('/event/add', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      router.push('/profile');
+      router.push(`/profile/manage/events/${form.petId}`);
     } catch (e) {
       setPopup({ messages: getErrorMessages([e]), type: 'error'});
     } finally {

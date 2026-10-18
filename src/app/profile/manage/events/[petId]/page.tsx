@@ -52,7 +52,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
     if (user && user.id && petId) {
       router.push(`/profile/add/event/${user.id}/${petId}`);
     } else {
-      setPopup({messages: ['Something went wrong.'], type: 'error'})
+      setPopup({messages: ['Something went wrong.'], type: 'error'});
     }
   }
 
@@ -74,9 +74,6 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
       });
 
       setPopup({messages: [response.data.message], type: 'success'});
-
-      console.log(response);
-
     } catch (e) {
 
       if (e instanceof AxiosError) { // Handle Axios errors.

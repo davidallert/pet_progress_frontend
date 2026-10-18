@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import formStyles from '../components/forms/form.module.css'
 import axios from '../../libraries/axios';
 import { AxiosError } from 'axios';
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation';
 
 import PopupContext from '@/app/context/popup/context';
@@ -33,11 +33,14 @@ export default function Profile() {
   const { species, speciesLoading, speciesError } = useSpecies();
 
   // States.
-  const [expandedRowId, setExpandedRowId] = useState<number | null>(0);
+  const [expandedRowId, setExpandedRowId] = useState<number>(0);
   const [loadingSave, setLoadingSave] = useState(false);
   const loading = userLoading || speciesLoading;
   const hasError = userError != null || speciesError != null;
   const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
+console.log('expandedRowId', expandedRowId)
+  // Refs.
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Error handling.
   const errors = [userError, speciesError];
@@ -79,25 +82,8 @@ export default function Profile() {
     try {
       const response = await axios.post('/remove/pet', {id: id});
       setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
-    } catch (error) {
-      if (error instanceof AxiosError) { // Handle Axios errors.
-        console.error('Error response:', error.response?.data);
-        console.error('Error status:', error.response?.status);
-        console.error('Error message:', error.message);
-        let errorMessage: any = 'Something went wrong.';
-
-        // Deal with the response from the server.
-        if (typeof(error.response?.data?.error) === "string") {
-          errorMessage = [error.response?.data?.error];
-        } else if (typeof(error.response?.data?.error)  === "object") {
-          errorMessage = Object.values(error.response?.data?.error);
-        }
-        setPopup({messages: [errorMessage], type: 'error', isVisible: true});
-      } else {
-        // Handle non-Axios errors.
-        console.error('Unexpected error:', error);
-        setPopup({messages: ['Something went wrong.'], type: 'error', isVisible: true});
-      }
+    } catch (e) {
+        setPopup({messages: getErrorMessages([e]), type: 'error'});
     } finally {
       window.sessionStorage.removeItem("expandedRowId");
       window.location.reload();
@@ -121,7 +107,6 @@ export default function Profile() {
   };
 
   const updatePets = (index: number, name: string, value: string, iconKey: string | void) => {
-    console.log(index, name, value)
     setPets(prev => {
       const updatedPets = [...prev];
       updatedPets[index] = { ...updatedPets[index], [name] : value }
@@ -177,11 +162,39 @@ export default function Profile() {
   const toggleExpand = (index: number) => {
     if (index === expandedRowId) return;
 
-    index === expandedRowId ? setExpandedRowId(null) : setExpandedRowId(index);
+    index === expandedRowId ? setExpandedRowId(0) : setExpandedRowId(index); // setExpandedRowId(null) ?
 
     window.sessionStorage.setItem("expandedRowId", String(index));
 
     window.scrollTo({top: 100, behavior: "smooth"});
+  }
+
+  const handleAvatarClick = async () => {
+    if (expandedPet?.id) {
+      inputRef.current?.click();
+    }
+  }
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    const petId = expandedPet?.id;
+
+    if (files && files.length > 0 && petId) {
+      const selectedFile = files[0];
+
+      const data = {id: petId, image: selectedFile};
+
+      try {
+        const response = await axios.post('/update/pet/image', data, {
+          headers: {'Content-Type': 'multipart/form-data'}}
+        );
+
+        updatePets(expandedRowId, 'imagePath', response.data.imageUrl);
+      }
+      catch (e) {
+        setPopup({messages: getErrorMessages([e]), type: 'error'});
+      }
+    }
   }
 
   // Return an empty page, just displaying the header and footer.
@@ -207,6 +220,9 @@ export default function Profile() {
   return (
     <main className={styles.main}>
 
+      {/* Input for avatar changes */}
+      <input className={styles.hidden} type="file" ref={inputRef} onChange={handleAvatarChange}></input>
+
       <section id="cards" className={styles.cards}>
         {expandedPet && expandedRowId !== null && (
           <div id={String(expandedPet.id)} className={styles.expandedRow} key={expandedPet.id}>
@@ -229,6 +245,7 @@ export default function Profile() {
                   <div
                     className={styles.avatarContainer}
                     id={`avatar${expandedPet.id}`}
+                    onClick={handleAvatarClick}
                   >
                     
                     <img
