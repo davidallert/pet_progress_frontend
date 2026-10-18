@@ -1,37 +1,49 @@
 "use client";
 
 import styles from "./page.module.css";
-import formStyles from '@/app/components/forms/form.module.css'
+
 import axios from '@/libraries/axios';
 import { AxiosError } from 'axios';
-import React, { FormEvent, useEffect, useState, useContext } from 'react';
+
+import React, { useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation'
-import PopupContext from '@/app/context/popup/context';
-import Button from "@/app/components/ui/Button";
+
+import type Pet from '@/types/pet';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOtter, faCloudArrowUp, faXmark, faFeatherPointed } from '@fortawesome/free-solid-svg-icons'
-import { useUserData } from '@/hooks/useUserData';
-import type Pet from '@/types/pet';
+import eventCategoryIcons from '@/libraries/event-category-icons'
+
+import PopupContext from '@/app/context/popup/context';
+import Button from "@/app/components/ui/Button";
 import TableInput from "@/app/components/ui/TableInput/TableInput";
+import TableSelect from "@/app/components/ui/TableSelect";
 import getErrorMessages from "@/utils/getErrorMessages";
+
+import { useEventCategories } from "@/hooks/useEventCategories";
+import { useUserData } from '@/hooks/useUserData';
 
 export default function Manage({params}: PageProps<'/profile/manage/events/[petId]'>) {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
   const { user, pets, setPets, userLoading, userError } = useUserData({eventLimit: 100});
+  const { eventCategories, eventCategoriesLoading, eventCategoriesError } = useEventCategories();
   const { petId } = React.use(params);
 
+  const loading = userLoading || eventCategoriesLoading;
+  const errors = [userError, eventCategoriesError];
+
   useEffect(() => {
-    if (userLoading || userError === 0) return;
+    if (loading || errors.length === 0) return;
 
-    setPopup({ messages: getErrorMessages([userError]), type: 'error'});
+    setPopup({ messages: getErrorMessages(errors), type: 'error'});
 
-    const anyErrors = [userError].some((e) => e != null)
+    const anyErrors = errors.some((e) => e != null)
     if (anyErrors) router.replace("/account");
-  }, [userLoading, userError]);
+  }, [loading, userError, eventCategoriesError]);
 
   // Return an empty page, just displaying the header and footer.
-  if (userLoading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+  if (loading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   const pet: Pet = pets.filter((pet) => pet.id === Number(petId))[0];
 
@@ -57,7 +69,6 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
   const upsertEvent = async (formData: FormData) => {
     try {
-
       const response = await axios.post('/event/upsert', formData, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
@@ -88,7 +99,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
         setPopup({messages: ['Something went wrong.'], type: 'error'});
       }
-    } // finally {}
+    }
   }
 
   const handleRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,6 +148,21 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
     }
   }
 
+  const handleIconChange = (e: React.ChangeEvent<HTMLSelectElement>, index: number) => {
+    const PET_INDEX = 0
+    
+    const newIconKey = e.target.selectedOptions[0].dataset.icon;
+
+    if (!newIconKey) return;
+
+    setPets(prev => {
+      const updatedPets = structuredClone(prev);
+      updatedPets[PET_INDEX].events[index].category.icon = newIconKey;
+
+      return updatedPets;
+    })
+  }
+
   return (
     <main className={styles.main}>
       <section className={styles.mainHeader}>
@@ -155,7 +181,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
           <div className={styles.thead} role="rowgroup">
             <div className={styles.tr} role="row">
               <div className={styles.th} role="columnheader">
-                Title
+                Title*
               </div>
               <div className={styles.th} role="columnheader">
                 Description
@@ -164,7 +190,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                 Image
               </div>
               <div className={styles.th} role="columnheader">
-                Type
+                Category
               </div>
               <div className={styles.th} role="columnheader">
                 Date
@@ -175,7 +201,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
             </div>
           </div>
           <div className={styles.tbody} role="rowgroup">
-            {pet.events.map((event) => (
+            {pet.events.map((event, index) => (
               <div className={styles.tr} key={event.id} role="row">
                 <form className={styles.form} encType="multipart/form-data">
                   <div className={styles.td} role="cell">
@@ -202,12 +228,17 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                     />
                   </div>
                   <div className={styles.td} role="cell">
-                    <TableInput
-                      id={`type-${event.id}`}
-                      name="type"
-                      type="text"
-                      // defaultValue={event.category}
-                    />
+                    <div className={styles.selectContainer}>
+                      <FontAwesomeIcon id={`iconId-${event.id}`} className={styles.selectIcon} icon={eventCategoryIcons[event.category?.icon ?? 'paw']}></FontAwesomeIcon>
+                      <TableSelect
+                        id={`categoryId-${event.id}`}
+                        name="categoryId"
+                        defaultValue={event.categoryId}
+                        firstOptionText="Select a category"
+                        options={eventCategories}
+                        onChange={(e) => handleIconChange(e, index)}
+                      />
+                    </div>
                   </div>
                   <div className={styles.td} role="cell">
                     <TableInput
@@ -227,7 +258,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                   <TableInput
                     id={`petId-${pet.id}`}
                     type="hidden"
-                    name="pet_id"
+                    name="petId"
                     defaultValue={String(pet.id)}
                   />
 

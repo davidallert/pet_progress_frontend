@@ -121,6 +121,7 @@ export default function Profile() {
   };
 
   const updatePets = (index: number, name: string, value: string, iconKey: string | void) => {
+    console.log(index, name, value)
     setPets(prev => {
       const updatedPets = [...prev];
       updatedPets[index] = { ...updatedPets[index], [name] : value }
@@ -251,17 +252,17 @@ export default function Profile() {
                     data-index={expandedRowId}
                   />
 
-                  <label className={formStyles.formLabel} htmlFor="species_id">
+                  <label className={formStyles.formLabel} htmlFor="speciesId">
                     Species
-                    <FontAwesomeIcon icon={speciesIcons[expandedPet.species.icon]}/>
+                    <FontAwesomeIcon icon={speciesIcons[expandedPet.species?.icon ?? 'dragon']}/>
                   </label>
                   <Select
-                    id="species_id"
-                    name="species_id"
+                    id="speciesId"
+                    name="speciesId"
                     onChange={handleSpeciesChange}
                     options={species}
                     data-index={expandedRowId}
-                    defaultValue={expandedPet.species_id}
+                    defaultValue={expandedPet.speciesId}
                   />
 
                   <label className={formStyles.formLabel} htmlFor="breed">
@@ -336,7 +337,7 @@ export default function Profile() {
                       <div className={styles.timelineUpper} />
                       )}
                     <div className={styles.eventIcon}>
-                      <FontAwesomeIcon icon={eventCategoryIcons[event.category.icon]}/>
+                      <FontAwesomeIcon icon={eventCategoryIcons[event.category?.icon ?? 'paw']}/>
                     </div>
                     {index !== expandedPet.events.length - 1 && (
                       <div className={styles.timelineLower} />

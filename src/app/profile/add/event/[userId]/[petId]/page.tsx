@@ -21,7 +21,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[userId]/[
   const router = useRouter();
 
   const { eventCategories, eventCategoriesLoading, eventCategoriesError } = useEventCategories();
-  const [selectedEventCategory, setSelectedEventCategory] = useState('camera-retro')
+  const [selectedEventCategory, setSelectedEventCategory] = useState('camera-retro');
   const [loadingAdd, setLoadingAdd] = useState(false);
 
   // Error handling.
@@ -37,12 +37,12 @@ export default function Event({params}: PageProps<'/profile/add/event/[userId]/[
   const { userId, petId } = React.use(params);
 
   const [form, setForm] = useState({
-    user_id: userId,
-    pet_id: petId,
+    userId: userId,
+    petId: petId,
     title: '',
     description: '',
     image: null as File | null,
-    category_id: '',
+    categoryId: '',
     date: ''
   });
 
@@ -65,11 +65,11 @@ export default function Event({params}: PageProps<'/profile/add/event/[userId]/[
       console.log(form);
 
       const formData = new FormData();
-      formData.append('pet_id', form.pet_id);
+      formData.append('petId', form.petId);
       formData.append('title', form.title);
       formData.append('description', form.description);
       if (form.image) formData.append('image', form.image);
-      formData.append('category_id', form.category_id);
+      formData.append('categoryId', form.categoryId);
       formData.append('date', form.date);
 
       // console.log('FormData image:', formData.get('image'));
@@ -87,7 +87,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[userId]/[
   };
 
   const handleEventCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setForm({...form, category_id: e.target.value});
+    setForm({...form, categoryId: e.target.value});
 
     const iconKey = e.target.selectedOptions[0].dataset.icon;
 
@@ -125,13 +125,13 @@ export default function Event({params}: PageProps<'/profile/add/event/[userId]/[
               name="image"
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="category_id">
+          <label className={formStyles.formLabel} htmlFor="categoryId">
             Category
             <FontAwesomeIcon icon={eventCategoryIcons[selectedEventCategory]}/>
           </label>
             <Select
-              name="category_id"
-              id="category_id"
+              name="categoryId"
+              id="categoryId"
               firstOptionText="Select a category"
               options={eventCategories}
               onChange={handleEventCategoryChange}

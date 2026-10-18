@@ -1,10 +1,10 @@
 interface Pet {
   id: number,
-  user_id: number,
+  userId: number,
   name: string,
   imagePath: string,
   birthday: string,
-  species_id: number,
+  speciesId: number,
   breed: string,
   species: {
     icon: string,
@@ -16,10 +16,11 @@ interface Pet {
     petId: number,
     title: string,
     description: string,
-    imagePath: string
+    imagePath: string,
+    categoryId: number,
     category: {
-    icon: string,
-    name: string
+      icon: string,
+      name: string
   }
   }>
 }

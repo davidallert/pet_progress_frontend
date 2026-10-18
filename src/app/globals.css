@@ -78,6 +78,7 @@ body {
 
 p {
   font-family: var(--font-alegreya), Arial, Helvetica, serif;
+  font-size: large;
 }
 
 a {

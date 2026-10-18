@@ -17,9 +17,9 @@ textarea.input {
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-
   resize: vertical;
-  padding-top: 27px; /* Suboptimal vertical centering fix */
+  padding-top: 27px; /* Suboptimal vertical centering fix... */
+  min-height: 75px;
 }
 
 .input[type="file"] {
@@ -33,7 +33,7 @@ input::file-selector-button {
   color: var(--white);
   border-radius: var(--radius);
   padding: 10px;
-  /* filter: drop-shadow(1px 1px 5px var(--main)); */
+  filter: drop-shadow(1px 1px 5px var(--main));
   margin-right: 7.5px;
   cursor: pointer;
   border-top-left-radius: calc(var(--radius) / 2);

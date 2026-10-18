@@ -29,10 +29,10 @@ export default function Pet() {
   const [selectedSpecies, setSelectedSpecies] = useState('shield-dog');
 
   const [form, setForm] = useState({
-    user_id: '',
+    userId: '',
     name: '',
     image: null as File | null,
-    species_id: '',
+    speciesId: '',
     breed: '',
     birthday: ''
   });
@@ -45,7 +45,7 @@ export default function Pet() {
           axios.get('/species'),
         ]);
 
-        setForm(prevForm => ({...prevForm, user_id: userResponse.data.user.id}));
+        setForm(prevForm => ({...prevForm, userId: userResponse.data.user.id}));
         setSpecies(speciesResponse.data);
 
         setLoading(false);
@@ -102,10 +102,10 @@ export default function Pet() {
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('user_id', form.user_id);
+      formData.append('userId', form.userId);
       formData.append('name', form.name);
       if (form.image) formData.append('image', form.image);
-      formData.append('species_id', form.species_id);
+      formData.append('speciesId', form.speciesId);
       formData.append('breed', form.breed);
       formData.append('birthday', form.birthday);
 
@@ -121,7 +121,7 @@ export default function Pet() {
   };
 
   const handleSpeciesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setForm({...form, species_id: e.target.value});
+    setForm({...form, speciesId: e.target.value});
 
     const iconKey = e.target.selectedOptions[0].dataset.icon;
 
@@ -151,13 +151,13 @@ export default function Pet() {
               name="image"
               onChange={handleChange}
             />
-          <label className={formStyles.formLabel} htmlFor="species_id">Species*
+          <label className={formStyles.formLabel} htmlFor="speciesId">Species*
             <FontAwesomeIcon icon={speciesIcons[selectedSpecies]}></FontAwesomeIcon>
           </label>
             <Select
               firstOptionText="Select a species"
-              id="species_id"
-              name="species_id"
+              id="speciesId"
+              name="speciesId"
               onChange={handleSpeciesChange}
               options={species}
             />

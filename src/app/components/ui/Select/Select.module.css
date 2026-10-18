@@ -26,8 +26,8 @@
 
 .select::picker(select) {
     appearance: base-select;
-    border-radius: var(--radius);
     border: 1px solid var(--light);
+    border-radius: calc(var(--radius) / 4);
     scrollbar-width: none;
     margin-top: 10px;
     /* position-area: bottom span-right; /* Anchors the top edge of the window to the bottom edge of the select */

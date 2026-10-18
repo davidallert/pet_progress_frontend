@@ -1,0 +1,43 @@
+.tableSelect {
+  width: 100%;
+  height: clamp(60px, 10dvw, 75px);
+  font-size: large;
+  transition-property: background-color, filter;
+  transition-duration: 0.5s;
+  background-color: var(--white);
+  line-height: clamp(60px, 10dvw, 75px);
+  cursor: pointer;
+  padding: 0 20px;
+  appearance: base-select;
+  border: none;
+}
+
+.tableSelect::picker-icon {
+  display: none !important;
+}
+
+.tableSelect::picker(select) {
+    appearance: base-select;
+    border: none;
+    scrollbar-width: none;
+    /* position-area: bottom span-right; /* Anchors the top edge of the window to the bottom edge of the select */
+    position-try-fallbacks: none;
+    min-height: 300px;
+    line-height: clamp(60px, 10dvw, 75px);
+}
+
+.option {
+    background-color: var(--light);
+    padding: 0 10px;
+}
+
+.option:hover {
+  background-color: var(--white) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .tableSelect::picker(select) {
+    min-width: 250px;
+    position-area: bottom center;
+  }
+}
