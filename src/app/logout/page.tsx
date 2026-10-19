@@ -8,6 +8,7 @@ import PopupContext from '@/app/context/popup/context';
 import styles from "./page.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter } from '@fortawesome/free-solid-svg-icons';
+import { mutate } from 'swr';
 
 export default function Logout() {
   const { setPopup } = useContext(PopupContext);
@@ -21,6 +22,7 @@ export default function Logout() {
 
         console.log(response);
 
+        await mutate('/user');
         setPopup({messages: ["You are now logged out."], type: 'success', isVisible: true})
       }
       catch (e) {

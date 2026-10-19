@@ -7,6 +7,7 @@ import PopupContext from '@/app/context/popup/context';
 import { useRouter } from 'next/navigation'
 import Input from '../../ui/Input';
 import Button from '../../ui/Button';
+import { mutate } from 'swr';
 
 export default function LoginForm() {
   const router = useRouter()
@@ -30,9 +31,9 @@ export default function LoginForm() {
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('/login', form);
 
-      console.log('Success:', response.data.message);
-
       setPopup({messages: [response.data.message], type: 'success'});
+
+      await mutate('/user');
       router.push('/profile');
     } catch (e) {
       if (isAxiosError(e)) { // Handle Axios errors.

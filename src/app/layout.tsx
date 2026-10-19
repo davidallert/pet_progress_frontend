@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import PopupProvider from "./context/popup/provider";
+import AuthProvider from "./context/auth/provider";
 import type { Metadata } from "next";
 import {Petrona, Alegreya_Sans } from "next/font/google";
 import "./globals.css";
@@ -38,13 +39,15 @@ export default function RootLayout({
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       </head>
       <body className={`${petrona.variable} ${alegreya.variable}`}>
-        <Header />
-        <PopupProvider>
-          <TooltipProvider>
-            {children}
-          </TooltipProvider>
-        </PopupProvider>
-        <Footer />
+        <AuthProvider>
+          <Header />
+            <PopupProvider>
+              <TooltipProvider>
+                {children}
+              </TooltipProvider>
+            </PopupProvider>
+          <Footer />
+        </AuthProvider>
         <SpeedInsights />
         <Analytics />
       </body>

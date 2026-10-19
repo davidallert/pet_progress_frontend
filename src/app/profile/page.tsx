@@ -38,7 +38,7 @@ export default function Profile() {
   const loading = userLoading || speciesLoading;
   const hasError = userError != null || speciesError != null;
   const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
-console.log('expandedRowId', expandedRowId)
+
   // Refs.
   const inputRef = useRef<HTMLInputElement | null>(null);
 
