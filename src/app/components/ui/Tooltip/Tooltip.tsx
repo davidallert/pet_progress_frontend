@@ -3,7 +3,7 @@ import styles from './Tooltip.module.css';
 import { useEffect, useState, useRef, useContext } from 'react';
 import TooltipContext from '@/app/context/tooltip/context';
 
-export default function Tooltip () {
+export default function Tooltip() {
     const { tooltip } = useContext(TooltipContext);
     const position = useMousePosition();
     const ttRef = useRef<HTMLDivElement>(null);

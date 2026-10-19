@@ -19,7 +19,10 @@ export default function Header() {
         </Link>
       </div>
       {isLoading ? (
-        <div className={styles.links}></div>
+        <div className={styles.links}>
+          <Link href="/">Home</Link>|
+          <Link href="/account">Sign in / up</Link>
+        </div>
       ) : user ? (
         <div className={styles.links}>
           <Link href="/">Home</Link>|

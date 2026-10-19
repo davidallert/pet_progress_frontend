@@ -1,0 +1,38 @@
+.timelineSection {
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.timelineUpper,
+.timelineLower {
+    position: absolute;
+    width: 2px;
+    background-color: var(--light);
+}
+
+.timelineUpper {
+    top: 0;
+    bottom: 50%;
+}
+
+.timelineLower {
+    top: 50%;
+    bottom: 0;
+}
+
+.eventIcon {
+  font-size: x-large;
+  background-color: var(--foreground);
+  padding: 15px 12px;
+  border-radius: var(--radius);
+  color: var(--white);
+  background-color: var(--foreground);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

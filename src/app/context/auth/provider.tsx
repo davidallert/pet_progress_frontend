@@ -22,8 +22,6 @@ export default function AuthProvider({ children }: {children: React.ReactNode}) 
         shouldRetryOnError: false
     });
 
-   console.log('data', data, 'isLoading', isLoading);
-
     return (
         <AuthContext.Provider value={{user: data ?? null, isLoading}}>
             {children}

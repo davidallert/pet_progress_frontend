@@ -313,7 +313,7 @@ export default function Profile() {
               <div className={styles.eventHead}>
                 <h2>Recent Events</h2>
 
-                {/* <div className={styles.viewTimeline}>
+                <div className={styles.viewTimeline}>
                   <Button
                     icon={true}
                     style={{ color: "#171717" }}
@@ -324,7 +324,7 @@ export default function Profile() {
                   >
                     <FontAwesomeIcon icon={faBarsStaggered} />
                   </Button>
-                </div> */}
+                </div>
               </div>
 
               {expandedPet.events.length === 0 && (
