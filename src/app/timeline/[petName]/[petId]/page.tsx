@@ -24,11 +24,11 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
 
   console.log(pet)
 
-  return (
-    <main className={styles.main}>
-      <h4 style={{textAlign: "center"}}>Petfolio is currently under development - features may be missing or incomplete.</h4>
-    </main>
-  )
+  // return (
+  //   <main className={styles.main}>
+  //     <h4 style={{textAlign: "center"}}>Petfolio is currently under development - features may be missing or incomplete.</h4>
+  //   </main>
+  // )
 
   if (petLoading || petError) {
     return (
@@ -48,9 +48,16 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
         <section className={styles.grid}>
         {pet?.events.map((event, index, events) => (
           <React.Fragment key={event.id}>
+            <div className={styles.timelineCol}>
+              <TimelineSection
+                iconKey={event.category.icon}
+                first={index === 0}
+                last={index === events.length - 1}
+              />
+            </div>
             <div className={styles.contentCol}>
-              <div className={styles.content}>
-                <div className={styles.text}>
+              <div className={styles.contentContainer}>
+                <div className={styles.textContainer}>
                 <div>
                   <h2>{event.title}</h2>
                   <p>{event.description ?? ''}</p>
@@ -59,17 +66,10 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
                   <p>{event.category.name ?? ''} {event.date && `| ${event.date}`}</p>
                 </div>
               </div>
-              <div className={styles.img}>
+              <div className={event.imagePath && styles.imgContainer}>
                 {event.imagePath && <img className={styles.eventImg} src={event.imagePath}></img>}
               </div>
               </div>
-            </div>
-            <div className={styles.timelineCol}>
-              <TimelineSection
-                iconKey={event.category.icon}
-                first={index === 0}
-                last={index === events.length - 1}
-              />
             </div>
           </React.Fragment>
         ))}

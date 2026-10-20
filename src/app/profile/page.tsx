@@ -231,15 +231,18 @@ export default function Profile() {
                 <Svg type="primary" index={expandedRowId} />
                 <Svg type="secondary" index={expandedRowId} />
 
-                  <div className={styles.removePet}>
-                    <Button
-                      icon={true}
-                      tooltip="Remove Pet"
-                      onClick={(e) => handleRemovePet(e, expandedPet.id)}
-                    >
-                      <FontAwesomeIcon icon={faXmark} />
-                    </Button>
-                  </div>
+                <div className={styles.viewTimeline}>
+                  <Button
+                    icon={true}
+                    style={{ color: "#171717" }}
+                    onClick={(e) =>
+                      routeToTimeline(e, expandedPet.name, expandedPet.id)
+                    }
+                    tooltip={`View Timeline`}
+                  >
+                    <FontAwesomeIcon icon={faBarsStaggered} />
+                  </Button>
+                </div>
 
                 {expandedPet.imagePath && (
                   <div
@@ -313,18 +316,15 @@ export default function Profile() {
               <div className={styles.eventHead}>
                 <h2>Recent Events</h2>
 
-                <div className={styles.viewTimeline}>
-                  <Button
-                    icon={true}
-                    style={{ color: "#171717" }}
-                    onClick={(e) =>
-                      routeToTimeline(e, expandedPet.name, expandedPet.id)
-                    }
-                    tooltip={`View Timeline`}
-                  >
-                    <FontAwesomeIcon icon={faBarsStaggered} />
-                  </Button>
-                </div>
+                  <div className={styles.removePet}>
+                    <Button
+                      icon={true}
+                      tooltip="Remove Pet"
+                      onClick={(e) => handleRemovePet(e, expandedPet.id)}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </Button>
+                  </div>
               </div>
 
               {expandedPet.events.length === 0 && (
