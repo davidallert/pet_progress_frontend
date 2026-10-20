@@ -347,8 +347,9 @@ export default function Profile() {
 
               )}
 
-              {expandedPet.events.map((event, index) => (
-                <div className={styles.event} key={index}>
+              {expandedPet.events.map((event, index) => {
+                return (
+                  <div className={styles.event} key={index}>
                   <div className={styles.timelineSection}>
                     {index !== 0 && (
                       <div className={styles.timelineUpper} />
@@ -369,6 +370,8 @@ export default function Profile() {
                       <h3>{event.title}</h3>
                       <p>
                         {
+                          event.description
+                          &&
                           event.description.length > 200
                           ?
                           `${event.description.slice(0, 200)}...`
@@ -382,8 +385,9 @@ export default function Profile() {
                       <p>{event.date ? `(${new Date(event.date).toDateString()})` : ""}</p>
                     </div>
                   </div>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
 
               {expandedPet.events.length === 0 && (
                 <div className={styles.eventBtn}>
