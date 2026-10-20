@@ -346,6 +346,7 @@
     justify-content: space-around;
     align-items: center;
     margin: 0;
+    border-bottom: 1px solid #2c2c2c;
   }
 
   .buttonGroup {

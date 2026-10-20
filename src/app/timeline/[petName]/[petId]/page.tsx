@@ -9,9 +9,11 @@ import getErrorMessages from "@/utils/getErrorMessages";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOtter } from '@fortawesome/free-solid-svg-icons';
 import TimelineSection from '@/app/components/ui/TimelineSection';
+import { useRouter } from 'next/navigation';
 
 export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId]'>) {
   const { setPopup } = useContext(PopupContext);
+  const router = useRouter();
 
   const { petId } = React.use(params);
   const { pet, petLoading, petError } = usePet(Number(petId));
@@ -29,6 +31,10 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
   //     <h4 style={{textAlign: "center"}}>Petfolio is currently under development - features may be missing or incomplete.</h4>
   //   </main>
   // )
+
+  const handleImgClick = (e: React.MouseEvent<HTMLImageElement>) => {
+    router.push(e.currentTarget.src);
+  }
 
   if (petLoading || petError) {
     return (
@@ -67,7 +73,7 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
                 </div>
               </div>
               <div className={event.imagePath && styles.imgContainer}>
-                {event.imagePath && <img className={styles.eventImg} src={event.imagePath}></img>}
+                {event.imagePath && <img className={styles.eventImg} src={event.imagePath} onClick={handleImgClick}></img>}
               </div>
               </div>
             </div>

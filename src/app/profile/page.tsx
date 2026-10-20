@@ -367,7 +367,15 @@ export default function Profile() {
                   <div className={styles.eventContentContainer}>
                     <div className={styles.eventContent}>
                       <h3>{event.title}</h3>
-                      <p>{event.description}</p>
+                      <p>
+                        {
+                          event.description.length > 200
+                          ?
+                          `${event.description.slice(0, 200)}...`
+                          :
+                          event.description
+                        }
+                      </p>
                     </div>
                     <div className={styles.eventDate}>
                       <p>{event.date}</p>
