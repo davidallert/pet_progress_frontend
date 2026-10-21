@@ -39,7 +39,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
     setPopup({ messages: getErrorMessages(errors), type: 'error'});
 
     const anyErrors = errors.some((e) => e != null)
-    if (anyErrors) router.replace("/account");
+    if (anyErrors) router.replace("/account/2");
   }, [loading, userError, eventCategoriesError]);
 
   // Return an empty page, just displaying the header and footer.

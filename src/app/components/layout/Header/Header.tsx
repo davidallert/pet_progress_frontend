@@ -10,6 +10,7 @@ export default function Header() {
 
   return (
     <header id="header" className={styles.header}>
+
       <div className={styles.logo}>
         <Link href="/">
           <div className={styles.logoGrp}>
@@ -18,23 +19,24 @@ export default function Header() {
           </div>
         </Link>
       </div>
-      {isLoading ? (
-        <div className={styles.links}>
-          <Link href="/">Home</Link>|
-          <Link href="/account">Sign in / up</Link>
-        </div>
-      ) : user ? (
-        <div className={styles.links}>
-          <Link href="/">Home</Link>|
-          <Link href="/profile">My Pets</Link>|
-          <Link href="/logout">Log out</Link>
-        </div>
-      ) : (
-        <div className={styles.links}>
-          <Link href="/">Home</Link>|
-          <Link href="/account">Sign in / up</Link>
-        </div>
-      )}
+
+      {isLoading || !user ?
+        (
+          <div className={styles.links}>
+            <Link href="/">Home</Link>|
+            <Link href="/account/1">Sign Up</Link>
+            |
+            <Link href="/account/2">Log In</Link>
+          </div>
+        ) : (
+          <div className={styles.links}>
+            <Link href="/">Home</Link>|
+            <Link href="/profile">My Pets</Link>
+            |
+            <Link href="/logout">Log Out</Link>
+
+          </div>
+        )}
 
     </header>
   )

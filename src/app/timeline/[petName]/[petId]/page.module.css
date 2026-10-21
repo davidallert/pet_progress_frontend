@@ -16,7 +16,6 @@
 .grid {
     display: grid;
     grid-template-columns: 2fr 10fr;
-    gap: 20px;
 }
 
 .contentCol {
@@ -45,6 +44,7 @@
     object-fit: cover;
     border-radius: 25px;
     filter: drop-shadow(1px 1px 10px #c8c7c7);
+    cursor: pointer;
 }
 
 .contentContainer {

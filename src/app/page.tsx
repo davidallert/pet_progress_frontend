@@ -17,7 +17,7 @@ const router = useRouter()
 
 const routeToAccount = (e: MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
-  router.replace("/account");
+  router.replace("/account/1");
 };
 
 useEffect(() => {
@@ -40,7 +40,9 @@ useEffect(() => {
     });
   };
 
-  const observer = new IntersectionObserver(callback);
+  const observer = new IntersectionObserver(callback, {
+    threshold: 0.5
+  });
 
   const cards = document.querySelectorAll(`.${styles.cardBg}`);
 
@@ -54,7 +56,7 @@ useEffect(() => {
 
   return (
     <main className={styles.main}>
-      <Link href="/account">
+      <Link href="/account/1">
         <section className={styles.heroContainer}>
           <picture>
             <source media="(max-width: 768px)" srcSet="/hero-mobile.jpg" />

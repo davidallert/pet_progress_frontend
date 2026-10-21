@@ -33,7 +33,8 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
   // )
 
   const handleImgClick = (e: React.MouseEvent<HTMLImageElement>) => {
-    router.push(e.currentTarget.src);
+    // router.push(e.currentTarget.src);
+    window.open(e.currentTarget.src, "_blank", "noopener,noreferrer");
   }
 
   if (petLoading || petError) {

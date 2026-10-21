@@ -51,7 +51,7 @@ export default function Profile() {
     setPopup({ messages: getErrorMessages(errors), type: 'error'});
 
     const anyErrors = errors.some((e) => e != null)
-    if (anyErrors) router.replace("/account");
+    if (anyErrors) router.replace("/account/2");
   }, [loading, userError, speciesError]);
 
   // Window is not available during server-side rendering in Next.js. useEffect runs after the component mounts.
