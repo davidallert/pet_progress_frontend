@@ -52,7 +52,7 @@ export default function Profile() {
 
     const anyErrors = errors.some((e) => e != null)
     if (anyErrors) router.replace("/account/2");
-  }, [loading, userError, speciesError]);
+  }, [userError, speciesError]);
 
   // Window is not available during server-side rendering in Next.js. useEffect runs after the component mounts.
   useEffect(() => {

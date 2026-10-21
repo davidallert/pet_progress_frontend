@@ -40,7 +40,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
     const anyErrors = errors.some((e) => e != null)
     if (anyErrors) router.replace("/account/2");
-  }, [loading, userError, eventCategoriesError]);
+  }, [userError, eventCategoriesError]);
 
   // Return an empty page, just displaying the header and footer.
   if (loading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;

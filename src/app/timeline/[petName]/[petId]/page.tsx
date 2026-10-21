@@ -22,9 +22,7 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
     if (petLoading || [petError].length === 0) return;
 
     setPopup({ messages: getErrorMessages([petError]), type: 'error'});
-  }, [petLoading, petError]);
-
-  console.log(pet)
+  }, [petError]);
 
   // return (
   //   <main className={styles.main}>
