@@ -25,14 +25,14 @@ const pet = {
 };
 
 async function mockLoggedInApi(page: Page) {
-  await page.route('**/api/user', route => route.fulfill({ json: user }));
-  await page.route('**/api/user/data**', route => route.fulfill({ json: { user: { ...user, pets: [pet] } } }));
-  await page.route('**/api/species', route => route.fulfill({ json: species }));
-  await page.route('**/api/event/categories', route => route.fulfill({ json: categories }));
+  await page.route('**/user', route => route.fulfill({ json: user }));
+  await page.route('**/user/data**', route => route.fulfill({ json: { user: { ...user, pets: [pet] } } }));
+  await page.route('**/species', route => route.fulfill({ json: species }));
+  await page.route('**/event/categories', route => route.fulfill({ json: categories }));
 }
 
 async function mockLoggedOutApi(page: Page) {
-  await page.route('**/api/user', route => route.fulfill({ status: 401, json: { message: 'Unauthenticated.' } }));
+  await page.route('**/user', route => route.fulfill({ status: 401, json: { message: 'Unauthenticated.' } }));
 }
 
 test('home page presents the product and routes to account registration', async ({ page }) => {
@@ -59,16 +59,16 @@ test('account page switches between registration and login forms', async ({ page
 test('login submits credentials and navigates to the profile after success', async ({ page }) => {
   await mockLoggedOutApi(page);
   let authenticated = false;
-  await page.route('**/api/sanctum/csrf-cookie', route => route.fulfill({ status: 204, body: '' }));
-  await page.route('**/api/login', async route => {
+  await page.route('**/sanctum/csrf-cookie', route => route.fulfill({ status: 204, body: '' }));
+  await page.route('**/login', async route => {
     authenticated = true;
     await route.fulfill({ status: 201, json: { message: 'Login successful!' } });
   });
-  await page.route('**/api/user', route => authenticated
+  await page.route('**/user', route => authenticated
     ? route.fulfill({ json: user })
     : route.fulfill({ status: 401, json: { message: 'Unauthenticated.' } }));
-  await page.route('**/api/user/data**', route => route.fulfill({ json: { user: { ...user, pets: [pet] } } }));
-  await page.route('**/api/species', route => route.fulfill({ json: species }));
+  await page.route('**/user/data**', route => route.fulfill({ json: { user: { ...user, pets: [pet] } } }));
+  await page.route('**/species', route => route.fulfill({ json: species }));
 
   await page.goto('/account/2');
   await page.locator('input[name=email]').fill(user.email);
@@ -82,7 +82,7 @@ test('login submits credentials and navigates to the profile after success', asy
 test('profile displays owned pets and saves edited pet data', async ({ page }) => {
   await mockLoggedInApi(page);
   let submitted: unknown;
-  await page.route('**/api/upsert/pet', async route => {
+  await page.route('**/upsert/pet', async route => {
     submitted = route.request().postDataJSON();
     await route.fulfill({ json: { message: 'Pets were updated.' } });
   });
@@ -100,7 +100,7 @@ test('profile uploads a replacement pet image as multipart form data', async ({ 
   await mockLoggedInApi(page);
   let uploadContentType = '';
   let uploadBody = '';
-  await page.route('**/api/update/pet/image', async route => {
+  await page.route('**/update/pet/image', async route => {
     uploadContentType = route.request().headers()['content-type'] ?? '';
     uploadBody = route.request().postData() ?? '';
     await route.fulfill({ json: { message: 'Image was updated.', imageUrl: 'https://example.test/lily-updated.jpg' } });
@@ -120,7 +120,8 @@ test('profile uploads a replacement pet image as multipart form data', async ({ 
 test('add-pet form loads species and submits the selected image and fields', async ({ page }) => {
   await mockLoggedInApi(page);
   let submitted = false;
-  await page.route('**/api/add/pet', async route => {
+  await page.route('**/add/pet', async route => {
+    if (route.request().method() !== 'POST') return route.continue();
     submitted = true;
     await route.fulfill({ status: 201, json: { message: 'Pet was added.' } });
   });
@@ -143,7 +144,7 @@ test('add-event form loads categories, submits an event, and navigates to event 
   await mockLoggedInApi(page);
   let submitted = false;
   let uploadContentType = '';
-  await page.route('**/api/event/add', async route => {
+  await page.route('**/event/add', async route => {
     submitted = true;
     uploadContentType = route.request().headers()['content-type'] ?? '';
     await route.fulfill({ status: 201, json: { message: 'Event was added.' } });
@@ -165,7 +166,7 @@ test('add-event form loads categories, submits an event, and navigates to event 
 
 test('timeline loads and renders a pet event', async ({ page }) => {
   await mockLoggedInApi(page);
-  await page.route('**/api/pet?id=5', route => route.fulfill({ json: pet }));
+  await page.route('**/pet?id=5', route => route.fulfill({ json: pet }));
 
   await page.goto('/timeline/lily/5');
   await expect(page.getByRole('heading', { name: "Lily's Timeline" })).toBeVisible();
@@ -179,7 +180,7 @@ test('timeline loads and renders a pet event', async ({ page }) => {
 test('event management saves edits and routes to the add-event form', async ({ page }) => {
   await mockLoggedInApi(page);
   let submitted = false;
-  await page.route('**/api/event/upsert', async route => {
+  await page.route('**/event/upsert', async route => {
     submitted = true;
     await route.fulfill({ json: { message: 'Event saved.' } });
   });
@@ -196,7 +197,9 @@ test('event management saves edits and routes to the add-event form', async ({ p
 
 test('logout calls the API and returns the visitor to the home page', async ({ page }) => {
   await mockLoggedInApi(page);
-  await page.route('**/api/logout', route => route.fulfill({ json: { message: 'Logged out.' } }));
+  await page.route('**/logout', route => route.request().method() === 'POST'
+    ? route.fulfill({ json: { message: 'Logged out.' } })
+    : route.continue());
 
   await page.goto('/logout');
   await expect(page).toHaveURL(/\/$/);
@@ -206,14 +209,14 @@ test('logout calls the API and returns the visitor to the home page', async ({ p
 test('registration creates the account, signs in, and opens the profile', async ({ page }) => {
   await mockLoggedOutApi(page);
   let registered = false;
-  await page.route('**/api/sanctum/csrf-cookie', route => route.fulfill({ status: 204, body: '' }));
-  await page.route('**/api/register', async route => {
+  await page.route('**/sanctum/csrf-cookie', route => route.fulfill({ status: 204, body: '' }));
+  await page.route('**/register', async route => {
     registered = true;
     await route.fulfill({ status: 201, json: { message: 'User registered successfully' } });
   });
-  await page.route('**/api/login', route => route.fulfill({ status: 201, json: { message: 'Login successful!' } }));
-  await page.route('**/api/user/data**', route => route.fulfill({ json: { user: { ...user, pets: [pet] } } }));
-  await page.route('**/api/species', route => route.fulfill({ json: species }));
+  await page.route('**/login', route => route.fulfill({ status: 201, json: { message: 'Login successful!' } }));
+  await page.route('**/user/data**', route => route.fulfill({ json: { user: { ...user, pets: [pet] } } }));
+  await page.route('**/species', route => route.fulfill({ json: species }));
 
   await page.goto('/account/1');
   await page.locator('input[name=name]').fill(user.name);

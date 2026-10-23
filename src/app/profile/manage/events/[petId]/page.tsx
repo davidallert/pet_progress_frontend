@@ -75,27 +75,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
 
       setPopup({messages: [response.data.message], type: 'success'});
     } catch (e) {
-
-      if (e instanceof AxiosError) { // Handle Axios errors.
-        console.error('Error response:', e.response?.data);
-        console.error('Error status:', e.response?.status);
-        console.error('Error message:', e.message);
-
-        let errorMessage: any = 'Something went wrong.';
-
-        if (typeof(e.response?.data?.error) === "string") {
-          errorMessage = [e.response?.data?.error];
-        } else if (typeof(e.response?.data?.error)  === "object") {
-          errorMessage = Object.values(e.response?.data?.error);
-        }
-
-        setPopup({messages: errorMessage, type: 'error'});
-
-      } else {
-        console.error('Unexpected error:', e);
-
-        setPopup({messages: ['Something went wrong.'], type: 'error'});
-      }
+      setPopup({messages: getErrorMessages([e]), type: 'error'});
     }
   }
 
@@ -103,14 +83,14 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
     e.preventDefault();
 
     const form = e.currentTarget.form;
-    console.log(form)
+
     if (!form) return;
 
     const formData = new FormData(form);
 
     const payload = {
       petId: Number(formData.get('petId')),
-      eventId: Number(formData.get('eventId')),
+      id: Number(formData.get('id')),
     };
 
     form.remove();
@@ -118,7 +98,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
     removeEvent(payload);
   };
 
-  const removeEvent = async (payload: {petId: number, eventId: number}) => {
+  const removeEvent = async (payload: {petId: number, id: number}) => {
     try {
       const response = await axios.post('/event/remove', payload, {
         headers: {'Content-Type': 'application/json'},
@@ -237,9 +217,9 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                   </div>
 
                   <TableInput
-                    id={`eventId-${event.id}`}
+                    id={`id-${event.id}`}
                     type="hidden"
-                    name="eventId"
+                    name="id"
                     defaultValue={String(event.id)}
                   />
                   <TableInput
