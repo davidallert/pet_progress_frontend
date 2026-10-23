@@ -55,7 +55,7 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
           <React.Fragment key={event.id}>
             <div className={styles.timelineCol}>
               <TimelineSection
-                iconKey={event.category.icon}
+                iconKey={event.category?.icon ?? 'paw'}
                 first={index === 0}
                 last={index === events.length - 1}
               />
@@ -65,10 +65,10 @@ export default function Timeline({params}: PageProps<'/timeline/[petName]/[petId
                 <div className={styles.textContainer}>
                 <div>
                   <h2>{event.title}</h2>
-                  <p>{event.description ?? ''}</p>
+                  <p>{event?.description ?? ''}</p>
                 </div>
                 <div>
-                  <p>{event.category.name ?? ''} {event.date && `| ${event.date}`}</p>
+                  <p>{event.category?.name ?? ''} {event.date && `| ${event.date}`}</p>
                 </div>
               </div>
               <div className={event.imagePath && styles.imgContainer}>

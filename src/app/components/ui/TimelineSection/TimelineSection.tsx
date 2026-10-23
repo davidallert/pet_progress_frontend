@@ -16,7 +16,7 @@ export default function TimelineSection(params: TimelineSectionProps) {
         <div className={styles.timelineSection}>
         {!first && <div className={styles.timelineUpper} />}
         <div className={styles.eventIcon}>
-            <FontAwesomeIcon icon={eventCategoryIcons[iconKey] ?? 'faPaw'}/>
+            <FontAwesomeIcon icon={eventCategoryIcons[iconKey] ?? 'paw'}/>
         </div>
         {!last && <div className={styles.timelineLower} />}
         </div>

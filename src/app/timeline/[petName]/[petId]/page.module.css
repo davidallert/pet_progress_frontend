@@ -18,6 +18,10 @@
     grid-template-columns: 2fr 10fr;
 }
 
+.timelineCol {
+    margin-right: 20px;
+}
+
 .contentCol {
     display: flex;
     align-items: center;
