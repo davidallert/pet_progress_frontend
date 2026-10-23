@@ -33,12 +33,10 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
   const loading = userLoading || eventCategoriesLoading;
   const errors = [userError, eventCategoriesError];
 
-  console.log(pets)
-
   useEffect(() => {
     if (loading || errors.length === 0) return;
 
-    setPopup({ messages: getErrorMessages(errors), type: 'error'});
+    setPopup({ messages: getErrorMessages([errors]), type: 'error'});
 
     const anyErrors = errors.some((e) => e != null)
     if (anyErrors) router.replace("/account/2");
@@ -105,12 +103,14 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
     e.preventDefault();
 
     const form = e.currentTarget.form;
+    console.log(form)
     if (!form) return;
 
     const formData = new FormData(form);
 
     const payload = {
-      id: Number(formData.get('id')),
+      petId: Number(formData.get('petId')),
+      eventId: Number(formData.get('eventId')),
     };
 
     form.remove();
@@ -118,32 +118,15 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
     removeEvent(payload);
   };
 
-  const removeEvent = async (payload: {id: number}) => {
+  const removeEvent = async (payload: {petId: number, eventId: number}) => {
     try {
       const response = await axios.post('/event/remove', payload, {
         headers: {'Content-Type': 'application/json'},
       });
+
       setPopup({messages: [response.data.message], type: 'success'});
-      console.log(response);
-    } catch (error) {
-      if (error instanceof AxiosError) { // Handle Axios errors.
-        console.error('Error response:', error.response?.data);
-        console.error('Error status:', error.response?.status);
-        console.error('Error message:', error.message);
-        let errorMessage: any = 'Something went wrong.';
-
-        if (typeof(error.response?.data?.error) === "string") {
-          errorMessage = [error.response?.data?.error];
-        } else if (typeof(error.response?.data?.error)  === "object") {
-          errorMessage = Object.values(error.response?.data?.error);
-        }
-
-        setPopup({messages: errorMessage, type: 'error'});
-      } else {
-        console.error('Unexpected error:', error);
-        setPopup({messages: ['Something went wrong.'], type: 'error'});
-      }
-    } finally {
+    } catch (e) {
+      setPopup({messages: getErrorMessages([e]), type: 'error'});
     }
   }
 
@@ -254,9 +237,9 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
                   </div>
 
                   <TableInput
-                    id={`id-${event.id}`}
+                    id={`eventId-${event.id}`}
                     type="hidden"
-                    name="id"
+                    name="eventId"
                     defaultValue={String(event.id)}
                   />
                   <TableInput

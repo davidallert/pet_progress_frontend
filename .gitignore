@@ -43,3 +43,7 @@ next-env.d.ts
 /src/styles*
 
 /logos/*
+# Playwright artifacts
+test-results/
+playwright-report/
+playwright/.cache/
