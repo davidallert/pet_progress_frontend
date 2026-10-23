@@ -21,12 +21,12 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: npm ci
-      - name: Type check
-        run: npm run typecheck
       - name: Build
         env:
           NEXT_PUBLIC_API_URL: https://api.example.test/api
         run: npm run build
+      - name: Type check
+        run: npm run typecheck
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
       - name: Run frontend integration tests
