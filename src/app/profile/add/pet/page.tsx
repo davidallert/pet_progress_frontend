@@ -8,6 +8,9 @@ import { AxiosError } from 'axios';
 
 import React, { FormEvent, useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/navigation'
+import { useSpecies } from "@/hooks/useSpecies";
+
+import getErrorMessages from "@/utils/getErrorMessages";
 
 import PopupContext from '@/app/context/popup/context';
 
@@ -25,11 +28,11 @@ export default function Pet() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [loadingAdd, setLoadingAdd] = useState(false);
-  const [species, setSpecies] = useState<Species[]>([]);
   const [selectedSpecies, setSelectedSpecies] = useState('shield-dog');
 
+  const { species, speciesLoading, speciesError } = useSpecies();
+
   const [form, setForm] = useState({
-    userId: '',
     name: '',
     image: null as File | null,
     speciesId: '',
@@ -38,27 +41,14 @@ export default function Pet() {
   });
 
   useEffect(() => {
-    const getInitialData = async () => {
-      try {
-        const [userResponse, speciesResponse] = await Promise.all([
-          axios.get('/user/data', { withCredentials: true }),
-          axios.get('/species'),
-        ]);
+    if (speciesLoading || [speciesError].length === 0) return;
 
-        setForm(prevForm => ({...prevForm, userId: userResponse.data.user.id}));
-        setSpecies(speciesResponse.data);
+    setPopup({ messages: getErrorMessages([speciesError]), type: 'error'});
 
-        setLoading(false);
-      }
-      catch (e) {
-        if (e instanceof(AxiosError)) {
-          setPopup({messages: [e.response?.data?.message + "."], type: 'error'})
-        }
-        router.push('/');
-      }
-    }
-    getInitialData();
-  }, []);
+    const anyErrors = [speciesError].some((e) => e != null)
+    if (anyErrors) router.replace("/profile");
+  }, [speciesError]);
+
 
   const addPet = async (formData: FormData) => {
     try {
@@ -100,7 +90,6 @@ export default function Pet() {
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('userId', form.userId);
       formData.append('name', form.name);
       if (form.image) formData.append('image', form.image);
       formData.append('speciesId', form.speciesId);
@@ -127,7 +116,7 @@ export default function Pet() {
   };
 
   // Return an empty page, just displaying the header and footer.
-  if (loading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
+  if (speciesLoading) return <main className={`${styles.main} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
   return (
     <main className={styles.main} style={{padding: "min(50px, 5%)"}}>

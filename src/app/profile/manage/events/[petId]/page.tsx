@@ -26,12 +26,14 @@ import { useUserData } from '@/hooks/useUserData';
 export default function Manage({params}: PageProps<'/profile/manage/events/[petId]'>) {
   const { setPopup } = useContext(PopupContext);
   const router = useRouter();
-  const { user, pets, setPets, userLoading, userError } = useUserData({eventLimit: 100});
   const { eventCategories, eventCategoriesLoading, eventCategoriesError } = useEventCategories();
   const { petId } = React.use(params);
+  const { user, pets, setPets, userLoading, userError } = useUserData({petId: Number(petId)});
 
   const loading = userLoading || eventCategoriesLoading;
   const errors = [userError, eventCategoriesError];
+
+  console.log(pets)
 
   useEffect(() => {
     if (loading || errors.length === 0) return;
@@ -45,7 +47,7 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
   // Return an empty page, just displaying the header and footer.
   if (loading) return <main className={`${styles.mainInit} ${styles.loading}`}><FontAwesomeIcon icon={faOtter} spinPulse size="3x"/></main>;
 
-  const pet: Pet = pets.filter((pet) => pet.id === Number(petId))[0];
+  const pet: Pet = pets[0];
 
   const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, petId:number) => {
     e.preventDefault();
@@ -146,15 +148,20 @@ export default function Manage({params}: PageProps<'/profile/manage/events/[petI
   }
 
   const handleIconChange = (e: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-    const PET_INDEX = 0
-    
-    const newIconKey = e.target.selectedOptions[0].dataset.icon;
+    const iconKey = e.target.selectedOptions[0].dataset.icon;
+    const iconName = e.target.selectedOptions[0].textContent;
 
-    if (!newIconKey) return;
+    if (!iconKey || !iconName) return;
 
     setPets(prev => {
       const updatedPets = structuredClone(prev);
-      updatedPets[PET_INDEX].events[index].category.icon = newIconKey;
+      const pet = updatedPets[0].events[index];
+
+      if (!pet.category) {
+        pet.category = {icon: '', name: iconName};
+      }
+
+      pet.category.icon = iconKey;
 
       return updatedPets;
     })

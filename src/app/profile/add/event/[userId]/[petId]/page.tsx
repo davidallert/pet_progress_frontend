@@ -32,7 +32,7 @@ export default function Event({params}: PageProps<'/profile/add/event/[userId]/[
 
     const anyErrors = [eventCategoriesError].some((e) => e != null)
     if (anyErrors) router.replace("/profile");
-  }, [eventCategoriesLoading, eventCategoriesError]);
+  }, [eventCategoriesError]);
 
   const { userId, petId } = React.use(params);
 

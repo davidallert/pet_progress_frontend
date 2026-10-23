@@ -78,15 +78,27 @@ export default function Profile() {
     }
   }
 
-  const removePet = async (id:Number) => {
+  const removePet = async (petId: Number) => {
     try {
-      const response = await axios.post('/remove/pet', {id: id});
-      setPopup({messages: [response?.data?.message], type: 'success', isVisible: true});
-    } catch (e) {
-        setPopup({messages: getErrorMessages([e]), type: 'error'});
-    } finally {
-      window.sessionStorage.removeItem("expandedRowId");
-      window.location.reload();
+      const response = await axios.post('/remove/pet', {id: petId});
+      setPopup({messages: [response?.data?.message], type: 'success'});
+      } catch (e) {
+      setPopup({messages: getErrorMessages([e]), type: 'error'});
+      } finally {
+      const index = pets.findIndex((pet) => pet.id === petId);
+
+      setPets(prev => {
+        const updatedPets = [...prev]
+        updatedPets.splice(index, 1);
+        
+        return updatedPets;
+      });
+
+      if (pets.length > 0) {
+        setExpandedRowId(0);
+      }
+
+    window.sessionStorage.removeItem("expandedRowId");
     }
   }
 
@@ -132,8 +144,8 @@ export default function Profile() {
 
   const handleRemovePet = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
     e.preventDefault();
-    const div = document.getElementById(String(id))
-    div?.remove()
+    // const div = document.getElementById(String(id))
+    // div?.remove()
     removePet(id);
   }
 
@@ -182,7 +194,11 @@ export default function Profile() {
     if (files && files.length > 0 && petId) {
       const selectedFile = files[0];
 
-      const data = {id: petId, image: selectedFile};
+      // const data = {id: petId, image: selectedFile};
+
+      const data = new FormData();
+      data.append('id', String(petId));
+      data.append('image', selectedFile);
 
       try {
         const response = await axios.post('/update/pet/image', data, {

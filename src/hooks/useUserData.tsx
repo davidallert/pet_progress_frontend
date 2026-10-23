@@ -4,7 +4,7 @@ import type User from '@/types/user';
 import type Pet from '@/types/pet';
 
 interface UseUserDataOptions {
-  // petLimit?: number,
+  petId?: number,
   eventLimit?: number,
 }
 
