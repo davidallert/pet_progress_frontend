@@ -376,7 +376,7 @@
   }
 
   .card {
-    padding: 15%;
+    padding: 20% 12%;
   }
 
   .avatar, .avatarContainer {
@@ -406,7 +406,7 @@
 
   .card {
     width: 100%;
-    padding: 15%;
+    padding: 10%;
     font-size: small;
   }
 

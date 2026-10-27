@@ -69,8 +69,10 @@ input::file-selector-button {
   transition-duration: 0.5s;
 }
 
-/* @media screen and (max-width: 1920px) {
-  .input {
-    padding: 20px;
+@media screen and (max-width: 768px) {
+  .input,
+  .input[type="file"],
+  textarea.input {
+    padding: 0 4%;
   }
-} */
+}

@@ -53,4 +53,8 @@
     min-width: 250px;
     position-area: bottom center;
   }
+
+  .select {
+    padding: 0 4%;
+  }
 }

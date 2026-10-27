@@ -247,18 +247,20 @@ export default function Profile() {
                 <Svg type="primary" index={expandedRowId} />
                 <Svg type="secondary" index={expandedRowId} />
 
-                <div className={styles.viewTimeline}>
-                  <Button
-                    icon={true}
-                    style={{ color: "#171717" }}
-                    onClick={(e) =>
-                      routeToTimeline(e, expandedPet.name, expandedPet.id)
-                    }
-                    tooltip={`View Timeline`}
-                  >
-                    <FontAwesomeIcon icon={faBarsStaggered} />
-                  </Button>
-                </div>
+                {expandedPet.events.length > 0 &&
+                  <div className={styles.viewTimeline}>
+                    <Button
+                      icon={true}
+                      style={{ color: "#171717" }}
+                      onClick={(e) =>
+                        routeToTimeline(e, expandedPet.name, expandedPet.id)
+                      }
+                      tooltip={`View Timeline`}
+                    >
+                      <FontAwesomeIcon icon={faBarsStaggered} />
+                    </Button>
+                  </div>
+                }
 
                 {expandedPet.imagePath && (
                   <div
