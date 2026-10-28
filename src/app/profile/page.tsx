@@ -12,6 +12,7 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Svg from "../components/ui/Svg/Svg";
 import Select from "../components/ui/Select";
+import Dialog from "../components/ui/Dialog";
 import speciesIcons from "@/libraries/species-icons";
 import eventCategoryIcons from "@/libraries/event-category-icons";
 
@@ -38,6 +39,7 @@ export default function Profile() {
   const loading = userLoading || speciesLoading;
   const hasError = userError != null || speciesError != null;
   const expandedPet = expandedRowId !== null && expandedRowId !== undefined ? pets[expandedRowId]: null;
+  const [petToDeleteId, setPetToDeleteId] = useState<number | null>(null);
 
   // Refs.
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -144,10 +146,18 @@ export default function Profile() {
 
   const handleRemovePet = (e:React.MouseEvent<HTMLButtonElement>, id:number) => {
     e.preventDefault();
-    // const div = document.getElementById(String(id))
-    // div?.remove()
-    removePet(id);
+
+    setPetToDeleteId(id);
   }
+
+  const dialogCallback = (confirmed: boolean) => {
+    const id = petToDeleteId;
+
+    setPetToDeleteId(null);
+    if (confirmed && id !== null) {
+      removePet(id);
+    }
+  };
 
   const handleAddEvent = (e:React.MouseEvent<HTMLButtonElement>, petId:number) => {
     e.preventDefault();
@@ -234,6 +244,15 @@ export default function Profile() {
   }
 
   return (
+    <>
+
+    <Dialog
+      title="Delete Pet"
+      text={`Are you sure you want to delete ${expandedPet?.name} and all related events? This action can't be undone.`}
+      visible={petToDeleteId !== null}
+      callback={dialogCallback}
+    />
+
     <main className={styles.main}>
 
       {/* Input for avatar changes */}
@@ -334,10 +353,10 @@ export default function Profile() {
               <div className={styles.eventHead}>
                 <h2>Recent Events</h2>
 
-                  <div className={styles.removePet}>
+                  <div className={styles.removePetBtn}>
                     <Button
                       icon={true}
-                      tooltip="Remove Pet"
+                      tooltip="Delete Pet"
                       onClick={(e) => handleRemovePet(e, expandedPet.id)}
                     >
                       <FontAwesomeIcon icon={faXmark} />
@@ -445,7 +464,6 @@ export default function Profile() {
                         <FontAwesomeIcon icon={faEye} />
                       </Button>
                     </div>
-
                     }
 
                     {index !== expandedRowId &&
@@ -487,5 +505,6 @@ export default function Profile() {
         </div>
       </div>
     </main>
+    </>
   );
 }

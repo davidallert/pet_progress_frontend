@@ -1,0 +1,7 @@
+.dimmer {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background-color: var(--foreground);
+    opacity: 0.5;
+}

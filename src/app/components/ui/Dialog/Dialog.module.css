@@ -1,0 +1,113 @@
+.dialog {
+    position: fixed;
+    top: 33dvh;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--light);
+    z-index: 11;
+    padding: 40px;
+    border-radius: calc(var(--radius) / 5);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 250px;
+    max-width: 500px;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.visible,
+.hidden {
+  z-index: 100;
+  transition: 0.3s ease-in-out;
+}
+
+.icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+}
+
+.h2 {
+    width: fit-content;
+}
+
+.h2::after {
+    width: 110%;
+    height: 1px;
+    content: "";
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-top: 5px;
+    background-color: var(--foreground);
+    mask-image: linear-gradient(to right, var(--foreground) 75%, transparent 100%);
+}
+
+.visible .h2::after {
+    animation: slide-in 1s ease-in-out;
+}
+
+.titleGrp {
+    display: flex;
+    justify-content: space-between;
+}
+
+.textGrp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btnGrp {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    margin: 20px auto;
+}
+
+.btnGrp button:first-of-type {
+    background-color: var(--error);
+    color: var(--foreground);
+}
+
+.btnGrp button:first-of-type:hover {
+    color: var(--white);
+}
+
+@keyframes slide-in {
+    from {
+        width: 0;
+        left: -10px;
+    }
+
+    to {
+        width: 110%;
+        left: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dialog {
+        width: 90%;
+    }
+}

@@ -55,18 +55,8 @@
   border-bottom: 1px solid var(--foreground);
 }
 
-.removePet {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.removePet button {
+.removePetBtn button {
   color: var(--foreground);
-  padding: 15px 12px;
-  background-color: var(--light);
-  border-radius: var(--radius);
-  font-size: 1rem;
 }
 
 .toggleExpandBtn {
@@ -146,7 +136,7 @@
 
 .viewTimeline button {
   position: absolute;
-  top: -10%;
+  top: -15%;
   right: -10%;
   color: var(--foreground);
   height: clamp(75px, 5dvw, 100px);
@@ -376,7 +366,7 @@
   }
 
   .card {
-    padding: 20% 12%;
+    padding: 15% 12%;
   }
 
   .avatar, .avatarContainer {
@@ -392,6 +382,10 @@
   .buttonGroup {
     width: 90%;
     flex-direction: column;
+  }
+
+  .viewTimeline button {
+    top: -5%;
   }
 }
 
@@ -412,6 +406,10 @@
 
   .avatar, .avatarContainer {
     display: none;
+  }
+
+  .viewTimeline button {
+    top: -15%;
   }
 }
 
