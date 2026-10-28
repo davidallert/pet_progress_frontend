@@ -87,9 +87,9 @@ The app is deployed on [Vercel](https://vercel.com/). To deploy your own copy:
 
 ## Roadmap
 
-- [ ] Timeline view that visualizes each pet's events chronologically
+- [X] Timeline view that visualizes each pet's events chronologically
 - [ ] Social features (sharing pets and milestones with friends)
-- [ ] Live chattign with friends
+- [ ] Live chatting with friends
 
 ## Related Repositories
 
