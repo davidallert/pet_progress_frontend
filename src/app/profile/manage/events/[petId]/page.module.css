@@ -45,6 +45,10 @@
     overflow: visible;
 }
 
+.table *:not(.th) {
+    font-size: large !important;
+}
+
 .table .td * {
     font-family: var(--font-alegreya), Arial, Helvetica, serif;
 }
@@ -122,10 +126,6 @@
     min-width: 0;
 }
 
-.td svg {
-    font-size: large;
-}
-
 .selectContainer {
   position: relative;
   width: 100%;
@@ -148,10 +148,6 @@
     .mainHeader {
         padding-right: clamp(25px, 5%, 100px);
     }
-
-    .table * {
-        font-size: large;
-    }
 }
 
 @media screen and (max-width: 768px) {
@@ -161,5 +157,13 @@
 
     .eventBtnContainer {
         width: 100%;
+    }
+
+    .th {
+        font-size: large;
+    }
+
+    .table *:not(.th) {
+        font-size: medium !important;
     }
 }
