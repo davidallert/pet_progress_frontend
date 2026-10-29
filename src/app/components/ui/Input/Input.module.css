@@ -24,10 +24,14 @@ textarea.input::-webkit-scrollbar {
   display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
-.input[type="file"] {
-  line-height: clamp(60px, 10dvw, 75px);;
-  cursor: pointer;
+.input[type="file"],
+.input[type="date"] {
+  line-height: clamp(60px, 10dvw, 75px);
   padding: 0 2%;
+}
+
+.input[type="file"] {
+  cursor: pointer;
 }
 
 input::file-selector-button {

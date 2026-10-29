@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import TooltipContext, { defaultTooltipState } from "./context";
-import Tooltip from "@/app/components/ui/Tooltip";
+import Tooltip from "@/app/components/layout/Tooltip";
 
 export default function TooltipProvider({ children }: { children: React.ReactNode }) {
   const [tooltip, setTooltip] = useState(defaultTooltipState);

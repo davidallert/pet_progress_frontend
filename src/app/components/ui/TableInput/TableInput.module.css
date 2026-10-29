@@ -9,6 +9,11 @@
   background-color: var(--white);
 }
 
+.input:focus {
+  outline: none;
+  border: 1px solid var(--foreground);
+}
+
 textarea.input::-webkit-scrollbar {
   display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
